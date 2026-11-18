@@ -3,7 +3,7 @@
 Every operation an agent or script can perform is a ``Command`` with a stable id (``edit.apply``,
 ``library.rate`` …), a JSON-schema parameter description and one handler.  Handlers act on a
 ``Context``: the open editor window (``control.WindowContext``, every edit is one undo step the
-user can take back) or a headless session (``session.Session``, used by ``lumen-cli`` and by the
+user can take back) or a headless session (``session.Session``, used by ``sadsha-lumen`` and by the
 MCP server when the editor is not running).  The command line, the JSON-lines control channel
 and the MCP server all dispatch through ``run``.
 
@@ -125,7 +125,7 @@ def arguments(cmd, args):
     unknown = set(args) - set(cmd.params)
     if unknown:
         raise CommandError(f'unknown argument(s) for {cmd.id}: {", ".join(sorted(unknown))}')
-    # null for an optional parameter means "not given" (lumen-cli passes unset options as None).
+    # null for an optional parameter means "not given" (sadsha-lumen passes unset options as None).
     args = {k: v for k, v in args.items() if v is not None or k in cmd.required}
     missing = [k for k in cmd.required if k not in args]
     if missing:
@@ -208,7 +208,7 @@ def _meta(context, path):
          read_only=True, tool='lumen_status')
 def app_status(context):
     current = context.current()
-    result = dict(application='LUMEN RAW', version=__version__, mode=context.mode, photos=len(context.photos()),
+    result = dict(application='SadSha Lumen', version=__version__, mode=context.mode, photos=len(context.photos()),
                   current=current, selected=context.selected())
     if current:
         result['process'] = context.edits(current).get('process', 1)
@@ -762,7 +762,7 @@ def edit_copy(context, to, path=None):
     return dict(source=path, copied=done)
 
 
-@command('edit.process', 'Set the process version: 2 renders scene-referred (1.6.0), 1 as LUMEN RAW 1.x.',
+@command('edit.process', 'Set the process version: 2 renders scene-referred (1.6.0), 1 as SadSha Lumen 1.x.',
          dict(version=dict(type='integer', enum=[1, 2]), path=PATH), required=('version',), tool='set_process_version')
 def edit_process(context, version, path=None):
     path = _target(context, path)

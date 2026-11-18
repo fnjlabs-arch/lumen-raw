@@ -1,4 +1,4 @@
-"""Colour management of the photos LUMEN RAW opens (2.1.2).
+"""Colour management of the photos SadSha Lumen opens (2.1.2).
 
 Until 2.1.1 only LUMEN's own export profiles kept their colours on input: 8-bit JPEG / PNG / TIFF
 with any other profile went through LittleCMS to 8-bit sRGB (colours outside sRGB clipped), 16-bit

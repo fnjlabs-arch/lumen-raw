@@ -44,7 +44,7 @@ SOURCE = r'''
 #include <metal_stdlib>
 using namespace metal;
 
-// Mirrors gpu_graphs._tonal / _color / _hsl; see LUMEN RAW lumen/metal.py.
+// Mirrors gpu_graphs._tonal / _color / _hsl; see SadSha Lumen lumen/metal.py.
 struct Params {
     float gain_r, gain_g, gain_b, exposure;
     float shadows, highlights, blacks, whites, contrast;
@@ -160,7 +160,7 @@ SOURCE2 = r'''
 #include <metal_stdlib>
 using namespace metal;
 
-// Process version 2: mirrors gpu_graphs._tonal2 / _color2; see LUMEN RAW lumen/metal.py.
+// Process version 2: mirrors gpu_graphs._tonal2 / _color2; see SadSha Lumen lumen/metal.py.
 struct Params2 {
     float gain_r, gain_g, gain_b;
     float shadows, highlights, blacks, whites, contrast, contrast_on;

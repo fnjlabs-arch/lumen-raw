@@ -1,4 +1,4 @@
-# LUMEN RAW release build: tests -> DirectML check -> PyInstaller -> portable ZIP ->
+# SadSha Lumen release build: tests -> DirectML check -> PyInstaller -> portable ZIP ->
 # Inno Setup installer -> installer extraction check -> smoke tests -> SHA256SUMS.
 # 2.1.1: also the update installer (the program without the AI models), its check, and the
 # update feed lumen-update.json.
@@ -16,7 +16,7 @@ $packages = Join-Path $publish 'packages'
 New-Item -ItemType Directory -Force -Path $logs, $packages | Out-Null
 $status = Join-Path $logs 'status.txt'
 $buildLog = Join-Path $logs 'build.log'
-Set-Content -LiteralPath $buildLog -Value "LUMEN RAW $version release build $(Get-Date -Format s)" -Encoding UTF8
+Set-Content -LiteralPath $buildLog -Value "SadSha Lumen $version release build $(Get-Date -Format s)" -Encoding UTF8
 $env:PYTHONIOENCODING = 'utf-8'
 $env:PYTHONUTF8 = '1'
 
@@ -102,21 +102,21 @@ try {
     Run 'source smoke test' $python @('main.py', '--smoke-test', $sample, $smoke)
 
     Step 'PyInstaller (DirectML onedir)'
-    Run 'PyInstaller' $python @('-m', 'PyInstaller', '--noconfirm', '--clean', 'LumenRAW.spec') (Join-Path $logs 'pyinstaller.log')
-    if (-not (Test-Path -LiteralPath 'dist\LumenRAW\LumenRAW.exe')) { Fail 'frozen executable missing' }
+    Run 'PyInstaller' $python @('-m', 'PyInstaller', '--noconfirm', '--clean', 'SadShaLumen.spec') (Join-Path $logs 'pyinstaller.log')
+    if (-not (Test-Path -LiteralPath 'dist\SadShaLumen\SadShaLumen.exe')) { Fail 'frozen executable missing' }
 
     Step 'Frozen smoke test'
     $frozenSmoke = Join-Path $publish 'portable-smoke'
     if (Test-Path -LiteralPath $frozenSmoke) { Remove-Item -LiteralPath $frozenSmoke -Recurse -Force }
-    $process = Start-Process -FilePath 'dist\LumenRAW\LumenRAW.exe' -ArgumentList @('--smoke-test', "`"$sample`"", "`"$frozenSmoke`"") -Wait -PassThru
+    $process = Start-Process -FilePath 'dist\SadShaLumen\SadShaLumen.exe' -ArgumentList @('--smoke-test', "`"$sample`"", "`"$frozenSmoke`"") -Wait -PassThru
     if ($process.ExitCode -ne 0) { Fail "frozen smoke test (exit $($process.ExitCode)); see $frozenSmoke\report.json" }
     Get-Content -LiteralPath (Join-Path $frozenSmoke 'report.json') -Encoding UTF8 | Where-Object { $_ -match '"(ok|backend|provider|device|warning)"' } | ForEach-Object { Say $_ }
-    # 1.6.0: the console lumen-cli.exe (command line and MCP server).
-    if (-not (Test-Path -LiteralPath 'dist\LumenRAW\lumen-cli.exe')) { Fail 'lumen-cli.exe missing' }
-    Run 'frozen lumen-cli and MCP check' $python @('tools\check_cli.py', 'dist\LumenRAW\lumen-cli.exe', $sample, (Join-Path $publish 'cli-smoke')) (Join-Path $logs 'cli-smoke.log')
+    # 1.6.0: the console sadsha-lumen.exe (command line and MCP server).
+    if (-not (Test-Path -LiteralPath 'dist\SadShaLumen\sadsha-lumen.exe')) { Fail 'sadsha-lumen.exe missing' }
+    Run 'frozen sadsha-lumen and MCP check' $python @('tools\check_cli.py', 'dist\SadShaLumen\sadsha-lumen.exe', $sample, (Join-Path $publish 'cli-smoke')) (Join-Path $logs 'cli-smoke.log')
 
     Step 'Portable ZIP'
-    foreach ($old in @("LumenRAW-$version-Windows.zip", "LumenRAW-$version-Windows.json", "LumenRAW-$version-Windows.zip.tmp")) {
+    foreach ($old in @("SadShaLumen-$version-Windows.zip", "SadShaLumen-$version-Windows.json", "SadShaLumen-$version-Windows.zip.tmp")) {
         $path = Join-Path $packages $old
         if (Test-Path -LiteralPath $path) { Remove-Item -LiteralPath $path -Force }
     }
@@ -134,12 +134,12 @@ try {
     }
     if (-not $Iscc) { Fail 'ISCC.exe not found; install Inno Setup 7 or pass -Iscc' }
     Say "ISCC: $Iscc"
-    Run 'compile installer' $Iscc @('/Qp', '/DAppBuild=dist\LumenRAW', "/DAppVersion=$version", 'installer.iss') (Join-Path $logs 'iscc.log')
-    $setup = Join-Path $packages "LumenRAW-$version-Setup.exe"
+    Run 'compile installer' $Iscc @('/Qp', '/DAppBuild=dist\SadShaLumen', "/DAppVersion=$version", 'installer.iss') (Join-Path $logs 'iscc.log')
+    $setup = Join-Path $packages "SadShaLumen-$version-Setup.exe"
     if (-not (Test-Path -LiteralPath $setup)) { Fail 'installer missing' }
     # 2.1.1: the update installer, which the editor downloads (no AI models; they stay installed).
-    Run 'compile update installer' $Iscc @('/Qp', '/DAppBuild=dist\LumenRAW', "/DAppVersion=$version", '/DUpdatePackage', 'installer.iss') (Join-Path $logs 'iscc-update.log')
-    $updateSetup = Join-Path $packages "LumenRAW-$version-Update.exe"
+    Run 'compile update installer' $Iscc @('/Qp', '/DAppBuild=dist\SadShaLumen', "/DAppVersion=$version", '/DUpdatePackage', 'installer.iss') (Join-Path $logs 'iscc-update.log')
+    $updateSetup = Join-Path $packages "SadShaLumen-$version-Update.exe"
     if (-not (Test-Path -LiteralPath $updateSetup)) { Fail 'update installer missing' }
 
     Step 'Installer extraction check'
@@ -147,21 +147,21 @@ try {
     if (Test-Path -LiteralPath $extract) { Remove-Item -LiteralPath $extract -Recurse -Force }
     $process = Start-Process -FilePath $setup -ArgumentList @('/PORTABLE=1', '/VERYSILENT', '/SUPPRESSMSGBOXES', '/NORESTART', '/NOICONS', "/DIR=`"$extract`"", "/LOG=`"$(Join-Path $logs 'installer-extract.log')`"") -Wait -PassThru
     if ($process.ExitCode -ne 0) { Fail "installer extraction (exit $($process.ExitCode))" }
-    $verified = Join-Path $packages "LumenRAW-$version-Installer-verified.json"
+    $verified = Join-Path $packages "SadShaLumen-$version-Installer-verified.json"
     if (Test-Path -LiteralPath $verified) { Remove-Item -LiteralPath $verified -Force }    # Run appends to its log file
     Run 'compare installer with frozen build' $python @('tools\verify_installer.py', $extract) $verified
     $installedSmoke = Join-Path $publish 'installer-smoke'
     if (Test-Path -LiteralPath $installedSmoke) { Remove-Item -LiteralPath $installedSmoke -Recurse -Force }
-    $process = Start-Process -FilePath (Join-Path $extract 'LumenRAW.exe') -ArgumentList @('--smoke-test', "`"$sample`"", "`"$installedSmoke`"") -Wait -PassThru
+    $process = Start-Process -FilePath (Join-Path $extract 'SadShaLumen.exe') -ArgumentList @('--smoke-test', "`"$sample`"", "`"$installedSmoke`"") -Wait -PassThru
     if ($process.ExitCode -ne 0) { Fail "installer smoke test (exit $($process.ExitCode))" }
-    Run 'installed lumen-cli and MCP check' $python @('tools\check_cli.py', (Join-Path $extract 'lumen-cli.exe'), $sample, (Join-Path $publish 'installer-cli-smoke')) (Join-Path $logs 'installer-cli-smoke.log')
+    Run 'installed sadsha-lumen and MCP check' $python @('tools\check_cli.py', (Join-Path $extract 'sadsha-lumen.exe'), $sample, (Join-Path $publish 'installer-cli-smoke')) (Join-Path $logs 'installer-cli-smoke.log')
 
     Step 'Update installer check'
     $updateExtract = Join-Path $publish 'update-extract'
     if (Test-Path -LiteralPath $updateExtract) { Remove-Item -LiteralPath $updateExtract -Recurse -Force }
     $process = Start-Process -FilePath $updateSetup -ArgumentList @('/PORTABLE=1', '/VERYSILENT', '/SUPPRESSMSGBOXES', '/NORESTART', '/NOICONS', "/DIR=`"$updateExtract`"", "/LOG=`"$(Join-Path $logs 'update-extract.log')`"") -Wait -PassThru
     if ($process.ExitCode -ne 0) { Fail "update installer extraction (exit $($process.ExitCode))" }
-    $verified = Join-Path $packages "LumenRAW-$version-Update-verified.json"
+    $verified = Join-Path $packages "SadShaLumen-$version-Update-verified.json"
     if (Test-Path -LiteralPath $verified) { Remove-Item -LiteralPath $verified -Force }
     Run 'compare update installer with frozen build' $python @('tools\verify_installer.py', $updateExtract, '--update') $verified
     Run 'update package: model download and smoke test' $python @('tools\check_update_package.py', $updateExtract, $sample, (Join-Path $publish 'update-smoke')) (Join-Path $logs 'update-smoke.log')
@@ -172,7 +172,7 @@ try {
     Get-ChildItem -LiteralPath $packages -File | ForEach-Object { Say ("{0,14:N0}  {1}" -f $_.Length, $_.Name) }
     Set-Content -LiteralPath $status -Value "SUCCESS $version $(Get-Date -Format s)" -Encoding UTF8
     Say ''
-    Say "SUCCESS: LUMEN RAW $version packages are in $packages"
+    Say "SUCCESS: SadSha Lumen $version packages are in $packages"
     exit 0
 }
 catch {

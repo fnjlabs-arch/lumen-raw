@@ -125,7 +125,7 @@ def copy_from(source, target, location=True, position=None):
         if sidecar.is_file():
             lines += ['-TagsFromFile', str(sidecar), *xmp]
             break
-    lines.append(f'-Software=LUMEN RAW {__version__}')
+    lines.append(f'-Software=SadSha Lumen {__version__}')
     if ext != '.dng':
         lines.append('-ExifIFD:ColorSpace=sRGB')
     lines += ['--', str(target)]

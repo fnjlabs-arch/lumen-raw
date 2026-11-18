@@ -450,9 +450,9 @@ def test_cli_render_and_config(photos, tmp_path, capsys):
     capsys.readouterr()
     assert cli.main(['mcp-config', 'json']) == 0
     config = json.loads(capsys.readouterr().out)
-    assert config['mcpServers']['lumen-raw']['args'][-1] == 'mcp'
+    assert config['mcpServers']['sadsha-lumen']['args'][-1] == 'mcp'
     assert cli.main(['mcp-config', 'claude-code']) == 0
-    assert capsys.readouterr().out.startswith('claude mcp add lumen-raw -- ')
+    assert capsys.readouterr().out.startswith('claude mcp add sadsha-lumen -- ')
 
 
 # --------------------------------------------------------------------------- the window

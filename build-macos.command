@@ -1,6 +1,6 @@
 #!/bin/bash
-# Double-click in Finder (or run in Terminal) to build LUMEN RAW for Apple silicon:
-# tests, Metal / Core ML check, LUMEN RAW.app and the DMG. Needs Python 3.12 (python3.12 on PATH,
+# Double-click in Finder (or run in Terminal) to build SadSha Lumen for Apple silicon:
+# tests, Metal / Core ML check, SadSha Lumen.app and the DMG. Needs Python 3.12 (python3.12 on PATH,
 # or pass --python /path/to/python3.12). Logs: .publish/v<version>/macos/logs (about 15-25 minutes).
 cd "$(dirname "$0")" || exit 1
 bash tools/build_macos.sh "$@"

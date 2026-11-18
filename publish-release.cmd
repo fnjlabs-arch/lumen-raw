@@ -1,7 +1,7 @@
 @echo off
 setlocal
 cd /d "%~dp0"
-echo Publish LUMEN RAW to GitHub: commit + tag + push, then create the Release with the packages.
+echo Publish SadSha Lumen to GitHub: commit + tag + push, then create the Release with the packages.
 echo If you are not signed in, a one-time code appears below; open https://github.com/login/device and enter it.
 echo Log: .publish\v131\logs\publish.log
 echo.

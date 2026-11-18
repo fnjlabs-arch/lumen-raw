@@ -1,7 +1,7 @@
 """Windows ML execution-provider catalog (1.3.1).
 
 On Windows 11 24H2+ (build 26100) Windows ML can download vendor execution
-providers on demand.  LUMEN RAW uses it for NVIDIA GeForce RTX 30-series and
+providers on demand.  SadSha Lumen uses it for NVIDIA GeForce RTX 30-series and
 newer: the ``NvTensorRtRtxExecutionProvider`` (TensorRT for RTX) is fetched
 through the catalog, registered with ONNX Runtime as a plugin library and then
 used for the AI models.  Everything here is best effort: any failure leaves the

@@ -1,7 +1,7 @@
 """Host platform: per-user folders and the few interface words that differ on macOS (1.3.1).
 
-Windows keeps its 1.3 locations (``%LOCALAPPDATA%\\LUMEN RAW``).  macOS uses the
-standard ``~/Library`` folders; Linux uses ``~/.local/state/LUMEN RAW``.
+Windows keeps its 1.3 locations (``%LOCALAPPDATA%\\SadSha Lumen``).  macOS uses the
+standard ``~/Library`` folders; Linux uses ``~/.local/state/SadSha Lumen``.
 Qt maps ``Ctrl`` shortcuts to the Command key and ``Alt`` to Option on macOS, so only
 the displayed names change.
 """
@@ -15,8 +15,8 @@ from .i18n import tr
 MACOS = sys.platform == 'darwin'
 WINDOWS = os.name == 'nt'
 LINUX = sys.platform.startswith('linux')
-#: CFBundleIdentifier of the macOS app (LumenRAW-macOS.spec); names its ~/Library/Caches folder.
-BUNDLE_ID = 'io.github.hety0211.lumenraw'
+#: CFBundleIdentifier of the macOS app (SadShaLumen-macOS.spec); names its ~/Library/Caches folder.
+BUNDLE_ID = 'com.sadsha.lumen'
 
 #: Key names shown in hints; the shortcuts themselves stay ``Ctrl+…`` in code.
 COMMAND = '⌘' if MACOS else 'Ctrl'
@@ -45,19 +45,19 @@ def data_folder():
     moves it there too: the tests give each one its own folder (2.1.0; until then tests wrote
     the Mac's real settings)."""
     if MACOS and not os.environ.get('LOCALAPPDATA'):
-        return Path.home() / 'Library' / 'Application Support' / 'LUMEN RAW'
+        return Path.home() / 'Library' / 'Application Support' / 'SadSha Lumen'
     base = os.environ.get('LOCALAPPDATA') or str(Path.home() / '.local' / 'state')
-    return Path(base) / 'LUMEN RAW'
+    return Path(base) / 'SadSha Lumen'
 
 
 def log_folder():
     if MACOS:
-        return Path.home() / 'Library' / 'Logs' / 'LUMEN RAW'
+        return Path.home() / 'Library' / 'Logs' / 'SadSha Lumen'
     return data_folder() / 'logs'
 
 
 def cache_folder():
     """Rebuildable caches such as compiled Core ML models."""
     if MACOS:
-        return Path.home() / 'Library' / 'Caches' / 'LUMEN RAW'
+        return Path.home() / 'Library' / 'Caches' / 'SadSha Lumen'
     return data_folder() / 'cache'

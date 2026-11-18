@@ -1,6 +1,6 @@
 # Linux x86_64 build (2.1.0): ONNX Runtime's CUDA provider, CuPy native pixel kernels, the Perl
 # ExifTool and the Qt FFmpeg multimedia backend.  Run tools/build_linux.sh, which installs the
-# build requirements and packages dist/LumenRAW as a portable .tar.gz.
+# build requirements and packages dist/SadShaLumen as a portable .tar.gz.
 import re
 import sys
 from pathlib import Path
@@ -62,14 +62,14 @@ a = Analysis(
 a.binaries = bundle.trim(a.binaries, 'linux')
 a.datas = bundle.trim(a.datas, 'linux')
 pyz = PYZ(a.pure)
-exe = EXE(pyz, a.scripts, [], exclude_binaries=True, name='LumenRAW',
+exe = EXE(pyz, a.scripts, [], exclude_binaries=True, name='SadShaLumen',
           debug=False, bootloader_ignore_signals=False, strip=False, upx=False,
           console=False, disable_windowed_traceback=False)
 # 1.6.0: the same program as a console executable: the command line and the MCP server (stdio).
-cli = EXE(pyz, a.scripts, [], exclude_binaries=True, name='lumen-cli',
+cli = EXE(pyz, a.scripts, [], exclude_binaries=True, name='sadsha-lumen',
           debug=False, bootloader_ignore_signals=False, strip=False, upx=False,
           console=True)
-coll = COLLECT(exe, cli, a.binaries, a.datas, strip=False, upx=False, name='LumenRAW')
+coll = COLLECT(exe, cli, a.binaries, a.datas, strip=False, upx=False, name='SadShaLumen')
 # 2.1.1: as on Windows, the AI models sit beside the program in models/, apart from _internal
 # (lumen/ai_models.py); asset_datas only carries their manifest.
-bundle.place_models(root, Path(DISTPATH) / 'LumenRAW')
+bundle.place_models(root, Path(DISTPATH) / 'SadShaLumen')

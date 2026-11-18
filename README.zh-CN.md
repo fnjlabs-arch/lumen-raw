@@ -1,14 +1,14 @@
-# LUMEN RAW · 多品牌 RAW 工作室
+# SadSha Lumen · 多品牌 RAW 工作室
 
 **开源 RAW 照片编辑器：图库与快速选片、调色、镜头校正、AI 移除、AI 增强、智能蒙版、照片合成、延时摄影视频，以及用一句话修图。**
 
 [English](README.md) · [下载](https://github.com/hety0211/lumen-raw/releases) · [更新记录](CHANGELOG.md) · [参与贡献](CONTRIBUTING.md) · [MIT 许可证](LICENSE)
 
-LUMEN RAW 是面向风光与旅行摄影的本地桌面编辑器，支持 Windows、Apple 芯片 Mac 和 x86_64 Linux（源码运行），无需账号。界面有简体中文、繁體中文、English、日本語、한국어、Deutsch、Français、Español、Русский 九种语言。导入、选片、调色、镜头校正、AI 移除 / 降噪 / 超分 / 蒙版、导出和延时视频全部在本机离线完成；只有你主动使用云端大模型修图时才会联网发送指令和参数，使用语音指令时会下载一次语音识别模型；2.1.1 起启动时会检查一次新版本，可以关闭。
+SadSha Lumen 是面向风光与旅行摄影的本地桌面编辑器，支持 Windows、Apple 芯片 Mac 和 x86_64 Linux（源码运行），无需账号。界面有简体中文、繁體中文、English、日本語、한국어、Deutsch、Français、Español、Русский 九种语言。导入、选片、调色、镜头校正、AI 移除 / 降噪 / 超分 / 蒙版、导出和延时视频全部在本机离线完成；只有你主动使用云端大模型修图时才会联网发送指令和参数，使用语音指令时会下载一次语音识别模型；2.1.1 起启动时会检查一次新版本，可以关闭。
 
 当前版本：**2.3.0**（Windows 与 macOS，2026-11-05）。Linux 从源码运行或自行构建（2.1.1 起加入 Linux 移植）。
 
-![LUMEN RAW 2.0.0「图库」页：左侧为文件夹树、智能相册与关键词，中间的缩略图网格显示星级、留用旗标、色标和被排除的照片，右侧为所选照片的拍摄信息、清晰度、评级与关键词](docs/screenshots/library-grid.png)
+![SadSha Lumen 2.0.0「图库」页：左侧为文件夹树、智能相册与关键词，中间的缩略图网格显示星级、留用旗标、色标和被排除的照片，右侧为所选照片的拍摄信息、清晰度、评级与关键词](docs/screenshots/library-grid.png)
 
 截图为实际运行界面，照片为公开的测试样片：raw.pixls.us 的 CC0 样片，以及 discuss.pixls.us 上以 CC BY-SA 4.0 发布的 Play Raw 样片（[图片来源](docs/screenshots/README.md)）。
 
@@ -16,9 +16,9 @@ LUMEN RAW 是面向风光与旅行摄影的本地桌面编辑器，支持 Window
 
 | 系统 | 下载 | 要求 |
 |---|---|---|
-| Windows | [`LumenRAW-2.3.0-Setup.exe`（完整安装包，606 MB）、`LumenRAW-2.3.0-Update.exe`（升级包，143 MB）或 `LumenRAW-2.3.0-Windows.zip`（便携版，673 MB）](https://github.com/hety0211/lumen-raw/releases/tag/v2.3.0) | Windows 10 22H2 / Windows 11，x64 |
-| macOS | [`LumenRAW-2.3.0-macOS-arm64.dmg`（663 MB）](https://github.com/hety0211/lumen-raw/releases/tag/v2.3.0-macos) | Apple 芯片（M1 及更新），macOS 15 Sequoia 或更新 |
-| Linux | 没有预编译下载：从源码运行（见[下方](#从源码运行)）；`tools/build_linux.sh --sample 照片.DNG` 可生成便携的 `LumenRAW-<版本>-Linux-x86_64.tar.gz` | x86_64、Python 3.12；可选 NVIDIA 显卡（CUDA 13 驱动） |
+| Windows | [`SadShaLumen-2.3.0-Setup.exe`（完整安装包，606 MB）、`SadShaLumen-2.3.0-Update.exe`（升级包，143 MB）或 `SadShaLumen-2.3.0-Windows.zip`（便携版，673 MB）](https://github.com/hety0211/lumen-raw/releases/tag/v2.3.0) | Windows 10 22H2 / Windows 11，x64 |
+| macOS | [`SadShaLumen-2.3.0-macOS-arm64.dmg`（663 MB）](https://github.com/hety0211/lumen-raw/releases/tag/v2.3.0-macos) | Apple 芯片（M1 及更新），macOS 15 Sequoia 或更新 |
+| Linux | 没有预编译下载：从源码运行（见[下方](#从源码运行)）；`tools/build_linux.sh --sample 照片.DNG` 可生成便携的 `SadShaLumen-<版本>-Linux-x86_64.tar.gz` | x86_64、Python 3.12；可选 NVIDIA 显卡（CUDA 13 驱动） |
 
 Windows 与 Mac 版为 2.3.0：新增「人像」面板，裁切改为照片上的工具并加入自动水平，每一步编辑都有名称的历史列表，新的「自动」，导出时内存用量约减半；Mac 版修复了菜单栏和 ⌘ 快捷键（[issue #11](https://github.com/hety0211/lumen-raw/issues/11)）。2.1.2 在水印面板加入拍摄位置（离线地图选点、写入 XMP、边框图钉），检查更新在 GitHub 连不上时改用镜像，查明并修复图库数据库损坏的根本原因，尼康“高效率”NEF 与内嵌 ICC 配置文件的照片按原色彩空间读入。2.1.1 带来了软件内更新、AI 模型与程序分开存放、清晰度与闭眼分开分析、DeepSeek Harness 接入和小米 MiMo。Mac 版发现新版本时打开下载页面。2.1.1 起可在 x86_64 Linux 上从源码运行，NVIDIA 显卡使用原生 CUDA 内核（社区贡献，见下方 Linux 说明）。2.3.0 的工程升为格式 9（裁切翻转、人脸）：2.3.0 能打开所有旧工程，2.1.2 及更早版本打不开 2.3.0 保存的工程。2.1.1 和 2.1.2 的工程格式不变（仍为 8），与 2.1.0 互相打开。2.1.0 的工程（`.lumen`）和选片集（`.lumenalbum`）升为格式 8（用于保存 AI 移除与新蒙版）：2.1.0 能打开所有旧工程，2.0.1 及更早版本打不开 2.1.0 保存的工程。下载页附有 SHA-256 校验值。安装包都没有商业代码签名。
 
@@ -29,15 +29,15 @@ GitHub 打不开或下载很慢时，可以从镜像站下载：文件每小时�
 **Windows**
 
 - **安装版：** 安装到当前用户目录，不需要管理员权限，可直接覆盖安装 1.2.x – 2.1.1。从 2.1.0 升级也可以只下载升级包（135 MB）：它不含 AI 模型，会留用 2.1.0 已有的模型。升级前先保存选片集并关闭旧版。安装开始时选择的语言就是软件的界面语言，之后可在「语言 / Language」菜单中更改。
-- **便携版：** 解压后运行 `LumenRAW-Windows\LumenRAW.exe`。`_internal` 和 `models` 文件夹必须留在 exe 旁边。便携版的界面语言默认跟随系统。
+- **便携版：** 解压后运行 `SadShaLumen-Windows\SadShaLumen.exe`。`_internal` 和 `models` 文件夹必须留在 exe 旁边。便携版的界面语言默认跟随系统。
 - 两种包都自带 Python 运行环境、ExifTool、字体、15 个 AI 模型、视频编码器和 lensfun 镜头数据库，可完全离线使用。语音指令用的识别模型（约 240 MB）在第一次点「语音」时下载；从 1.5 – 1.7 升级安装时，安装程序会保留旧版自带的模型，不必重新下载。
 - 2.1.1 起 AI 模型（约 522 MB）放在程序旁的 `models` 文件夹，与程序分开：软件内更新只下载程序（约 135 MB）和有变化的模型，见下方[软件更新与 AI 模型](#软件更新与-ai-模型)。AI 模型以半精度存放（结果相差约十万分之一，速度不变），语音模型不随包。
 
 **macOS**
 
-- 双击 DMG，把 **LUMEN RAW** 拖到「应用程序」文件夹（覆盖旧版即可）。
-- 界面语言默认使用「系统设置 → 通用 → 语言与地区」中第一个受支持的首选语言（也可在该页的「应用程序」中单独给 LUMEN RAW 指定），之后可在「语言 / Language」菜单中更改。1.5.0 Mac 版只有中文界面；如果 Mac 的首选语言是英文，现在首次打开为英文，在「Language」菜单中选「简体中文」即可。
-- 安装包是临时签名，没有经过 Apple 公证，第一次打开会被拦截：点「完成」，打开「系统设置 → 隐私与安全性」，在页面下方点「仍要打开」。也可以在终端执行 `xattr -dr com.apple.quarantine "/Applications/LUMEN RAW.app"`。
+- 双击 DMG，把 **SadSha Lumen** 拖到「应用程序」文件夹（覆盖旧版即可）。
+- 界面语言默认使用「系统设置 → 通用 → 语言与地区」中第一个受支持的首选语言（也可在该页的「应用程序」中单独给 SadSha Lumen 指定），之后可在「语言 / Language」菜单中更改。1.5.0 Mac 版只有中文界面；如果 Mac 的首选语言是英文，现在首次打开为英文，在「Language」菜单中选「简体中文」即可。
+- 安装包是临时签名，没有经过 Apple 公证，第一次打开会被拦截：点「完成」，打开「系统设置 → 隐私与安全性」，在页面下方点「仍要打开」。也可以在终端执行 `xattr -dr com.apple.quarantine "/Applications/SadSha Lumen.app"`。
 - 第一次点“语音”时系统会询问麦克风权限，点「允许」；和 Windows 版一样，同意后下载一次语音识别模型（约 240 MB）。语音只在本机识别，不会上传。
 - 云端 API Key 存放在登录钥匙串中。每次更新 App 后第一次使用时，macOS 会询问是否允许读取，输入开机密码并选「始终允许」即可。
 
@@ -50,12 +50,12 @@ GitHub 打不开或下载很慢时，可以从镜像站下载：文件每小时�
 
 ## 软件更新与 AI 模型
 
-2.1.1 起，LUMEN RAW 启动后会在后台检查有没有新版本（读取 GitHub 最新发布中的 `lumen-update.json`，只带程序版本号）。有新版本时弹出「LUMEN RAW — 软件更新」窗口，显示当前版本 → 最新版本、下载大小和更新内容：
+2.1.1 起，SadSha Lumen 启动后会在后台检查有没有新版本（读取 GitHub 最新发布中的 `lumen-update.json`，只带程序版本号）。有新版本时弹出「SadSha Lumen — 软件更新」窗口，显示当前版本 → 最新版本、下载大小和更新内容：
 
-- **立即更新：** 下载升级包和新版本中本机没有的 AI 模型（可取消，下次从中断处继续），每个文件核对大小与 SHA-256，只接受本项目 GitHub 发布中的文件。完成后点「重启并更新」：LUMEN RAW 先关闭（未保存的修改照常询问），升级包等程序完全退出后静默安装，装完自动重新打开。
+- **立即更新：** 下载升级包和新版本中本机没有的 AI 模型（可取消，下次从中断处继续），每个文件核对大小与 SHA-256，只接受本项目 GitHub 发布中的文件。完成后点「重启并更新」：SadSha Lumen 先关闭（未保存的修改照常询问），升级包等程序完全退出后静默安装，装完自动重新打开。
 - **下次提醒：** 关闭窗口，下次启动时再提醒。也可以在「帮助 → 检查更新…」手动检查，在「帮助 → 启动时检查更新」关闭自动检查。
-- **只下载变化的部分：** 15 个 AI 模型（约 522 MB）放在 `LumenRAW.exe` 旁的 `models` 文件夹，文件名带内容的 SHA-256（例如 `skyseg.b57ea5204f87.onnx`）。升级包只有程序（约 135 MB），不改动 `models`；新版本换了模型时只下载换掉的那几个。完整安装包与便携包仍带全部模型，可离线安装。
-- **缺少模型时：** 启动时提示下载，「帮助 → AI 模型…」可随时查看与下载（命令行：`lumen-cli models --download`）；缺少模型的功能会说明需要下载什么，其他功能照常使用。
+- **只下载变化的部分：** 15 个 AI 模型（约 522 MB）放在 `SadShaLumen.exe` 旁的 `models` 文件夹，文件名带内容的 SHA-256（例如 `skyseg.b57ea5204f87.onnx`）。升级包只有程序（约 135 MB），不改动 `models`；新版本换了模型时只下载换掉的那几个。完整安装包与便携包仍带全部模型，可离线安装。
+- **缺少模型时：** 启动时提示下载，「帮助 → AI 模型…」可随时查看与下载（命令行：`sadsha-lumen models --download`）；缺少模型的功能会说明需要下载什么，其他功能照常使用。
 - 便携版、源码运行（包括 Linux）和 macOS 版会打开下载页面，由你自己下载新版本。
 - **网络不好时：** 下载在断线或 30 秒收不到数据时自动从中断处续传。仍然失败时，窗口会写明原因（例如 `github.com: 连接超时`），并给出手动下载的链接：检查更新失败时是[最新版本的发布页面](https://github.com/hety0211/lumen-raw/releases/latest)，下载其中的完整安装包（含全部 AI 模型）覆盖安装即可；AI 模型下载失败时还可以在 [`ai-models` 页面](https://github.com/hety0211/lumen-raw/releases/tag/ai-models)单独下载缺少的模型文件（不要改文件名），用窗口里的「打开模型文件夹」放进去后点「重试」；语音识别模型在 [`speech-model-1` 页面](https://github.com/hety0211/lumen-raw/releases/tag/speech-model-1)，放进「打开语音模型文件夹」打开的文件夹即可。（2026-10-26 发布当天的修复：最初上传的 2.1.1 一次断线就失败；已安装它的用户不会收到提示，用新的完整安装包覆盖安装即可。）
 - **镜像（2.1.2）：** 连不上 GitHub 时，检查更新和下载依次改用作者的新加坡镜像和香港镜像（[lumenraw.com](https://lumenraw.com/download/)）。镜像上的更新清单必须带发布密钥的签名，文件按清单中的 SHA-256 校验，镜像无法改动任何文件。
@@ -68,7 +68,7 @@ GitHub 打不开或下载很慢时，可以从镜像站下载：文件每小时�
 - **编辑历史与新的「自动」（2.3.0）：** 每一步编辑都有名称，点击即可回到那一步；「自动」改为测量照片后设置白平衡、曝光、影调与自然饱和度，结果都是可以继续调的滑块。右侧面板合并为一行 8 个（色彩分级并入「色彩」，镜头校正折叠在「细节」底部）。
 - **软件内更新（2.1.1）：** 启动时发现新版本，一键下载、关闭后静默安装并自动重开；AI 模型与程序分开存放，以后的更新只下载程序（约 135 MB）和有变化的模型。断线时自动续传，失败时给出手动下载的链接。
 - **清晰度与闭眼分开分析（2.1.1）：** 「图库」菜单中两个独立开关；风光照片可以不找人脸，之后再打开另一项时只补算那一项。
-- **DeepSeek Harness 与小米 MiMo（2.1.1）：** 「AI 助手接入（MCP）」一键把 LUMEN RAW 写进 DSH 的配置；自然语言修图新增小米 MiMo，去掉通义千问（百炼）、豆包（方舟）和硅基流动。
+- **DeepSeek Harness 与小米 MiMo（2.1.1）：** 「AI 助手接入（MCP）」一键把 SadSha Lumen 写进 DSH 的配置；自然语言修图新增小米 MiMo，去掉通义千问（百炼）、豆包（方舟）和硅基流动。
 - **Linux（2.1.1，社区贡献）：** x86_64 Linux 可从源码运行，NVIDIA 显卡上用原生 CUDA 内核显影、用 CUDA 运行 AI 模型。见上方[下载与安装](#下载与安装)。
 - **AI 移除（2.1.0）：** 涂抹或单击要去掉的东西，本地 LaMa 模型按周围画面补全：码头上的游客、路牌，甚至整座灯塔。补全在原图上计算一次并随工程保存，预览、放大与导出完全一致。见下方[AI 移除](#ai-移除)。
 - **风光蒙版与点选物体（2.1.0）：** 点一下就选出水面、植被、山体、建筑或地面；「点选物体」单击任意东西生成蒙版，Shift + 单击加选，Alt + 单击减选。见下方[风光蒙版与点选物体](#风光蒙版与点选物体)。
@@ -83,11 +83,11 @@ GitHub 打不开或下载很慢时，可以从镜像站下载：文件每小时�
 - **拖动直方图与调色吸管（1.7.0）：** 像 Lightroom 一样在直方图上左右拖动调整黑色、暗部、曝光、亮部与白色；「调色」面板可用吸管从画面取色作为色彩分级的色相。见下方[直方图与调色吸管](#直方图与调色吸管)。
 - **场景参考色彩（1.6.0）：** 新的处理版本 2：RAW 解码不再截断色域，曝光、白平衡与亮部／暗部在线性光下计算（亮部／暗部为不产生光晕的局部色调映射），饱和度、八色混合器与色彩分级在 OkLCh 中计算，超出 sRGB 的颜色保持色相与明度压缩。旧工程画面不变。见下方[色彩与处理版本](#色彩与处理版本)。
 - **评级（1.6.0）：** 星级、留用／排除旗标、色标，按 Lightroom 的快捷键操作，带字段筛选；自动保存，可与 XMP 互通，可导入 Lightroom 目录中的评级。见下方[评级与筛选](#评级与筛选)。
-- **AI 助手与命令行（1.6.0）：** Claude Code、Codex、WorkBuddy 等本地 AI 助手通过 MCP 直接操作 LUMEN RAW（窗口中可见、可撤销）；`lumen-cli` 命令行可批量出图。见下方[AI 助手（MCP）与命令行](#ai-助手mcp与命令行)。
+- **AI 助手与命令行（1.6.0）：** Claude Code、Codex、WorkBuddy 等本地 AI 助手通过 MCP 直接操作 SadSha Lumen（窗口中可见、可撤销）；`sadsha-lumen` 命令行可批量出图。见下方[AI 助手（MCP）与命令行](#ai-助手mcp与命令行)。
 - **镜头校正（1.5.1）：** 按 EXIF 自动识别镜头，用开源 lensfun 数据库校正畸变、暗角和横向色差（边缘紫边／绿边）。见下方[镜头校正](#镜头校正)。
 - **九种界面语言（1.5.1）：** 顶部菜单「语言 / Language」随时切换，安装程序也提供同样的九种语言。
-- **一句话修图（1.5）：** 输入或说出想要的效果，你选择的本地或云端大模型返回参数，LUMEN RAW 直接应用，一步即可撤销。见下方[自然语言修图](#自然语言修图)。
-- **多品牌 RAW：** Sony ARW / SR2 / SRF，Canon CRW / CR2 / CR3，Nikon NEF / NRW，Fujifilm RAF（含 X-Trans），Panasonic RW2，DNG，以及内置 LibRaw 支持的其他格式；也能打开 JPEG / PNG / TIFF。LibRaw 无法解码的尼康“高效率” NEF 改用文件内嵌的全尺寸 JPEG 打开（2.1.2 起按相机设置的 sRGB / Adobe RGB 解码）；照片内嵌的 ICC 配置文件（Display P3、Adobe RGB 等）和相机 EXIF 标明的 Adobe RGB 都按原色彩空间读入，不裁切广色域；内置 LibRaw 尚未收录的尼康 Z50 II、Z5 II，无损 NEF 的色彩矩阵由 LUMEN RAW 补上。
+- **一句话修图（1.5）：** 输入或说出想要的效果，你选择的本地或云端大模型返回参数，SadSha Lumen 直接应用，一步即可撤销。见下方[自然语言修图](#自然语言修图)。
+- **多品牌 RAW：** Sony ARW / SR2 / SRF，Canon CRW / CR2 / CR3，Nikon NEF / NRW，Fujifilm RAF（含 X-Trans），Panasonic RW2，DNG，以及内置 LibRaw 支持的其他格式；也能打开 JPEG / PNG / TIFF。LibRaw 无法解码的尼康“高效率” NEF 改用文件内嵌的全尺寸 JPEG 打开（2.1.2 起按相机设置的 sRGB / Adobe RGB 解码）；照片内嵌的 ICC 配置文件（Display P3、Adobe RGB 等）和相机 EXIF 标明的 Adobe RGB 都按原色彩空间读入，不裁切广色域；内置 LibRaw 尚未收录的尼康 Z50 II、Z5 II，无损 NEF 的色彩矩阵由 SadSha Lumen 补上。
 - **非破坏性显影：** 曝光、对比度、亮部 / 暗部 / 白色 / 黑色，可在任意位置拖动的曝光曲线，白平衡（读取相机记录色温，带吸管），八色 HSL，RGB 与单通道曲线，三段色彩分级，黑白，暗角与颗粒。另有 12 个内置风格预设（可调强度、可导入导出），可导入 Lightroom 预设和 LUT，以及自动调整、快照和撤销 / 重做。
 - **细节与修复：** 去薄雾、清晰度、纹理、锐化、明度 / 彩色降噪；污点修复、仿制图章和 AI 移除。
 - **蒙版：** 画笔、线性渐变、径向、亮度范围、相似颜色点选，本地 AI 识别的天空、人物、主体、背景、近景、水面、植被、山体、建筑、地面，以及单击点选的物体。可反选、羽化、调不透明度、用画笔补画或擦除，每张照片最多 32 个。
@@ -99,7 +99,7 @@ GitHub 打不开或下载很慢时，可以从镜像站下载：文件每小时�
 
 ## AI 移除
 
-![LUMEN RAW 2.1.0：「修复」面板中选了「AI 移除 · 点选物体」，在 Skagen 灯塔上单击一次后，整座灯塔被识别并以紫色标出，状态栏显示“正在读取原图并 AI 移除…”](docs/screenshots/removal.png)
+![SadSha Lumen 2.1.0：「修复」面板中选了「AI 移除 · 点选物体」，在 Skagen 灯塔上单击一次后，整座灯塔被识别并以紫色标出，状态栏显示“正在读取原图并 AI 移除…”](docs/screenshots/removal.png)
 
 ![同一张照片单击前（左）与单击后（右）：灯塔消失，房子、旗子和云层被接续上](docs/screenshots/removal-before-after.jpg)
 
@@ -115,7 +115,7 @@ GitHub 打不开或下载很慢时，可以从镜像站下载：文件每小时�
 
 ## 风光蒙版与点选物体
 
-![LUMEN RAW 2.1.0：「蒙版」面板新增水面、植被、山体、建筑、地面按钮，「点选物体」处于开启状态；在小猫上单击一次就选中了它（紫色覆盖），包括抬起的爪子](docs/screenshots/object-masks.png)
+![SadSha Lumen 2.1.0：「蒙版」面板新增水面、植被、山体、建筑、地面按钮，「点选物体」处于开启状态；在小猫上单击一次就选中了它（紫色覆盖），包括抬起的爪子](docs/screenshots/object-masks.png)
 
 - **水面、植被、山体、建筑、地面：** 一个网络（EfficientViT-Seg B2，在 ADE20K 的 150 类上训练）一次同时得到五组，CPU 约 0.25 秒。水面包括水、海、河、湖、泳池和瀑布；植被包括树、草、植物、田野、花和棕榈；山体包括山、丘陵和岩石；建筑包括建筑、房屋、高楼、塔、桥、墙、柱、小屋和码头；地面包括地面、道路、人行道、泥土、沙、小路、跑道和土路。和天空、人物等蒙版一样，先在预览上快速生成，再在原图上细化边缘。
 - **点选物体：** 打开后单击画面中的任意东西，由 EfficientViT-SAM L0（Segment Anything 的高效版）识别轮廓。第一次单击要编码整幅画面（约 0.5–1 秒），之后每次单击约 15 毫秒，再用约 0.3 秒按照片边缘对齐。Shift + 单击加选（被遮住的另一部分，或多个物体中的下一个），Alt + 单击（Mac 为 `Option`）减选：去掉点下的整个物体；如果它包含加选点，则只去掉所点的那一部分。点击位置随工程保存。
@@ -123,7 +123,7 @@ GitHub 打不开或下载很慢时，可以从镜像站下载：文件每小时�
 
 ## 曝光曲线的黑点与白点
 
-![LUMEN RAW 2.1.0：「光影」面板的曝光曲线，黑点已移到直方图开始处，白点正被拖到直方图结束处，曲线左上角显示“白点 182 → 255”，大峡谷照片的反差随之拉开](docs/screenshots/curve-ends.png)
+![SadSha Lumen 2.1.0：「光影」面板的曝光曲线，黑点已移到直方图开始处，白点正被拖到直方图结束处，曲线左上角显示“白点 182 → 255”，大峡谷照片的反差随之拉开](docs/screenshots/curve-ends.png)
 
 - 曝光曲线两端的方形手柄可以自由拖动，就像在达芬奇里用曲线拉灰片：黑点向右切掉最暗的部分、向上提亮黑位（褪色效果）；白点向左把较暗的高光拉到纯白、向下压低白位。两点之间的整根曲线（包括已拖出的弯曲）保持形状、随之伸缩，两点之外保持平直。
 - 曲线背后是未调整照片的亮度直方图，灰片的影调从哪里开始、到哪里结束一目了然，把两点拖到那里即可。拖动时曲线左上角显示该点的输入 → 输出（0–255）。
@@ -131,7 +131,7 @@ GitHub 打不开或下载很慢时，可以从镜像站下载：文件每小时�
 
 ## 图库
 
-顶部的 **图库**（`G`，`D` 回到「显影」）是 LUMEN RAW 自己的照片目录。
+顶部的 **图库**（`G`，`D` 回到「显影」）是 SadSha Lumen 自己的照片目录。
 
 1. **导入：** 「导入文件夹…」（`Ctrl+Shift+I`，也可以把文件夹拖进网格）在后台导入文件夹及其子文件夹，跳过回收站、系统和隐藏文件夹。照片留在原处，图库只记录它们（数据目录中的 `library.db`）。在显影中打开的照片也会加入图库。
 2. **浏览：** 左侧是目录（全部照片、最近导入、当前选片集）、智能相册、带照片数的文件夹树和关键词。网格可按拍摄时间、文件名、星级或导入时间排序，`Ctrl`+滚轮或滑块把缩略图调到 96–320 像素。缩略图上显示星级、旗标、色标、连拍序号和提示标记。
@@ -146,7 +146,7 @@ GitHub 打不开或下载很慢时，可以从镜像站下载：文件每小时�
 
 ## 选片
 
-![LUMEN RAW 2.0.0 选片的对比模式：左边是选定的希腊灯塔，右边琥珀色框中是候选的斯卡恩灯塔；顶部显示它的拍摄信息、四星、留用旗标和清晰度 98，下方胶片条显示整组照片的评级](docs/screenshots/culling.png)
+![SadSha Lumen 2.0.0 选片的对比模式：左边是选定的希腊灯塔，右边琥珀色框中是候选的斯卡恩灯塔；顶部显示它的拍摄信息、四星、留用旗标和清晰度 98，下方胶片条显示整组照片的评级](docs/screenshots/culling.png)
 
 **选片**（`C`，或在网格中按空格）全屏查看网格中的照片（多选时只看所选），也可以从底部选片集开始。
 
@@ -180,7 +180,7 @@ GitHub 打不开或下载很慢时，可以从镜像站下载：文件每小时�
 
 ## 预设、Lightroom 预设与 LUT
 
-![LUMEN RAW 1.7.0：左侧「预设」面板按分组列出导入的 Lightroom 预设（“胶片质感”），已套用“暖调胶片 01”，下方是 LUT「Teal Orange Film」的强度滑块](docs/screenshots/presets.png)
+![SadSha Lumen 1.7.0：左侧「预设」面板按分组列出导入的 Lightroom 预设（“胶片质感”），已套用“暖调胶片 01”，下方是 LUT「Teal Orange Film」的强度滑块](docs/screenshots/presets.png)
 
 左侧 **预设** 面板：
 
@@ -205,14 +205,14 @@ GitHub 打不开或下载很慢时，可以从镜像站下载：文件每小时�
 
 ## 直方图与调色吸管
 
-![LUMEN RAW 1.7.0：直方图的“暗部”区域加亮并显示 +38；「调色」面板高光区域旁是「吸管取色」按钮，色相 41 由吸管从画面中取得](docs/screenshots/tools.png)
+![SadSha Lumen 1.7.0：直方图的“暗部”区域加亮并显示 +38；「调色」面板高光区域旁是「吸管取色」按钮，色相 41 由吸管从画面中取得](docs/screenshots/tools.png)
 
 - **拖动直方图：** 与 Lightroom 一样，直方图按色调分成黑色、暗部、曝光、亮部、白色五个区域；指针所在的区域加亮并显示名称与数值，左右拖动即调整对应滑块（拖过整个宽度为 200 点，曝光为 4 EV），每次一步可撤销，双击归零。
 - **调色吸管：** 「调色」面板选好暗部、中间调或高光后点「吸管取色」，再点画面中的颜色，就把它作为该区域的色相；该区域尚未着色时同时按颜色的浓淡设置强度。点到接近灰色的地方不会改动。
 
 ## 镜头校正
 
-![LUMEN RAW 1.5.1 界面：右侧「裁切·镜头」面板按 EXIF 识别出尼康 Z 14-24mm f/2.8 S，并校正了畸变、暗角和横向色差](docs/screenshots/lens.png)
+![SadSha Lumen 1.5.1 界面：右侧「裁切·镜头」面板按 EXIF 识别出尼康 Z 14-24mm f/2.8 S，并校正了畸变、暗角和横向色差](docs/screenshots/lens.png)
 
 右侧「裁切·镜头」面板，裁切工具下方的 **镜头校正**：
 
@@ -227,7 +227,7 @@ GitHub 打不开或下载很慢时，可以从镜像站下载：文件每小时�
 
 ## 自然语言修图
 
-![LUMEN RAW 1.5.0 界面：左侧“自然语言输入”中，本机 qwen3-14b 按“暖一点，暗部提亮，颜色更鲜艳一些”完成修图](docs/screenshots/workspace.png)
+![SadSha Lumen 1.5.0 界面：左侧“自然语言输入”中，本机 qwen3-14b 按“暖一点，暗部提亮，颜色更鲜艳一些”完成修图](docs/screenshots/workspace.png)
 
 左侧面板“预设”和“快照”之间的 **自然语言输入**：
 
@@ -265,7 +265,7 @@ GitHub 打不开或下载很慢时，可以从镜像站下载：文件每小时�
 
 ## 评级与筛选
 
-![LUMEN RAW 1.6.0：底部选片集的缩略图上显示星级、留用旗标、排除标记与色标，工具栏有星级、旗标、色标与筛选；状态栏为 AI 助手刚完成的一步调整](docs/screenshots/library.png)
+![SadSha Lumen 1.6.0：底部选片集的缩略图上显示星级、留用旗标、排除标记与色标，工具栏有星级、旗标、色标与筛选；状态栏为 AI 助手刚完成的一步调整](docs/screenshots/library.png)
 
 图库网格、选片窗口，以及底部选片集的工具栏和缩略图：
 
@@ -283,60 +283,60 @@ GitHub 打不开或下载很慢时，可以从镜像站下载：文件每小时�
 
 ## AI 助手（MCP）与命令行
 
-LUMEN RAW 的所有操作都是带稳定 id 和 JSON 参数的“命令”（`edit.apply`、`library.rate`、`photo.export`……）。界面的评级、命令面板（`Ctrl+K`）、命令行和 MCP 服务走同一个入口。
+SadSha Lumen 的所有操作都是带稳定 id 和 JSON 参数的“命令”（`edit.apply`、`library.rate`、`photo.export`……）。界面的评级、命令面板（`Ctrl+K`）、命令行和 MCP 服务走同一个入口。
 
-**让 AI 助手操作 LUMEN RAW：** 「帮助 → AI 助手接入（MCP）」中有现成的配置，可直接复制：
-
-```
-claude mcp add lumen-raw -- "%LOCALAPPDATA%\Programs\LUMEN RAW\lumen-cli.exe" mcp
-codex mcp add lumen-raw -- "%LOCALAPPDATA%\Programs\LUMEN RAW\lumen-cli.exe" mcp
-```
-
-Mac 上 `lumen-cli` 在 App 内部：
+**让 AI 助手操作 SadSha Lumen：** 「帮助 → AI 助手接入（MCP）」中有现成的配置，可直接复制：
 
 ```
-claude mcp add lumen-raw -- "/Applications/LUMEN RAW.app/Contents/MacOS/lumen-cli" mcp
+claude mcp add sadsha-lumen -- "%LOCALAPPDATA%\Programs\SadSha Lumen\sadsha-lumen.exe" mcp
+codex mcp add sadsha-lumen -- "%LOCALAPPDATA%\Programs\SadSha Lumen\sadsha-lumen.exe" mcp
 ```
 
-**DeepSeek Harness（DSH，2.1.1）：** 在该窗口的「DeepSeek Harness」页点「写入 DSH 配置」，会把条目合并进 `~/.dsh/cordis.patch.yml`（DSH 所有配置都读取的用户级补丁文件，命令行和桌面版都适用；原有条目保留，写入前先备份），也可以运行 `lumen-cli mcp-config dsh --install`。重启 DSH 后，工具名为 `mcp__lumen-raw__<工具>`。条目是一行 `@deepseek-ai/dsh-mcp-client` 插件：
+Mac 上 `sadsha-lumen` 在 App 内部：
+
+```
+claude mcp add sadsha-lumen -- "/Applications/SadSha Lumen.app/Contents/MacOS/sadsha-lumen" mcp
+```
+
+**DeepSeek Harness（DSH，2.1.1）：** 在该窗口的「DeepSeek Harness」页点「写入 DSH 配置」，会把条目合并进 `~/.dsh/cordis.patch.yml`（DSH 所有配置都读取的用户级补丁文件，命令行和桌面版都适用；原有条目保留，写入前先备份），也可以运行 `sadsha-lumen mcp-config dsh --install`。重启 DSH 后，工具名为 `mcp__sadsha-lumen__<工具>`。条目是一行 `@deepseek-ai/dsh-mcp-client` 插件：
 
 ```yaml
 - insert:
-    - id: mcp-lumen-raw
+    - id: mcp-sadsha-lumen
       name: '@deepseek-ai/dsh-mcp-client'
       config:
-        serverName: lumen-raw
+        serverName: sadsha-lumen
         transport: stdio
-        command: 'C:\Users\<你>\AppData\Local\Programs\LUMEN RAW\lumen-cli.exe'
+        command: 'C:\Users\<你>\AppData\Local\Programs\SadSha Lumen\sadsha-lumen.exe'
         args: ['mcp']
         env: {}
         toolCallTimeoutMs: 600000
 ```
 
-WorkBuddy、Claude Desktop 等其他客户端使用 JSON 配置（`"command"` 为 `lumen-cli.exe` 的完整路径，Mac 上为 `lumen-cli` 的完整路径，`"args": ["mcp"]`）。之后可以对助手说“把这个文件夹里三星以上的照片按金色时刻预设处理，天空压暗一点，导出到桌面”，或“导入 E:\DCIM，每组连拍只留最清晰、没闭眼的一张，加上关键词‘冰岛’”。
+WorkBuddy、Claude Desktop 等其他客户端使用 JSON 配置（`"command"` 为 `sadsha-lumen.exe` 的完整路径，Mac 上为 `sadsha-lumen` 的完整路径，`"args": ["mcp"]`）。之后可以对助手说“把这个文件夹里三星以上的照片按金色时刻预设处理，天空压暗一点，导出到桌面”，或“导入 E:\DCIM，每组连拍只留最清晰、没闭眼的一张，加上关键词‘冰岛’”。
 
-- **LUMEN RAW 打开时：** 助手通过本地控制通道（只有当前用户能连接的命名管道；Mac 上为 Unix 套接字）在窗口中操作，每一步都显示出来，`Ctrl+Z` 即可撤销；状态栏和「AI 助手接入」窗口列出最近的操作，可在该窗口关闭窗口控制。
-- **LUMEN RAW 未打开时：** 助手在后台独立打开、调整、渲染和导出照片，照片旁的同名 `.lumen` 工程会被沿用；保存工程或导出前不会写任何文件。
+- **SadSha Lumen 打开时：** 助手通过本地控制通道（只有当前用户能连接的命名管道；Mac 上为 Unix 套接字）在窗口中操作，每一步都显示出来，`Ctrl+Z` 即可撤销；状态栏和「AI 助手接入」窗口列出最近的操作，可在该窗口关闭窗口控制。
+- **SadSha Lumen 未打开时：** 助手在后台独立打开、调整、渲染和导出照片，照片旁的同名 `.lumen` 工程会被沿用；保存工程或导出前不会写任何文件。
 - **工具（32 个）：** 打开照片、读取／应用调整（与自然语言修图同一套参数，含天空、主体等 AI 区域蒙版）、撤销／重做、自动色调、预设、复制调色、星级／旗标／色标、渲染预览（把 JPEG 图像交给助手查看）、导出、批量导出、保存工程、导入 Lightroom 预设与 LUT、精细化 AI 蒙版边缘；2.0.0 新增：把文件夹导入图库、按关键词／相机／日期／清晰度／闭眼／连拍等查找图库中的照片、添加或移除关键词、分析清晰度与闭眼并选出每组连拍的最佳一张、制作延时视频。
 - **协议：** stdio，支持 MCP 2026-07-28（无握手）和 2024-11-05 至 2025-11-25（`initialize` 握手）。
 
 **命令行：**
 
 ```
-lumen-cli render DSC0001.ARW out.jpg --size 2560 --preset 金色时刻 --set exposure=0.3 --set hsl.blue.saturation=20
-lumen-cli render DSC0001.ARW out.jpg --preset "暖调胶片 01" --lut 胶片.cube --lut-amount 70
-lumen-cli import-presets 大神预设包.zip
-lumen-cli render 旅行.lumen out.tif
-lumen-cli rate *.ARW 4
-lumen-cli list "rating>=3 -flag:reject"
-lumen-cli run edit.apply "{\"changes\": {\"adjustments\": {\"highlights\": -40}}}"
-lumen-cli run catalog.import "{\"paths\": [\"E:/DCIM\"]}"
-lumen-cli run catalog.search "{\"query\": \"burst:best -eyes:closed keyword:冰岛\"}"
-lumen-cli run video.timelapse "{\"query\": \"folder:延时\", \"output\": \"夜景.mp4\", \"deflicker\": \"medium\"}"
-lumen-cli commands
+sadsha-lumen render DSC0001.ARW out.jpg --size 2560 --preset 金色时刻 --set exposure=0.3 --set hsl.blue.saturation=20
+sadsha-lumen render DSC0001.ARW out.jpg --preset "暖调胶片 01" --lut 胶片.cube --lut-amount 70
+sadsha-lumen import-presets 大神预设包.zip
+sadsha-lumen render 旅行.lumen out.tif
+sadsha-lumen rate *.ARW 4
+sadsha-lumen list "rating>=3 -flag:reject"
+sadsha-lumen run edit.apply "{\"changes\": {\"adjustments\": {\"highlights\": -40}}}"
+sadsha-lumen run catalog.import "{\"paths\": [\"E:/DCIM\"]}"
+sadsha-lumen run catalog.search "{\"query\": \"burst:best -eyes:closed keyword:冰岛\"}"
+sadsha-lumen run video.timelapse "{\"query\": \"folder:延时\", \"output\": \"夜景.mp4\", \"deflicker\": \"medium\"}"
+sadsha-lumen commands
 ```
 
-`run` 在 LUMEN RAW 打开时在窗口中执行（加 `--headless` 则始终在后台）。结果为 JSON；从源码运行时用 `python main.py --cli …`。
+`run` 在 SadSha Lumen 打开时在窗口中执行（加 `--headless` 则始终在后台）。结果为 JSON；从源码运行时用 `python main.py --cli …`。
 
 ## 界面语言与外观
 
@@ -392,18 +392,18 @@ lumen-cli commands
 
 | 内容 | Windows | macOS |
 |---|---|---|
-| 日志 | `%LOCALAPPDATA%\LUMEN RAW\logs` | `~/Library/Logs/LUMEN RAW` |
-| 界面语言、镜头校正默认值（`settings.ini`），自然语言设置，GPU 兼容记录 | `%LOCALAPPDATA%\LUMEN RAW` | `~/Library/Application Support/LUMEN RAW` |
-| API Key | 设置文件中，DPAPI 加密 | 登录钥匙串（“LUMEN RAW”） |
-| 评级目录（`catalog.jsonl`），命令行日志 | `%LOCALAPPDATA%\LUMEN RAW` | `~/Library/Application Support/LUMEN RAW` |
-| 导入和保存的预设（`.lumenpreset`） | `%LOCALAPPDATA%\LUMEN RAW\presets` | `~/Library/Application Support/LUMEN RAW/presets` |
-| 图库（`library.db`：文件夹、拍摄信息、关键词、智能相册、选片提示） | `%LOCALAPPDATA%\LUMEN RAW` | — |
-| 预览缓存（默认上限 4 GB，卸载时删除） | `%LOCALAPPDATA%\LUMEN RAW\cache\previews` | — |
-| 语音识别模型（首次使用时下载） | `%LOCALAPPDATA%\LUMEN RAW\models\sensevoice` | 随 App 自带 |
-| AI 模型（2.1.1） | `LumenRAW.exe` 旁的 `models`（该文件夹不可写时为 `%LOCALAPPDATA%\LUMEN RAW\models`）；卸载时删除 | 随 App 自带 |
-| 下载的升级包（2.1.1） | `%LOCALAPPDATA%\LUMEN RAW\updates`，新版本运行后删除 | — |
+| 日志 | `%LOCALAPPDATA%\SadSha Lumen\logs` | `~/Library/Logs/SadSha Lumen` |
+| 界面语言、镜头校正默认值（`settings.ini`），自然语言设置，GPU 兼容记录 | `%LOCALAPPDATA%\SadSha Lumen` | `~/Library/Application Support/SadSha Lumen` |
+| API Key | 设置文件中，DPAPI 加密 | 登录钥匙串（“SadSha Lumen”） |
+| 评级目录（`catalog.jsonl`），命令行日志 | `%LOCALAPPDATA%\SadSha Lumen` | `~/Library/Application Support/SadSha Lumen` |
+| 导入和保存的预设（`.lumenpreset`） | `%LOCALAPPDATA%\SadSha Lumen\presets` | `~/Library/Application Support/SadSha Lumen/presets` |
+| 图库（`library.db`：文件夹、拍摄信息、关键词、智能相册、选片提示） | `%LOCALAPPDATA%\SadSha Lumen` | — |
+| 预览缓存（默认上限 4 GB，卸载时删除） | `%LOCALAPPDATA%\SadSha Lumen\cache\previews` | — |
+| 语音识别模型（首次使用时下载） | `%LOCALAPPDATA%\SadSha Lumen\models\sensevoice` | 随 App 自带 |
+| AI 模型（2.1.1） | `SadShaLumen.exe` 旁的 `models`（该文件夹不可写时为 `%LOCALAPPDATA%\SadSha Lumen\models`）；卸载时删除 | 随 App 自带 |
+| 下载的升级包（2.1.1） | `%LOCALAPPDATA%\SadSha Lumen\updates`，新版本运行后删除 | — |
 
-- Linux 上这些文件位于 `~/.local/state/LUMEN RAW`。API Key 保存在 `natural-language.json` 中、权限为 0600：Linux 上没有与 DPAPI 或系统钥匙串对应的保护，请保护好账户密码和备份。
+- Linux 上这些文件位于 `~/.local/state/SadSha Lumen`。API Key 保存在 `natural-language.json` 中、权限为 0600：Linux 上没有与 DPAPI 或系统钥匙串对应的保护，请保护好账户密码和备份。
 
 - 原片始终只读。编辑步骤保存在 `.lumen` / `.lumenalbum` 中；AI 和合成结果另存为新的 DNG 文件。从选片集或图库“移除”只是移除记录，不会删除磁盘上的文件。
 - 「图库 → 预览缓存」可把缓存上限改为 1–32 GB、关闭或清空，缓存会按需重建；照片在磁盘上被修改后会重新解码。卸载时保留图库与评级。
@@ -440,7 +440,7 @@ lumen-cli commands
 
 ```powershell
 git clone https://github.com/hety0211/lumen-raw.git
-cd lumen-raw
+cd sadsha-lumen
 py -3.12 -m venv .venv
 .\.venv\Scripts\python.exe -m pip install -r requirements.txt
 .\.venv\Scripts\python.exe tools/fetch_assets.py
@@ -460,7 +460,7 @@ py -3.12 -m venv .venv
 
 ```bash
 git clone https://github.com/hety0211/lumen-raw.git
-cd lumen-raw
+cd sadsha-lumen
 ./run-source.command
 ```
 
@@ -470,7 +470,7 @@ cd lumen-raw
 
 ```bash
 git clone https://github.com/hety0211/lumen-raw.git
-cd lumen-raw
+cd sadsha-lumen
 ./run-source.sh
 ```
 
@@ -487,7 +487,7 @@ cd lumen-raw
 - **界面翻译：** 代码中的界面文字为简体中文原文，经 `tr()` 查找 `lumen/locales/<语言>.json`；`python tools/i18n_catalog.py` 检查各语言的缺漏和占位符。新增界面文字后请同时补充各语言的译文。
 - **Windows 发布构建：** `build-release.cmd` 依次执行测试、DirectML 检查、便携版 ZIP 和 Inno Setup 安装包。
 - **macOS 发布构建：** `./build-macos.command` 依次执行测试、Metal / Core ML 自检、PyInstaller、临时签名、冒烟测试和 DMG，输出在 `.publish/v<版本>/macos/`。
-- **Linux 开发与发布构建：** 编辑器用 `./run-source.sh` 启动；安装测试与打包工具用 `.venv-linux/bin/python -m pip install -r requirements-linux-dev.txt`，再执行 `.venv-linux/bin/python -m pytest tests -q`。`tools/build_linux.sh --sample 照片.DNG` 依次执行测试、源码冒烟测试、PyInstaller 和冻结包冒烟测试，并把 `LumenRAW-<版本>-Linux-x86_64.tar.gz` 写到 `.publish/v<版本>/linux/`；AI 模型与 Windows 一样放在程序旁的 `models`。便携目录同时包含 `LumenRAW.desktop`、`lumen.png` 和 `install-desktop.sh`，可安装到当前用户的应用程序菜单。
+- **Linux 开发与发布构建：** 编辑器用 `./run-source.sh` 启动；安装测试与打包工具用 `.venv-linux/bin/python -m pip install -r requirements-linux-dev.txt`，再执行 `.venv-linux/bin/python -m pytest tests -q`。`tools/build_linux.sh --sample 照片.DNG` 依次执行测试、源码冒烟测试、PyInstaller 和冻结包冒烟测试，并把 `SadShaLumen-<版本>-Linux-x86_64.tar.gz` 写到 `.publish/v<版本>/linux/`；AI 模型与 Windows 一样放在程序旁的 `models`。便携目录同时包含 `SadShaLumen.desktop`、`lumen.png` 和 `install-desktop.sh`，可安装到当前用户的应用程序菜单。
 - **用真实照片自检：**
   - `python main.py --smoke-test 照片 输出目录`：界面、调色、蒙版、AI 预览、逐个加载全部 AI 模型、语音模型（已安装时）、一次自然语言修图、镜头校正、语言目录、图库与选片，以及视频编码。
   - `--workflow-test`：多品牌导入与 AI 副本。

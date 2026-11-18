@@ -206,7 +206,7 @@ def test_dng_names_the_current_version(tmp_path):
     from lumen import __version__
     engine.export_image(tmp_path / 'x.dng', np.full((8, 8, 3), .5, np.float32))
     with tifffile.TiffFile(tmp_path / 'x.dng') as f:
-        assert f.pages[0].tags[305].value == f'LUMEN RAW {__version__}'
+        assert f.pages[0].tags[305].value == f'SadSha Lumen {__version__}'
 
 
 def test_command_results_keep_the_metadata_error_field():
@@ -255,7 +255,7 @@ def _process_events():
 
 
 def test_cli_render_works_without_optional_options(tmp_path):
-    # lumen-cli passes unset options (--size, --max-kb) as None; 1.6.0 – 1.6.1 rejected them.
+    # sadsha-lumen passes unset options (--size, --max-kb) as None; 1.6.0 – 1.6.1 rejected them.
     from lumen import cli, commands
     source = tmp_path / 'photo.png'
     Image.new('RGB', (120, 80), (120, 140, 160)).save(source)

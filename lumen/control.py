@@ -1,9 +1,9 @@
 """Local control channel of the editor window (1.6.0).
 
-While LUMEN RAW runs it listens on a local socket that only the same user can open (a named pipe
+While SadSha Lumen runs it listens on a local socket that only the same user can open (a named pipe
 on Windows, a Unix socket elsewhere).  Requests are JSON lines ``{"id", "command", "args"}`` and
 each gets one reply line ``{"id", "ok", "result" | "error"}``; commands are those of
-``commands``.  ``lumen-cli`` and its MCP server use the channel when the editor is open, so an
+``commands``.  ``sadsha-lumen`` and its MCP server use the channel when the editor is open, so an
 agent's edits appear in the window and each is one step the user can undo.
 
 Commands run one at a time on a worker thread; whatever touches the window runs on the GUI
@@ -36,7 +36,7 @@ def channel_name():
     if override:
         return re.sub(r'[^A-Za-z0-9_.-]', '_', override)
     user = re.sub(r'[^A-Za-z0-9_.-]', '_', getpass.getuser() or 'user')
-    return f'lumen-raw-control-{user}'
+    return f'sadsha-lumen-control-{user}'
 
 
 def enabled():
@@ -74,11 +74,11 @@ class Client:
                     self._pipe = None
                 return
             except FileNotFoundError:
-                raise Unavailable('LUMEN RAW is not running')
+                raise Unavailable('SadSha Lumen is not running')
             except (ConnectionRefusedError, PermissionError, OSError) as exc:
                 # All pipe instances busy (Windows 231) or a stale socket file.
                 if time.monotonic() > deadline:
-                    raise Unavailable(f'LUMEN RAW is not reachable: {exc}')
+                    raise Unavailable(f'SadSha Lumen is not reachable: {exc}')
                 time.sleep(.05)
 
     def _send(self, data):
@@ -90,7 +90,7 @@ class Client:
     def _receive(self):
         chunk = self._pipe.read(65536) if self._pipe is not None else self._socket.recv(65536)
         if not chunk:
-            raise ConnectionError('LUMEN RAW closed the connection')
+            raise ConnectionError('SadSha Lumen closed the connection')
         return chunk
 
     def call(self, command, args=None):

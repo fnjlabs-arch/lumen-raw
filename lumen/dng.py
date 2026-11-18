@@ -82,5 +82,5 @@ def write(path, srgb, photo=None, provenance=None, space=None):
     from .photo_metadata import description
     tifffile.imwrite(str(path),large_image.encode_strips(srgb,linear=True,space=space),shape=srgb.shape,dtype=np.uint16,
                     rowsperstrip=large_image.STRIP_ROWS,photometric=34892,planarconfig='contig',
-                    metadata=None,software=f'LUMEN RAW {__version__}',extratags=tags,
+                    metadata=None,software=f'SadSha Lumen {__version__}',extratags=tags,
                     description=description(photo,provenance) if photo is not None else None)

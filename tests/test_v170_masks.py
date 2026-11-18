@@ -147,7 +147,7 @@ def test_projects_and_albums_store_each_mask_raster_once(tmp_path):
     old.pop('lut')
     old['masks'] = [dict(mask, raster=selection.encode(cv2.resize(truth, (800, 533))))]
     legacy = tmp_path / 'old.lumen'
-    legacy.write_text(json.dumps(dict(application='LUMEN RAW', source='a.png', edits=old)), encoding='utf-8')
+    legacy.write_text(json.dumps(dict(application='SadSha Lumen', source='a.png', edits=old)), encoding='utf-8')
     assert model.load_project(legacy)[1]['masks'][0]['raster'] == old['masks'][0]['raster']
 
 

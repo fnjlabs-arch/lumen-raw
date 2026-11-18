@@ -24,7 +24,7 @@ def digest(path):
 
 
 def main(extracted, update=False):
-    source, target = files(PROJECT / 'dist' / 'LumenRAW'), files(Path(extracted))
+    source, target = files(PROJECT / 'dist' / 'SadShaLumen'), files(Path(extracted))
     if update:
         source = {name: path for name, path in source.items() if not name.startswith('models/')}
     # Inno Setup adds nothing in portable mode; any difference is a packaging error.

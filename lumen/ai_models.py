@@ -2,14 +2,14 @@
 
 Up to 2.1.0 the models (about 520 MB of the 600 MB installer) were part of the program files, so
 every new version downloaded all of them again.  The packages now keep them in their own folder,
-``models`` next to LumenRAW.exe (the macOS app carries them inside its bundle), which an update
+``models`` next to SadShaLumen.exe (the macOS app carries them inside its bundle), which an update
 leaves alone: an update downloads the program (about 150 MB) and only the models that changed.
 
 Each model file is named after its content, ``<name>.<first 12 hex digits of its SHA-256>.onnx``.
 ``assets/ai-models.json`` (written by tools/bundle.py) lists the files this version needs; a file
 is only ever written under that name after its size and SHA-256 were checked, so a new version of
 a model never replaces a file a running program has open, and finding a model needs no hashing.
-Missing files are downloaded from LUMEN RAW's own GitHub release (``download``), into the models
+Missing files are downloaded from SadSha Lumen's own GitHub release (``download``), into the models
 folder when it is writable and into the per-user data folder otherwise.
 
 A source checkout has no manifest and uses the pinned float32 files of ``assets/models``.
@@ -229,7 +229,7 @@ def prepare(keep=()):
 
 
 def status():
-    """For ``lumen-cli models`` and the dialog: where the models are and what is missing."""
+    """For ``sadsha-lumen models`` and the dialog: where the models are and what is missing."""
     data = manifest()
     lacking = missing(data)
     return dict(packaged=data is not None, folders=[str(f) for f in folders()], download_folder=str(download_folder()),

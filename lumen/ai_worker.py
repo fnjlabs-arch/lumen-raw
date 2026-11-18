@@ -4,8 +4,8 @@ A GPU driver or execution-provider fault inside ONNX Runtime is a native crash
 that no Python code can catch.  AI super-resolution, denoising and automatic
 masks therefore run their ONNX sessions in one long-lived worker process.  When
 that process dies, the provider it was using is recorded for this GPU + driver
-(``%LOCALAPPDATA%\\LUMEN RAW\\gpu-compat.json``; macOS: ``~/Library/Application
-Support/LUMEN RAW``), the worker restarts, and the same tile is retried on the next
+(``%LOCALAPPDATA%\\SadSha Lumen\\gpu-compat.json``; macOS: ``~/Library/Application
+Support/SadSha Lumen``), the worker restarts, and the same tile is retried on the next
 provider (TensorRT for RTX -> DirectML -> CPU; macOS: Core ML -> CPU).
 The editor itself keeps running and later sessions skip the crashing provider.
 """

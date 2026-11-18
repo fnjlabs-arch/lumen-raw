@@ -184,7 +184,7 @@ class UpdateDialog(_Card):
     the 2.1.1 design asked for)."""
 
     def __init__(self, window, update):
-        super().__init__(window, tr('LUMEN RAW — 软件更新'), tr('发现新版本'), tr('软件更新'))
+        super().__init__(window, tr('SadSha Lumen — 软件更新'), tr('发现新版本'), tr('软件更新'))
         self.update_info = update
         self.cancel = None
         versions = QHBoxLayout()
@@ -262,7 +262,7 @@ class UpdateDialog(_Card):
             self.size_label.setText(text)
             self.rebind(self.primary, tr('立即更新'), self.start)
         else:
-            self.size_label.setText(tr('这份 LUMEN RAW 不是用安装程序安装的（便携版、源码或 macOS），请在发布页面下载新版本。'))
+            self.size_label.setText(tr('这份 SadSha Lumen 不是用安装程序安装的（便携版、源码或 macOS），请在发布页面下载新版本。'))
             self.rebind(self.primary, tr('打开下载页面'), self.open_page)
         self.rebind(self.secondary, tr('下次提醒'), self.reject)
 
@@ -316,7 +316,7 @@ class UpdateDialog(_Card):
             return
         self.installer = result
         self.progress.setValue(1000)
-        self.status.setText(tr('下载完成。安装时 LUMEN RAW 会先关闭（未保存的修改会先询问），装好后自动重新打开。'))
+        self.status.setText(tr('下载完成。安装时 SadSha Lumen 会先关闭（未保存的修改会先询问），装好后自动重新打开。'))
         self.rebind(self.primary, tr('重启并更新'), self.install)
         self.rebind(self.secondary, tr('稍后'), self.reject)
 
@@ -324,7 +324,7 @@ class UpdateDialog(_Card):
         if self.window.request_update_install(self.installer):
             self.accept()
         else:
-            self.status.setText(tr('没有关闭 LUMEN RAW，更新未安装。随时可以再点“重启并更新”。'))
+            self.status.setText(tr('没有关闭 SadSha Lumen，更新未安装。随时可以再点“重启并更新”。'))
 
     def reject(self):
         if self.cancel is not None:
@@ -336,7 +336,7 @@ class ModelsDialog(_Card):
     """The AI models this version needs and lacks (after an update, or a program-only install)."""
 
     def __init__(self, window, records=None):
-        super().__init__(window, tr('LUMEN RAW — AI 模型'), caption=tr('AI 模型'))
+        super().__init__(window, tr('SadSha Lumen — AI 模型'), caption=tr('AI 模型'))
         self.cancel = None
         self.records = ai_models.missing() if records is None else records
         self.text = QLabel()
@@ -432,15 +432,15 @@ class CheckResult(_Card):
 
     def __init__(self, window, error=None):
         latest = error is None
-        super().__init__(window, tr('LUMEN RAW — 软件更新'), tr('已是最新版本') if latest else tr('检查失败'), tr('检查更新'),
+        super().__init__(window, tr('SadSha Lumen — 软件更新'), tr('已是最新版本') if latest else tr('检查失败'), tr('检查更新'),
                          'okBadge' if latest else 'warnBadge')
-        text = QLabel(tr('LUMEN RAW {version} 已是最新版本。', version=__version__) if latest
+        text = QLabel(tr('SadSha Lumen {version} 已是最新版本。', version=__version__) if latest
                       else tr('无法检查更新：{error}', error=error))
         text.setWordWrap(True)
         text.setTextFormat(Qt.TextFormat.PlainText)
         self.root.addWidget(text)
         if latest:
-            hint = QLabel(tr('有新版本时，启动 LUMEN RAW 后会自动提示（可在「帮助 → 启动时检查更新」中关闭）。'))
+            hint = QLabel(tr('有新版本时，启动 SadSha Lumen 后会自动提示（可在「帮助 → 启动时检查更新」中关闭）。'))
             hint.setWordWrap(True)
             hint.setObjectName('subtle')
             self.root.addWidget(hint)

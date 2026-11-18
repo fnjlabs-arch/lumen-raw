@@ -18,7 +18,7 @@ def onnxruntime():
     Microsoft telemetry (1DS) posts events over HTTP from background threads: a reply arriving
     while the process exited locked a destroyed mutex and aborted the app as it quit (2 of 4
     smoke runs).  Only ``ORT_DISABLE_TELEMETRY`` keeps those threads from starting;
-    ``disable_telemetry_events`` stops the events.  LUMEN RAW works offline: off everywhere."""
+    ``disable_telemetry_events`` stops the events.  SadSha Lumen works offline: off everywhere."""
     global _QUIET
     os.environ.setdefault('ORT_DISABLE_TELEMETRY','1')   # its uploader threads (see lumen/__init__.py)
     import onnxruntime as ort

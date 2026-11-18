@@ -143,7 +143,7 @@ def settings_path():
 # refuses, keys are stored as given in a file readable only by the user.
 KEYCHAIN = sys.platform == 'darwin'
 #: (service, account) of the keychain item; the value is a JSON object provider -> key.
-KEYCHAIN_ITEM = (b'LUMEN RAW', b'api-keys')
+KEYCHAIN_ITEM = (b'SadSha Lumen', b'api-keys')
 _keychain_cache = None  # keys last read from or written to the keychain
 _NOT_FOUND = -25300  # errSecItemNotFound
 
@@ -473,7 +473,7 @@ def _parameter_table():
     ])
 
 
-SYSTEM_PROMPT = '''你是 LUMEN RAW 修图软件里的调色助手。用户用一句话描述想要的效果，你只能通过下面列出的固定参数来实现，并且只返回一个 JSON 对象。
+SYSTEM_PROMPT = '''你是 SadSha Lumen 修图软件里的调色助手。用户用一句话描述想要的效果，你只能通过下面列出的固定参数来实现，并且只返回一个 JSON 对象。
 
 可调参数：
 {table}
@@ -688,7 +688,7 @@ def _openai_headers(service):
     if service['provider'] == 'mimo' and service['key']:
         headers['api-key'] = service['key']      # the header of MiMo's own examples
     if service['provider'] == 'openrouter':
-        headers.update({'HTTP-Referer': 'https://github.com/hety0211/lumen-raw', 'X-OpenRouter-Title': 'LUMEN RAW'})
+        headers.update({'HTTP-Referer': 'https://github.com/hety0211/lumen-raw', 'X-OpenRouter-Title': 'SadSha Lumen'})
     return headers
 
 

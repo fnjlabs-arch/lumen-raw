@@ -487,7 +487,7 @@ def test_old_projects_render_exactly_as_before(tmp_path):
     old = {k: v for k, v in copy.deepcopy(edits).items() if k != 'lut'}
     old['version'] = 6
     project = tmp_path / 'old.lumen'
-    project.write_text(json.dumps(dict(application='LUMEN RAW', source='a.png', edits=old, snapshots=[])), encoding='utf-8')
+    project.write_text(json.dumps(dict(application='SadSha Lumen', source='a.png', edits=old, snapshots=[])), encoding='utf-8')
     _, loaded = model.load_project(project)
     assert loaded['lut'] is None and loaded['process'] == old['process']
     reference = engine.process(source, dict(edits, lut=None))

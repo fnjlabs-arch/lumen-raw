@@ -6,6 +6,6 @@ if (-not (Test-Path -LiteralPath $pythonPath)) {
 }
 & $pythonPath -m pip install --no-cache-dir -r requirements-lock.txt
 if ($LASTEXITCODE -ne 0) { throw 'Dependency installation failed.' }
-& $pythonPath -m PyInstaller --noconfirm LumenRAW.spec
+& $pythonPath -m PyInstaller --noconfirm SadShaLumen.spec
 if ($LASTEXITCODE -ne 0) { throw 'Build failed.' }
-Write-Output 'CPU portable build: dist\LumenRAW\LumenRAW.exe'
+Write-Output 'CPU portable build: dist\SadShaLumen\SadShaLumen.exe'

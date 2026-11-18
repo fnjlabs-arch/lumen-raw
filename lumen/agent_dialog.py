@@ -46,8 +46,8 @@ class AgentDialog(QDialog):
         title = QLabel(tr('AI 助手接入  /  MCP'))
         title.setObjectName('section')
         root.addWidget(title)
-        text = QLabel(tr('让本机支持 MCP 的 AI 助手（Claude Code、Codex、DeepSeek Harness、WorkBuddy、Claude Desktop 等）直接操作 LUMEN RAW：'
-                         '打开照片、调色、评级、预览与导出。LUMEN RAW 打开时，助手的每一步修改都显示在窗口中，可用 {undo} 撤销；'
+        text = QLabel(tr('让本机支持 MCP 的 AI 助手（Claude Code、Codex、DeepSeek Harness、WorkBuddy、Claude Desktop 等）直接操作 SadSha Lumen：'
+                         '打开照片、调色、评级、预览与导出。SadSha Lumen 打开时，助手的每一步修改都显示在窗口中，可用 {undo} 撤销；'
                          '未打开时在后台处理。原片始终不会被修改。', undo=host.keys('Ctrl+Z')))
         text.setWordWrap(True)
         text.setObjectName('subtle')
@@ -74,7 +74,7 @@ class AgentDialog(QDialog):
                 ('DeepSeek Harness', tr('DeepSeek Harness（DSH，命令行和桌面版）：写入 {file}，对所有配置生效',
                                         file=cli.dsh_patch_file()), 'dsh',
                  tr('点“写入 DSH 配置”自动合并（原文件会先备份），或复制下面的内容手动合并；然后重启 DeepSeek Harness，'
-                    '工具名为 mcp__lumen-raw__…'))):
+                    '工具名为 mcp__sadsha-lumen__…'))):
             page = QWidget()
             layout = QVBoxLayout(page)
             layout.setContentsMargins(4, 10, 4, 4)
@@ -122,8 +122,8 @@ class AgentDialog(QDialog):
         except (OSError, ValueError) as exc:
             QMessageBox.warning(self, 'DeepSeek Harness', str(exc))
             return
-        text = {'present': tr('{path} 里已经有 lumen-raw 服务器（手动添加的），没有改动。'),
-                'updated': tr('已更新 {path} 中的 LUMEN RAW 配置。重启 DeepSeek Harness 后生效。')}.get(
+        text = {'present': tr('{path} 里已经有 sadsha-lumen 服务器（手动添加的），没有改动。'),
+                'updated': tr('已更新 {path} 中的 SadSha Lumen 配置。重启 DeepSeek Harness 后生效。')}.get(
             action, tr('已写入 {path}。重启 DeepSeek Harness 后生效。'))
         QMessageBox.information(self, 'DeepSeek Harness', text.format(path=path))
 

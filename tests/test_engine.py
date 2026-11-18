@@ -193,7 +193,7 @@ def test_project_history_roundtrip(tmp_path):
     src.write_bytes(b'original')
     digest = hashlib.sha256(src.read_bytes()).digest()
     model.save_project(p, src, e)
-    assert json.loads(p.read_text(encoding='utf-8'))['application'] == 'LUMEN RAW'
+    assert json.loads(p.read_text(encoding='utf-8'))['application'] == 'SadSha Lumen'
     source, loaded = model.load_project(p)
     assert loaded == e and PathLike(source) == PathLike(src)
     assert hashlib.sha256(src.read_bytes()).digest() == digest

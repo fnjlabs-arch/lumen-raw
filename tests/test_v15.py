@@ -302,7 +302,7 @@ def test_ollama_and_anthropic_requests_use_their_native_formats(fake):
     assert nl_edit.parse_reply(nl_edit.complete(claude, messages, image='QUJD'))['adjustments']['exposure'] == .3
     _, path, headers, payload = server.requests[-1]
     assert path == '/v1/messages' and headers['x-api-key'] == 'sk-ant-test' and headers['anthropic-version']
-    assert payload['system'].startswith('你是 LUMEN RAW') and payload['max_tokens'] > 0
+    assert payload['system'].startswith('你是 SadSha Lumen') and payload['max_tokens'] > 0
     assert payload['messages'][-1]['content'][0]['source']['data'] == 'QUJD'
     assert nl_edit.list_models(ollama) == ['qwen3:8b']
     assert nl_edit.list_models(claude) == ['claude-x', 'gpt-y']
@@ -372,7 +372,7 @@ def test_keys_live_in_one_keychain_item_on_macos(tmp_path, monkeypatch, keychain
 @pytest.mark.skipif(sys.platform != 'darwin', reason='macOS keychain')
 def test_real_keychain_item_round_trip(monkeypatch):
     read, write = REAL_KEYCHAIN
-    item = (b'LUMEN RAW test', f'pytest-{os.getpid()}'.encode())
+    item = (b'SadSha Lumen test', f'pytest-{os.getpid()}'.encode())
     monkeypatch.setattr(nl_edit, 'KEYCHAIN_ITEM', item)
     try:
         assert read() is None

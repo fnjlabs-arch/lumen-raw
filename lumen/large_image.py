@@ -24,7 +24,7 @@ def allocate(shape,dtype=np.float32,zeros=False):
     validate_size(shape)
     size=int(np.prod(shape))*np.dtype(dtype).itemsize
     if size<=MAP_BYTES:return np.zeros(shape,dtype) if zeros else np.empty(shape,dtype)
-    folder=Path(tempfile.gettempdir())/'LumenRAW-cache';folder.mkdir(exist_ok=True)
+    folder=Path(tempfile.gettempdir())/'SadShaLumen-cache';folder.mkdir(exist_ok=True)
     if shutil.disk_usage(folder).free<size+256*1024*1024:
         raise ValueError(tr('大图缓存需要至少 {v:.1f} GB 可用磁盘空间。', v=size/2**30+.25))
     fd,path=tempfile.mkstemp(prefix='image-',suffix='.tmp',dir=folder);os.close(fd)

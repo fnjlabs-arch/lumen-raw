@@ -270,7 +270,7 @@ def test_installer_offers_the_same_languages_and_writes_the_choice():
     names = re.findall(r'^Name: "(\w+)"; MessagesFile', iss, re.M)
     assert sorted(i18n.normalize(n) for n in names) == sorted(i18n.CODES)
     assert 'Key: "language"; String: "{language}"' in iss
-    assert '{cm:CreateDesktopIcon}' in iss and '{cm:LaunchProgram,LUMEN RAW}' in iss
+    assert '{cm:CreateDesktopIcon}' in iss and '{cm:LaunchProgram,SadSha Lumen}' in iss
 
 
 def test_a_fresh_process_starts_in_the_saved_language(tmp_path):
@@ -281,8 +281,8 @@ def test_a_fresh_process_starts_in_the_saved_language(tmp_path):
         env.pop('LOCALAPPDATA', None)
         env['HOME'] = str(tmp_path)
         folder = tmp_path / 'Library' / 'Application Support'
-    (folder / 'LUMEN RAW').mkdir(parents=True)
-    (folder / 'LUMEN RAW' / 'settings.ini').write_text('[General]\nlanguage=ko\n', encoding='ascii')
+    (folder / 'SadSha Lumen').mkdir(parents=True)
+    (folder / 'SadSha Lumen' / 'settings.ini').write_text('[General]\nlanguage=ko\n', encoding='ascii')
     code = 'from lumen import i18n, model; print(i18n.language(), model.COLORS[0][0])'
     out = subprocess.run([sys.executable, '-c', code], cwd=ROOT, env=env, capture_output=True, text=True,
                          encoding='utf-8', timeout=60)

@@ -141,7 +141,7 @@ def test_exports_keep_the_originals_metadata_but_not_what_no_longer_applies(tmp_
         assert tags['ExifIFD:LensModel'] == 'FE 24-70mm F2.8 GM' and abs(tags['ExifIFD:ExposureTime'] - .004) < 1e-9
         assert tags['GPS:GPSLatitude'] == pytest.approx(31.2) and tags['XMP-dc:Subject'] == 'landscape'
         assert tags['XMP-xmp:Label'] == 'Red' and tags['XMP-xmp:Rating'] == 4          # from the .xmp sidecar
-        assert tags['IFD0:Software'].startswith('LUMEN RAW ')
+        assert tags['IFD0:Software'].startswith('SadSha Lumen ')
         # The export is already upright, sized and sRGB; Lightroom must not develop it again.
         assert tags.get('IFD0:Orientation', 1) == 1 and 'ExifIFD:ExifImageWidth' not in tags
         assert not any(k.startswith(('XMP-crs:', 'IFD1:')) for k in tags)

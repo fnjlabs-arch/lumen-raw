@@ -73,10 +73,10 @@ class WorkflowMixin:
         try:i18n.save_language(code)
         except OSError as exc:return self.error(tr('无法保存语言设置：')+str(exc))
         # Ask in the chosen language, and in the current one when the user may not read it.
-        lines=[i18n.tr_in(code,'界面语言将在重新启动 LUMEN RAW 后切换为 {name}。现在重新启动吗？',name=i18n.language_name(code))]
-        current=tr('界面语言将在重新启动 LUMEN RAW 后切换为 {name}。现在重新启动吗？',name=i18n.language_name(code))
+        lines=[i18n.tr_in(code,'界面语言将在重新启动 SadSha Lumen 后切换为 {name}。现在重新启动吗？',name=i18n.language_name(code))]
+        current=tr('界面语言将在重新启动 SadSha Lumen 后切换为 {name}。现在重新启动吗？',name=i18n.language_name(code))
         if current not in lines:lines.append(current)
-        box=QMessageBox(self);box.setWindowTitle('LUMEN RAW');box.setIcon(QMessageBox.Icon.Question)
+        box=QMessageBox(self);box.setWindowTitle('SadSha Lumen');box.setIcon(QMessageBox.Icon.Question)
         box.setText('\n\n'.join(lines))
         restart=box.addButton(i18n.tr_in(code,'立即重新启动'),QMessageBox.ButtonRole.AcceptRole)
         box.addButton(i18n.tr_in(code,'稍后'),QMessageBox.ButtonRole.RejectRole)

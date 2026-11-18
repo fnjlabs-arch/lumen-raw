@@ -1,6 +1,6 @@
 # macOS Apple silicon build (1.3.1): ONNX Runtime with Core ML, PyObjC Metal and the
-# pure-Perl ExifTool.  Produces "dist/LUMEN RAW.app"; run it through tools/build_macos.sh,
-# which draws build/macos/LumenRAW.icns first and signs the bundle afterwards.
+# pure-Perl ExifTool.  Produces "dist/SadSha Lumen.app"; run it through tools/build_macos.sh,
+# which draws build/macos/SadShaLumen.icns first and signs the bundle afterwards.
 import os
 import re
 import sys
@@ -38,27 +38,27 @@ a = Analysis(
 a.binaries = bundle.trim(a.binaries, 'macos')
 a.datas = bundle.trim(a.datas, 'macos')
 pyz = PYZ(a.pure)
-exe = EXE(pyz, a.scripts, [], exclude_binaries=True, name='LumenRAW',
+exe = EXE(pyz, a.scripts, [], exclude_binaries=True, name='SadShaLumen',
           debug=False, bootloader_ignore_signals=False, strip=False, upx=False,
           console=False, disable_windowed_traceback=False, argv_emulation=False,
           target_arch='arm64', codesign_identity=None, entitlements_file=None)
-# 1.6.0: Contents/MacOS/lumen-cli, the command line and the MCP server (stdio).
-cli = EXE(pyz, a.scripts, [], exclude_binaries=True, name='lumen-cli',
+# 1.6.0: Contents/MacOS/sadsha-lumen, the command line and the MCP server (stdio).
+cli = EXE(pyz, a.scripts, [], exclude_binaries=True, name='sadsha-lumen',
           debug=False, bootloader_ignore_signals=False, strip=False, upx=False,
           console=True, argv_emulation=False, target_arch='arm64', codesign_identity=None, entitlements_file=None)
-coll = COLLECT(exe, cli, a.binaries, a.datas, strip=False, upx=False, name='LumenRAW')
+coll = COLLECT(exe, cli, a.binaries, a.datas, strip=False, upx=False, name='SadShaLumen')
 
 document = lambda name, types, rank='Alternate': {
     'CFBundleTypeName': name, 'CFBundleTypeRole': 'Editor', 'LSHandlerRank': rank, 'LSItemContentTypes': types}
 exported = lambda identifier, description, extension: {
     'UTTypeIdentifier': identifier, 'UTTypeDescription': description, 'UTTypeConformsTo': ['public.json'],
-    'UTTypeIconFile': 'LumenRAW.icns', 'UTTypeTagSpecification': {'public.filename-extension': [extension]}}
+    'UTTypeIconFile': 'SadShaLumen.icns', 'UTTypeTagSpecification': {'public.filename-extension': [extension]}}
 app = BUNDLE(
-    coll, name='LUMEN RAW.app', icon=str(art / 'LumenRAW.icns'),
-    bundle_identifier='io.github.hety0211.lumenraw', version=version,
+    coll, name='SadSha Lumen.app', icon=str(art / 'SadShaLumen.icns'),
+    bundle_identifier='com.sadsha.lumen', version=version,
     info_plist={
-        'CFBundleName': 'LUMEN RAW',
-        'CFBundleDisplayName': 'LUMEN RAW',
+        'CFBundleName': 'SadSha Lumen',
+        'CFBundleDisplayName': 'SadSha Lumen',
         'CFBundleShortVersionString': version,
         'CFBundleVersion': version,
         'CFBundleDevelopmentRegion': 'zh_CN',
@@ -68,24 +68,24 @@ app = BUNDLE(
         'LSMinimumSystemVersion': minimum,
         'LSArchitecturePriority': ['arm64'],
         'LSApplicationCategoryType': 'public.app-category.photography',
-        # 2.3.0 (issue #11): lumen-cli is a console EXE in the same COLLECT, and PyInstaller turns that
+        # 2.3.0 (issue #11): sadsha-lumen is a console EXE in the same COLLECT, and PyInstaller turns that
         # into LSBackgroundOnly = true: the window opens but the app never becomes the active one, so
         # the menu bar stays on the previous app and key equivalents do not reach it.
         'LSBackgroundOnly': False,
         'NSHighResolutionCapable': True,
-        'NSHumanReadableCopyright': 'LUMEN RAW · MIT License',
+        'NSHumanReadableCopyright': 'SadSha Lumen · MIT License',
         # 1.5.0: voice instructions are recognized offline on this Mac.
-        'NSMicrophoneUsageDescription': 'LUMEN RAW 在本机离线识别你的语音修图指令，录音不会上传。',
+        'NSMicrophoneUsageDescription': 'SadSha Lumen 在本机离线识别你的语音修图指令，录音不会上传。',
         # Every RAW type macOS knows (ARW, CR2 / CR3, NEF, RAF, RW2, DNG, ...) conforms to public.camera-raw-image.
         'CFBundleDocumentTypes': [
             document('Camera RAW', ['public.camera-raw-image']),
             document('Image', ['public.jpeg', 'public.png', 'public.tiff']),
-            document('LUMEN RAW 工程', ['io.github.hety0211.lumenraw.project'], 'Owner'),
-            document('LUMEN RAW 选片集', ['io.github.hety0211.lumenraw.album'], 'Owner'),
+            document('SadSha Lumen 工程', ['com.sadsha.lumen.project'], 'Owner'),
+            document('SadSha Lumen 选片集', ['com.sadsha.lumen.album'], 'Owner'),
         ],
         'UTExportedTypeDeclarations': [
-            exported('io.github.hety0211.lumenraw.project', 'LUMEN RAW 工程', 'lumen'),
-            exported('io.github.hety0211.lumenraw.album', 'LUMEN RAW 选片集', 'lumenalbum'),
+            exported('com.sadsha.lumen.project', 'SadSha Lumen 工程', 'lumen'),
+            exported('com.sadsha.lumen.album', 'SadSha Lumen 选片集', 'lumenalbum'),
         ],
     },
 )

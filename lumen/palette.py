@@ -1,6 +1,6 @@
 """Command palette (Ctrl+K, 1.6.0): every command of ``commands`` by id, run in this window.
 
-The same commands serve ``lumen-cli`` and MCP agents; here they act on the open photo and each
+The same commands serve ``sadsha-lumen`` and MCP agents; here they act on the open photo and each
 edit is one undo step.  Commands with parameters ask for them as a JSON object.
 """
 from __future__ import annotations
@@ -59,7 +59,7 @@ class CommandPalette(QDialog):
         self.list = QListWidget()
         self.list.itemActivated.connect(lambda item: self.run(item.data(Qt.ItemDataRole.UserRole)))
         root.addWidget(self.list, 1)
-        note = QLabel(tr('这些命令也可由 lumen-cli 与 MCP 助手调用（帮助 → AI 助手接入）。'))
+        note = QLabel(tr('这些命令也可由 sadsha-lumen 与 MCP 助手调用（帮助 → AI 助手接入）。'))
         note.setObjectName('subtle')
         note.setWordWrap(True)
         root.addWidget(note)
@@ -100,7 +100,7 @@ class CommandPalette(QDialog):
             try:
                 args = json.loads(text or '{}')
             except ValueError as exc:
-                return QMessageBox.warning(self, 'LUMEN RAW', tr('参数不是有效的 JSON：') + str(exc))
+                return QMessageBox.warning(self, 'SadSha Lumen', tr('参数不是有效的 JSON：') + str(exc))
         self.accept()
         self.window.statusBar().showMessage(tr('正在执行 {command}…', command=cmd.id))
         # Commands may wait for the window (opening a photo, exporting): never on the GUI thread.
@@ -108,7 +108,7 @@ class CommandPalette(QDialog):
 
     def done_command(self, cmd, result):
         if isinstance(result, Exception):
-            return QMessageBox.warning(self.window, 'LUMEN RAW', str(result))
+            return QMessageBox.warning(self.window, 'SadSha Lumen', str(result))
         result = {k: v for k, v in result.items() if k != 'image'}
         if cmd.read_only:
             box = QMessageBox(self.window)

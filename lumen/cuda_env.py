@@ -54,7 +54,7 @@ def library_folders():
 
 def cache_folder():
     base = os.environ.get('XDG_CACHE_HOME') or str(Path.home() / '.cache')
-    return Path(base) / 'lumen-raw' / 'cuda-libs'
+    return Path(base) / 'sadsha-lumen' / 'cuda-libs'
 
 
 def prepare(create=True):

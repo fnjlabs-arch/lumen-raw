@@ -242,7 +242,7 @@ def validate(data):
 
 #: Largest project file written and read (1.7.0: fine AI masks are up to 4096 pixels; 32 MB before).
 #: 2.1.0: 512 MB like albums (AI removal patches), and checked before a save replaces the file:
-#: until then a project could be saved that LUMEN RAW then refused to open.
+#: until then a project could be saved that SadSha Lumen then refused to open.
 PROJECT_BYTES = 512 * 1024 * 1024
 
 
@@ -274,7 +274,7 @@ def save_project(path, source, edits, snapshots=None):
     snapshots = validate_snapshots(snapshots or [])
     # 1.7.0: LUT tables and mask rasters are stored once, however many snapshots use them.
     recipes, tables = pack([validate(edits)] + [s['edits'] for s in snapshots])
-    payload = dict(application='LUMEN RAW', source=relative, edits=recipes[0],
+    payload = dict(application='SadSha Lumen', source=relative, edits=recipes[0],
                    snapshots=[dict(s, edits=e) for s, e in zip(snapshots, recipes[1:])], **tables)
     data = json.dumps(payload, ensure_ascii=False, indent=2).encode('utf-8')
     if len(data) > PROJECT_BYTES:
@@ -290,8 +290,8 @@ def load_project(path, include_snapshots=False):
     if path.stat().st_size > PROJECT_BYTES:
         raise ValueError(tr('工程文件过大。'))
     data = json.loads(path.read_text(encoding='utf-8'))
-    if data.get('application') not in ('LUMEN RAW', 'Lumen ARW'):
-        raise ValueError(tr('这不是 LUMEN RAW 工程。'))
+    if data.get('application') not in ('SadSha Lumen', 'Lumen ARW'):
+        raise ValueError(tr('这不是 SadSha Lumen 工程。'))
     tables = stored_tables(data)
     source = source_path(data['source'], path.parent)
     result = (str(source), validate(unpack(data['edits'], tables)))

@@ -2,7 +2,7 @@
 
   --minimum APP            print the highest macOS version any bundled arm64 binary requires
   --check-smoke REPORT     fail unless a smoke-test report shows Metal development and a real AI preview
-  --dmg APP OUT [--sample] build LumenRAW-<version>-macOS-arm64.dmg in OUT, then verify it:
+  --dmg APP OUT [--sample] build SadShaLumen-<version>-macOS-arm64.dmg in OUT, then verify it:
                            checksum, read-only mount, code signature, smoke test from the image
 """
 from __future__ import annotations
@@ -100,13 +100,13 @@ def sha256(path):
 def build_dmg(app, output):
     """dmgbuild lays out the Finder window; plain hdiutil is the fallback."""
     art = PROJECT / 'build' / 'macos'
-    volume = f'LUMEN RAW {__version__}'
+    volume = f'SadSha Lumen {__version__}'
     try:
         import dmgbuild
         settings = {
             'format': 'UDZO', 'filesystem': 'HFS+', 'compression-level': 9,
             'files': [str(app)], 'symlinks': {'Applications': '/Applications'},
-            'icon': str(art / 'LumenRAW.icns'),
+            'icon': str(art / 'SadShaLumen.icns'),
             'icon_locations': {app.name: (180, 200), 'Applications': (480, 200)},
             'background': str(art / 'dmg-background.tiff'),
             'window_rect': ((200, 140), (660, 400)), 'default_view': 'icon-view',
@@ -141,7 +141,7 @@ def verify_dmg(output, app_name, sample):
         if sample:
             smoke = Path(tempfile.mkdtemp(prefix='lumen-dmg-smoke-'))
             environment = dict(os.environ, QT_QPA_PLATFORM='offscreen')
-            code = subprocess.run([str(app / 'Contents' / 'MacOS' / 'LumenRAW'), '--smoke-test', str(sample), str(smoke)],
+            code = subprocess.run([str(app / 'Contents' / 'MacOS' / 'SadShaLumen'), '--smoke-test', str(sample), str(smoke)],
                                   env=environment).returncode
             if code:
                 raise SystemExit(f'smoke test from the mounted DMG failed ({code}); see {smoke}/report.json')
@@ -162,7 +162,7 @@ def verify_dmg(output, app_name, sample):
 def package(app, folder, sample=None):
     app, folder = Path(app), Path(folder)
     folder.mkdir(parents=True, exist_ok=True)
-    output = folder / f'LumenRAW-{__version__}-macOS-arm64.dmg'
+    output = folder / f'SadShaLumen-{__version__}-macOS-arm64.dmg'
     output.unlink(missing_ok=True)
     tool = build_dmg(app, output)
     report = dict(version=__version__, dmg=output.name, built_with=tool, bytes=output.stat().st_size)

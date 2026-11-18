@@ -252,7 +252,7 @@ def test_a_cancelled_download_resumes_where_it_stopped(server, monkeypatch):
 def test_the_manifest_lists_the_pinned_files_and_a_mirror():
     data = json.loads((ROOT / 'assets/speech-assets.json').read_text(encoding='utf-8'))
     assert data['mirrors'] and all(m.startswith('https://') and m.endswith('/') for m in data['mirrors'])
-    # 2.0.0: LUMEN RAW's own release of the same files.
+    # 2.0.0: SadSha Lumen's own release of the same files.
     assert data['releases'] and all(r.startswith('https://github.com/') and r.endswith('/') for r in data['releases'])
     assert all(f['url'].startswith(speech.UPSTREAM) and len(f['sha256']) == 64 for f in data['files'])
     assert 200 < speech.download_megabytes() < 260

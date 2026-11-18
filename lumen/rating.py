@@ -471,12 +471,12 @@ class RatingMixin:
             return self.error(tr('无法读取 Lightroom 目录：') + str(exc))
         existing = {p: v for p, v in values.items() if Path(p).is_file()}
         if not values:
-            QMessageBox.information(self, 'LUMEN RAW', tr('这个目录中没有评级、旗标或色标。'))
+            QMessageBox.information(self, 'SadSha Lumen', tr('这个目录中没有评级、旗标或色标。'))
             return
         answer = QMessageBox.question(
             self, tr('导入 Lightroom 评级'),
             tr('目录中有 {total} 张照片带有评级、旗标或色标，其中 {found} 张在本机找到。\n\n'
-               '导入后会覆盖这些照片在 LUMEN RAW 中的评级。是否同时把找到的照片加入图集？', total=len(values), found=len(existing)),
+               '导入后会覆盖这些照片在 SadSha Lumen 中的评级。是否同时把找到的照片加入图集？', total=len(values), found=len(existing)),
             QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No | QMessageBox.StandardButton.Cancel)
         if answer == QMessageBox.StandardButton.Cancel:
             return

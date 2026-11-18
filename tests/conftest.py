@@ -1,14 +1,14 @@
 """Tests run with the Simplified Chinese source texts, whatever the system language (1.5.1).
 
 1.6.0: tests use their own rating catalog and control-channel name, so they never touch the
-user's library and never talk to a LUMEN RAW window the user has open.  2.0.0: likewise the photo
+user's library and never talk to a SadSha Lumen window the user has open.  2.0.0: likewise the photo
 library database and the preview cache."""
 import os
 import tempfile
 
 os.environ['LUMEN_LANGUAGE'] = os.environ.get('LUMEN_TEST_LANGUAGE', 'zh_CN')
 os.environ['LUMEN_CATALOG'] = os.path.join(tempfile.mkdtemp(prefix='lumen-test-catalog-'), 'catalog.jsonl')
-os.environ['LUMEN_CONTROL_NAME'] = f'lumen-raw-test-{os.getpid()}'
+os.environ['LUMEN_CONTROL_NAME'] = f'sadsha-lumen-test-{os.getpid()}'
 # 1.7.0: imported presets go to a folder of the test run, never the user's preset library.
 os.environ['LUMEN_PRESETS'] = tempfile.mkdtemp(prefix='lumen-test-presets-')
 # 2.0.0: the photo library (next to the test catalog) and the preview cache are the test run's own.

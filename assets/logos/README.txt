@@ -1,7 +1,7 @@
-LUMEN RAW built-in watermark logos
+SadSha Lumen built-in watermark logos
 
 The camera and lens brand logos in this folder are trademarks of their respective owners.
-LUMEN RAW draws them only on the border of a photograph to name the camera and lens that took
+SadSha Lumen draws them only on the border of a photograph to name the camera and lens that took
 it, picked from the photograph's own EXIF data. No endorsement by or affiliation with these
 companies is implied. Remove a logo in the Watermark panel (Camera logo / Lens logo).
 

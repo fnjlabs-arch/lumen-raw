@@ -1,5 +1,5 @@
 #!/bin/bash
-# Run LUMEN RAW from source on Linux (Python 3.12).  The first run creates .venv-linux,
+# Run SadSha Lumen from source on Linux (Python 3.12).  The first run creates .venv-linux,
 # installs the runtime requirements (plus the CUDA build on an NVIDIA machine) and restores
 # the runtime assets and the Perl ExifTool.
 cd "$(dirname "$0")" || exit 1

@@ -856,9 +856,9 @@ def test_opening_a_photo_with_the_portrait_panel_open_finds_its_faces(window, tm
 
 
 def test_the_macos_app_is_a_foreground_app():
-    """Issue #11: PyInstaller makes a bundle with a console EXE (lumen-cli) background-only, so the
+    """Issue #11: PyInstaller makes a bundle with a console EXE (sadsha-lumen) background-only, so the
     menu bar and the key equivalents never reach it."""
     root = Path(__file__).resolve().parents[1]
-    spec = (root / 'LumenRAW-macOS.spec').read_text(encoding='utf-8')
+    spec = (root / 'SadShaLumen-macOS.spec').read_text(encoding='utf-8')
     assert "'LSBackgroundOnly': False" in spec and 'console=True' in spec
     assert 'LSBackgroundOnly must be false' in (root / 'tools' / 'build_macos.sh').read_text(encoding='utf-8')

@@ -1,7 +1,7 @@
 """The preset library (1.7.0): built-in looks and the user's own presets.
 
 Imported presets are stored as .lumenpreset files in ``<data folder>/presets`` (``LUMEN_PRESETS``
-overrides it), so they are there the next time LUMEN RAW starts and the command layer sees the
+overrides it), so they are there the next time SadSha Lumen starts and the command layer sees the
 same list as the window.  ``import_path`` reads:
 
 * LUMEN presets (.lumenpreset);

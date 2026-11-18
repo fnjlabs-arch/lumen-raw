@@ -1,8 +1,8 @@
 """Rotating diagnostic log for the desktop application (1.3.0).
 
 Windowed builds have no console, so GPU fallbacks, job failures and state
-transitions are written to %LOCALAPPDATA%\\LUMEN RAW\\logs\\lumen.log
-(macOS: ~/Library/Logs/LUMEN RAW/lumen.log; Linux: ~/.local/state/LUMEN RAW/logs).
+transitions are written to %LOCALAPPDATA%\\SadSha Lumen\\logs\\lumen.log
+(macOS: ~/Library/Logs/SadSha Lumen/lumen.log; Linux: ~/.local/state/SadSha Lumen/logs).
 Set LUMEN_LOG_LEVEL=DEBUG to include scheduler transitions.
 """
 import faulthandler
@@ -42,8 +42,8 @@ def configure(level=None, filename='lumen.log'):
     root.addHandler(handler)
     root.setLevel(getattr(logging, level, logging.INFO))
     from . import __version__
-    logging.getLogger('lumen').info('LUMEN RAW %s %s · Python %s · pid %d', __version__,
-                                    {'lumen.log': 'starting', 'lumen-cli.log': 'command line'}.get(filename, 'AI worker'),
+    logging.getLogger('lumen').info('SadSha Lumen %s %s · Python %s · pid %d', __version__,
+                                    {'lumen.log': 'starting', 'sadsha-lumen.log': 'command line'}.get(filename, 'AI worker'),
                                     sys.version.split()[0], os.getpid())
 
 

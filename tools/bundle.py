@@ -1,10 +1,10 @@
-"""What the PyInstaller specs put into the packages (1.8.0), shared by LumenRAW.spec and
-LumenRAW-macOS.spec.
+"""What the PyInstaller specs put into the packages (1.8.0), shared by SadShaLumen.spec and
+SadShaLumen-macOS.spec.
 
 * The AI models are bundled as the float16-weight copies of ``tools/compact_models.py``.
   2.1.1: they are kept apart from the program (``lumen/ai_models.py``): ``model_pack`` names each
   copy after its SHA-256 in ``build/model-pack`` and lists them in ``assets/ai-models.json``; the
-  Windows package keeps them in ``models`` next to LumenRAW.exe, which updates leave alone.
+  Windows package keeps them in ``models`` next to SadShaLumen.exe, which updates leave alone.
 * The SenseVoice speech model is not bundled: ``lumen.speech`` downloads it on first use.
 * Packages that only reach the build through optional imports (pandas via
   onnxruntime.transformers, Tcl/Tk via tifffile, lxml, …) are excluded, and so are the Qt pieces

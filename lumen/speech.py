@@ -10,7 +10,7 @@ the model's metadata. CTC output is decoded greedily.
 of ``assets/speech-assets.json`` on first use into the per-user data folder, from Hugging Face or
 its mirror, resuming partial downloads and checking every file's size and SHA-256 before it is
 used.  A source checkout may keep the model in ``assets/models/sensevoice`` (tools/fetch_assets.py).
-2.0.0: the manifest's ``releases`` (LUMEN RAW's own GitHub release of the same files) are tried
+2.0.0: the manifest's ``releases`` (SadSha Lumen's own GitHub release of the same files) are tried
 too, so the download does not depend on the upstream repository staying online.
 2.1.1: the resumable download itself lives in ``downloads`` (shared with the AI models and updates).
 2.1.1: when every source fails, the panel links ``release_page`` and the model folder, so the two
@@ -70,7 +70,7 @@ def download_megabytes():
 
 
 def release_page():
-    """2.1.1: LUMEN RAW's own release of the model files, for downloading them by hand."""
+    """2.1.1: SadSha Lumen's own release of the model files, for downloading them by hand."""
     releases = manifest().get('releases') or []
     return releases[0].rstrip('/').replace('/releases/download/', '/releases/tag/') if releases else None
 
@@ -79,7 +79,7 @@ def sources(url, mirrors, releases=()):
     """The manifest URL, its mirrors and the release copies (2.0.0, by file name).  Simplified
     Chinese interfaces try the mirror first and the upstream last."""
     mirrored = [mirror + url[len(UPSTREAM):] for mirror in mirrors if url.startswith(UPSTREAM)]
-    # 2.1.2: each release copy on GitHub is followed by LUMEN RAW's own mirrors of it.
+    # 2.1.2: each release copy on GitHub is followed by SadSha Lumen's own mirrors of it.
     released = [copy for release in releases for copy in downloads.alternatives(release + url.rsplit('/', 1)[-1])]
     if language() == 'zh_CN':
         return mirrored + released + [url]

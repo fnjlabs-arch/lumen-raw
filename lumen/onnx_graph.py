@@ -108,7 +108,7 @@ class Graph:
         self.nodes.append(body)
         return out
 
-    def serialize(self, opset=13, producer='LUMEN RAW'):
+    def serialize(self, opset=13, producer='SadSha Lumen'):
         graph = b''.join(_bytes(1, n) for n in self.nodes) + _bytes(2, self.name)
         graph += b''.join(_bytes(5, tensor(name, array)) for name, array in self.initializers.values())
         graph += b''.join(_bytes(11, i) for i in self.inputs)

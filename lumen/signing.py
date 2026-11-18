@@ -1,7 +1,7 @@
 """Ed25519 signatures (RFC 8032) for the update feed (2.1.2), standard library only.
 
 The feed ``lumen-update.json`` names the update installer and the AI models with their SHA-256.
-When GitHub cannot be reached the editor reads it from LUMEN RAW's own mirrors (``updates``);
+When GitHub cannot be reached the editor reads it from SadSha Lumen's own mirrors (``updates``);
 there the feed must carry a valid signature (``lumen-update.json.sig``) by the release key, whose
 public half is built into the editor, so a mirror can serve the files but never change them.
 ``tools/make_update_feed.py`` signs; the private key never leaves the publishing computer.

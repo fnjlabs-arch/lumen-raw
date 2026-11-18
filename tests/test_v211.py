@@ -154,7 +154,7 @@ def test_the_build_names_models_after_their_content_and_lists_them(tmp_path, mon
     assert data['release'] == ai_models.RELEASE and data['models']['skyseg.onnx'] == dict(
         file=f'skyseg.{digest[:12]}.onnx', bytes=3000, sha256=digest)
     assert sorted(p.name for p in pack.iterdir()) == sorted(r['file'] for r in data['models'].values())
-    program = tmp_path / 'dist' / 'LumenRAW'
+    program = tmp_path / 'dist' / 'SadShaLumen'
     placed = bundle.place_models(ROOT, program, build)
     assert placed == program / 'models' and (placed / f'skyseg.{digest[:12]}.onnx').read_bytes() == b'sky' * 1000
     assert all(ai_models.NAME.match(r['file']) for r in data['models'].values())
@@ -162,7 +162,7 @@ def test_the_build_names_models_after_their_content_and_lists_them(tmp_path, mon
 
 def test_the_packaging_tools_keep_models_out_of_the_program(tmp_path):
     from tools import package_windows
-    program = tmp_path / 'LumenRAW'
+    program = tmp_path / 'SadShaLumen'
     (program / '_internal' / 'assets').mkdir(parents=True)
     (program / 'models').mkdir()
     models = {}
@@ -184,21 +184,21 @@ def test_the_packaging_tools_keep_models_out_of_the_program(tmp_path):
 def test_the_installer_builds_an_update_package_without_models():
     iss = (ROOT / 'installer.iss').read_text(encoding='utf-8')
     assert '#ifdef UpdatePackage' in iss and 'Excludes: "\\models"' in iss
-    assert 'OutputBaseFilename=LumenRAW-{#AppVersion}-{#PackageKind}' in iss
+    assert 'OutputBaseFilename=SadShaLumen-{#AppVersion}-{#PackageKind}' in iss
     assert '{param:WAITPID|0}' in iss and 'WaitForSingleObject' in iss
     assert 'Check: RelaunchRequested' in iss and '{param:RELAUNCH|0}' in iss
     assert 'Type: filesandordirs; Name: "{app}\\models"' in iss
     assert "KeepModels(ExpandConstant('{app}\\_internal\\assets\\models'), ExpandConstant('{app}\\models\\import'))" in iss
     build = (ROOT / 'tools' / 'build_release.ps1').read_text(encoding='utf-8')
     assert '/DUpdatePackage' in build and 'check_update_package.py' in build and 'make_update_feed.py' in build
-    spec = (ROOT / 'LumenRAW.spec').read_text(encoding='utf-8')
-    assert "bundle.place_models(root, Path(DISTPATH) / 'LumenRAW')" in spec
+    spec = (ROOT / 'SadShaLumen.spec').read_text(encoding='utf-8')
+    assert "bundle.place_models(root, Path(DISTPATH) / 'SadShaLumen')" in spec
 
 
 # ----------------------------------------------------------------------------- updates
 
 def feed(base, version, models=None, payload=b''):
-    package = dict(url=base + f'v{version}/LumenRAW-{version}-Update.exe', bytes=len(payload),
+    package = dict(url=base + f'v{version}/SadShaLumen-{version}-Update.exe', bytes=len(payload),
                    sha256=hashlib.sha256(payload).hexdigest())
     entry = dict(version=version, update=package, models=models)
     return dict(format=1, version=version, page=base + 'page', notes={'zh_CN': '新版本的说明', 'en': 'What changed'},
@@ -244,7 +244,7 @@ def test_the_feed_offers_only_a_newer_version_for_this_platform(feed_server):
 
 def test_only_lumen_raw_releases_are_trusted(monkeypatch):
     monkeypatch.delenv('LUMEN_UPDATE_FEED', raising=False)
-    assert updates.trusted('https://github.com/hety0211/lumen-raw/releases/download/v2.1.2/LumenRAW-2.1.2-Update.exe')
+    assert updates.trusted('https://github.com/hety0211/lumen-raw/releases/download/v2.1.2/SadShaLumen-2.1.2-Update.exe')
     assert not updates.trusted('https://github.com/someone/else/releases/download/v1/x.exe')
     assert not updates.trusted('http://github.com/hety0211/lumen-raw/releases/download/v1/x.exe')
     monkeypatch.setenv('LUMEN_UPDATE_FEED', 'http://127.0.0.1:9/feed.json')
@@ -260,7 +260,7 @@ def test_an_installed_copy_downloads_the_program_and_only_changed_models(feed_se
     manifest = dict(format=1, release=feed_server + 'ai-models/', models=models)
     _Files.files['/ai-models/' + models['skyseg.onnx']['file']] = new_sky
     publish(feed_server, feed(feed_server, '2.9.0', manifest, payload))
-    _Files.files['/v2.9.0/LumenRAW-2.9.0-Update.exe'] = payload
+    _Files.files['/v2.9.0/SadShaLumen-2.9.0-Update.exe'] = payload
     monkeypatch.setattr(updates, 'mode', lambda: 'manual')
     update = updates.check()
     assert not update.installable()
@@ -295,7 +295,7 @@ def test_an_installed_copy_downloads_the_program_and_only_changed_models(feed_se
 def test_downloaded_installers_are_removed_once_the_new_version_runs(feed_server, monkeypatch):
     folder = updates.updates_folder()
     folder.mkdir(parents=True)
-    (folder / 'LumenRAW-2.1.1-Update.exe').write_bytes(b'x')
+    (folder / 'SadShaLumen-2.1.1-Update.exe').write_bytes(b'x')
     (folder / 'pending.json').write_text(json.dumps(dict(version=__version__, models=['a'])))
     assert updates.pending() is None and updates.keep_models() == set()
     updates.tidy()
@@ -327,7 +327,7 @@ def test_the_update_window_offers_downloads_and_installs_on_close(app, feed_serv
     payload = os.urandom(90_000)
     manifest = dict(format=1, release=feed_server + 'ai-models/', models=packaged['models'])
     publish(feed_server, feed(feed_server, '2.9.0', manifest, payload))
-    _Files.files['/v2.9.0/LumenRAW-2.9.0-Update.exe'] = payload
+    _Files.files['/v2.9.0/SadShaLumen-2.9.0-Update.exe'] = payload
     monkeypatch.setattr(updates, 'mode', lambda: 'installer')
     asked = []
     parent = QMainWindow()
@@ -374,7 +374,7 @@ def test_the_window_installs_an_update_only_when_it_closes(own_library, window, 
     help_menu = window.menuBar().actions()[titles.index('帮助')].menu()
     entries = [a.text() for a in help_menu.actions()]
     assert '检查更新…' in entries and 'AI 模型…' in entries and '启动时检查更新' in entries
-    installer = tmp_path / 'LumenRAW-2.9.0-Update.exe'
+    installer = tmp_path / 'SadShaLumen-2.9.0-Update.exe'
     installer.write_bytes(b'x')
     monkeypatch.setattr(window, 'confirm_close_library', lambda: False)        # the user cancels
     assert not window.request_update_install(installer) and window.update_installer is None
@@ -388,11 +388,11 @@ from test_ui import app, window, wait_until  # noqa: E402,F401
 # ----------------------------------------------------------------------------- DeepSeek Harness
 
 def test_the_dsh_entry_is_a_dsh_mcp_client_row_with_literal_windows_paths(monkeypatch):
-    monkeypatch.setattr(cli, 'executable', lambda: [r"C:\Users\O'Neil\AppData\Local\Programs\LUMEN RAW\lumen-cli.exe"])
+    monkeypatch.setattr(cli, 'executable', lambda: [r"C:\Users\O'Neil\AppData\Local\Programs\SadSha Lumen\sadsha-lumen.exe"])
     entry = cli.dsh_entry()
-    assert entry.splitlines()[:4] == ['- insert:', '    - id: mcp-lumen-raw', "      name: '@deepseek-ai/dsh-mcp-client'", '      config:']
-    assert "command: 'C:\\Users\\O''Neil\\AppData\\Local\\Programs\\LUMEN RAW\\lumen-cli.exe'" in entry
-    assert "args: ['mcp']" in entry and 'serverName: lumen-raw' in entry and 'transport: stdio' in entry
+    assert entry.splitlines()[:4] == ['- insert:', '    - id: mcp-sadsha-lumen', "      name: '@deepseek-ai/dsh-mcp-client'", '      config:']
+    assert "command: 'C:\\Users\\O''Neil\\AppData\\Local\\Programs\\SadSha Lumen\\sadsha-lumen.exe'" in entry
+    assert "args: ['mcp']" in entry and 'serverName: sadsha-lumen' in entry and 'transport: stdio' in entry
     assert 'toolCallTimeoutMs: 600000' in entry
     assert cli.mcp_config('dsh').endswith(entry) and 'cordis.patch.yml' in cli.mcp_config('dsh')
 
@@ -410,10 +410,10 @@ def test_writing_the_dsh_patch_file_merges_and_keeps_the_users_entries(tmp_path,
     path.write_text(mine, encoding='utf-8')
     assert cli.install_dsh() == (path, 'added')
     text = path.read_text(encoding='utf-8')
-    assert text.startswith(mine) and text.count('mcp-lumen-raw') == 1
+    assert text.startswith(mine) and text.count('mcp-sadsha-lumen') == 1
     assert path.with_name('cordis.patch.yml.lumen-backup').read_text(encoding='utf-8') == mine
     # An entry the user wrote by hand is left alone; a mapping cannot be merged automatically.
-    path.write_text("- insert:\n    - config:\n        serverName: 'lumen-raw'\n", encoding='utf-8')
+    path.write_text("- insert:\n    - config:\n        serverName: 'sadsha-lumen'\n", encoding='utf-8')
     assert cli.install_dsh()[1] == 'present'
     path.write_text('plugins:\n  a: 1\n', encoding='utf-8')
     with pytest.raises(ValueError):
@@ -474,7 +474,7 @@ def test_claude_uses_api_version_2026_10_21_and_openrouter_its_title_header():
     settings['provider'] = 'openrouter'
     settings['providers']['openrouter']['key'] = 'sk-or'
     headers = nl_edit._openai_headers(nl_edit.active(settings))
-    assert headers['X-OpenRouter-Title'] == 'LUMEN RAW' and headers['Authorization'] == 'Bearer sk-or'
+    assert headers['X-OpenRouter-Title'] == 'SadSha Lumen' and headers['Authorization'] == 'Bearer sk-or'
     assert 'api-key' not in headers
 
 
@@ -781,10 +781,10 @@ def test_review_4_a_partial_update_download_survives_a_restart(feed_server, pack
     payload = os.urandom(200_000)
     manifest = dict(format=1, release=feed_server + 'ai-models/', models={})
     publish(feed_server, feed(feed_server, '2.9.0', manifest, payload))
-    _Files.files['/v2.9.0/LumenRAW-2.9.0-Update.exe'] = payload
+    _Files.files['/v2.9.0/SadShaLumen-2.9.0-Update.exe'] = payload
     folder = updates.updates_folder()
     folder.mkdir(parents=True)
-    (folder / 'LumenRAW-2.8.0-Update.exe.part').write_bytes(b'older offer')
+    (folder / 'SadShaLumen-2.8.0-Update.exe.part').write_bytes(b'older offer')
     update = updates.check()
     seen = []
     with pytest.raises(downloads.Cancelled):
@@ -792,7 +792,7 @@ def test_review_4_a_partial_update_download_survives_a_restart(feed_server, pack
     part = update.installer_path().with_name(update.installer_path().name + '.part')
     have = part.stat().st_size
     assert 0 < have < len(payload) and updates.pending()['version'] == '2.9.0'
-    assert not (folder / 'LumenRAW-2.8.0-Update.exe.part').exists()
+    assert not (folder / 'SadShaLumen-2.8.0-Update.exe.part').exists()
     updates.tidy()                                            # the next start
     assert part.stat().st_size == have
     installer = updates.download(updates.check())

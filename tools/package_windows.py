@@ -1,6 +1,6 @@
 """Package the verified Windows onedir build as a portable ZIP.
 
-2.1.1: the AI models are in ``dist/LumenRAW/models`` under their content names, apart from the
+2.1.1: the AI models are in ``dist/SadShaLumen/models`` under their content names, apart from the
 program (``_internal``), and ``_internal/assets/ai-models.json`` lists them; both are checked here.
 The ZIP carries the models (a portable copy is complete); the update installer does not."""
 from __future__ import annotations
@@ -16,15 +16,15 @@ PROJECT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(PROJECT))
 from lumen import __version__  # noqa: E402
 
-SOURCE = PROJECT / 'dist' / 'LumenRAW'
+SOURCE = PROJECT / 'dist' / 'SadShaLumen'
 PACKAGES = PROJECT / '.publish' / ('v' + __version__.replace('.', '')) / 'packages'
-OUTPUT = PACKAGES / f'LumenRAW-{__version__}-Windows.zip'
+OUTPUT = PACKAGES / f'SadShaLumen-{__version__}-Windows.zip'
 
 
 def write_checksums():
     """SHA256SUMS.txt for the portable ZIP and installer, as published on Releases."""
     lines = []
-    for path in sorted(PACKAGES.glob(f'LumenRAW-{__version__}-*')):
+    for path in sorted(PACKAGES.glob(f'SadShaLumen-{__version__}-*')):
         if path.suffix.lower() in ('.zip', '.exe'):
             with path.open('rb') as stream:
                 lines.append(f'{hashlib.file_digest(stream, "sha256").hexdigest()}  {path.name}')
@@ -65,7 +65,7 @@ def check_models(program=SOURCE):
 
 
 def main():
-    if not (SOURCE / 'LumenRAW.exe').is_file():
+    if not (SOURCE / 'SadShaLumen.exe').is_file():
         raise SystemExit('Missing frozen editor executable.')
     files = sorted(path for path in SOURCE.rglob('*') if path.is_file())
     names = {path.name.lower() for path in files}
@@ -87,7 +87,7 @@ def main():
         with zipfile.ZipFile(temporary, 'w', compression=zipfile.ZIP_DEFLATED,
                              compresslevel=4, allowZip64=True) as archive:
             for path in files:
-                archive.write(path, 'LumenRAW-Windows/' + path.relative_to(SOURCE).as_posix())
+                archive.write(path, 'SadShaLumen-Windows/' + path.relative_to(SOURCE).as_posix())
         with zipfile.ZipFile(temporary) as archive:
             corrupt = archive.testzip()
             if corrupt:

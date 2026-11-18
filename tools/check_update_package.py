@@ -3,7 +3,7 @@
     python tools/check_update_package.py <update installer extracted with /PORTABLE=1> <photo> <output folder>
 
 Without models it must report them missing; a model a 2.1.0 installation left (the installer
-moves them to ``models/import``) is adopted; ``lumen-cli models --download`` fetches the rest
+moves them to ``models/import``) is adopted; ``sadsha-lumen models --download`` fetches the rest
 (``build/model-pack`` served on this machine, ``LUMEN_MODEL_RELEASE``); then the editor passes
 the smoke test.  The run has its own LOCALAPPDATA, never the user's.
 """
@@ -38,7 +38,7 @@ def main(program, photo, output):
     if output.exists():
         shutil.rmtree(output)
     output.mkdir(parents=True)
-    cli = program / 'lumen-cli.exe'
+    cli = program / 'sadsha-lumen.exe'
     if (program / 'models').exists() and any((program / 'models').iterdir()):
         raise SystemExit('the update package must not contain models')
     # A 2.1.0 installation's model under its plain name, as the update installer moves it.
@@ -62,7 +62,7 @@ def main(program, photo, output):
         if code != 0 or after['missing'] or Path(after['download_folder']) != program / 'models':
             raise SystemExit(f'model download failed (exit {code}): {out}{err}')
         smoke = output / 'smoke'
-        code, out, err = run([str(program / 'LumenRAW.exe'), '--smoke-test', str(photo), str(smoke)], environment)
+        code, out, err = run([str(program / 'SadShaLumen.exe'), '--smoke-test', str(photo), str(smoke)], environment)
         result = json.loads((smoke / 'report.json').read_text(encoding='utf-8'))
         report['smoke'] = dict(exit=code, ok=result.get('ok'), models=len(result.get('models', {})),
                                updates=result.get('updates'), error=result.get('error'))

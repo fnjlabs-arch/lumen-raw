@@ -1,4 +1,4 @@
-Offline world map of the location picker (LUMEN RAW 2.1.2), built by tools/build_map.py.
+Offline world map of the location picker (SadSha Lumen 2.1.2), built by tools/build_map.py.
 
 Source: Natural Earth (https://www.naturalearthdata.com/), public domain:
 "All versions of Natural Earth raster + vector map data found on this website are in the public domain."

@@ -778,14 +778,14 @@ class LibraryModeMixin:
         try:
             self.library_db = library_db.LibraryDB()
         except sqlite3.Error as error:
-            # 2.1.0: the library stays untouched (e.g. another LUMEN RAW process holds it locked); this
+            # 2.1.0: the library stays untouched (e.g. another SadSha Lumen process holds it locked); this
             # session uses a temporary one.
             import tempfile
             log.error('library database unavailable: %s', error)
-            note = tr('图库数据库暂时无法打开（{error}），本次使用临时图库，原图库保持不变。关闭其他 LUMEN RAW 窗口或命令行后重新启动即可恢复。',
+            note = tr('图库数据库暂时无法打开（{error}），本次使用临时图库，原图库保持不变。关闭其他 SadSha Lumen 窗口或命令行后重新启动即可恢复。',
                       error=error)
             self.library_db = library_db.LibraryDB(Path(tempfile.mkdtemp(prefix='lumen-library-')) / 'library.db')
-            QTimer.singleShot(0, self, lambda: QMessageBox.warning(self, 'LUMEN RAW', note))
+            QTimer.singleShot(0, self, lambda: QMessageBox.warning(self, 'SadSha Lumen', note))
         self.previews = preview_cache.default()
         self.previews.paused = lambda: self.work.busy(A.AI, A.EXPORTING)
         from .library_tasks import LibraryWorker

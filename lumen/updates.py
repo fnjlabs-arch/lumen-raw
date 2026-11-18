@@ -1,7 +1,7 @@
 """Checking for and installing new versions from inside the editor (2.1.1).
 
 Each Windows release on GitHub carries ``lumen-update.json`` (tools/make_update_feed.py): the
-version, short notes per language, the update installer (``LumenRAW-<version>-Update.exe``, the
+version, short notes per language, the update installer (``SadShaLumen-<version>-Update.exe``, the
 program without the AI models) and the AI-model manifest of that version.  The editor reads the
 copy of the newest release, ``…/releases/latest/download/lumen-update.json``, which needs no API
 call and sends nothing but the program version in its User-Agent.
@@ -12,7 +12,7 @@ window has closed runs the installer silently; the installer waits for this proc
 (``/WAITPID``) and opens the new version (``/RELAUNCH=1``).  Portable copies, source runs and the
 macOS app open the release page instead.
 
-2.1.2: when GitHub cannot be reached the feed is read from LUMEN RAW's mirrors, Singapore first,
+2.1.2: when GitHub cannot be reached the feed is read from SadSha Lumen's mirrors, Singapore first,
 then Hong Kong (``downloads.alternatives``), and the files are downloaded from the mirror that
 answered.  A feed read from a mirror counts only with a valid Ed25519 signature
 (``lumen-update.json.sig``, ``signing``) by a key in ``FEED_KEYS``; its SHA-256 sums then vouch
@@ -38,7 +38,7 @@ FEED = 'https://github.com/hety0211/lumen-raw/releases/latest/download/lumen-upd
 RELEASES = 'https://github.com/hety0211/lumen-raw/releases'
 #: 2.1.1: the newest Windows release, offered for downloading by hand when a check or download fails.
 LATEST = RELEASES + '/latest'
-#: Files are only downloaded from LUMEN RAW's own releases (a test feed may serve its own).
+#: Files are only downloaded from SadSha Lumen's own releases (a test feed may serve its own).
 TRUSTED = ('https://github.com/hety0211/lumen-raw/releases/download/',)
 #: settings.ini key: check when the editor starts ('1', the default) or only from the Help menu.
 SETTING = 'check_updates'

@@ -1,14 +1,14 @@
-# LUMEN RAW
+# SadSha Lumen
 
 **An open-source RAW photo editor: a photo library and fast culling, color grading, lens corrections, AI object removal, AI enhancement, smart masks, photo merging, time-lapse videos — and editing by describing the look in one sentence.**
 
 [中文说明](README.zh-CN.md) · [Downloads](https://github.com/hety0211/lumen-raw/releases) · [Changelog](CHANGELOG.md) · [Contributing](CONTRIBUTING.md) · [MIT license](LICENSE)
 
-LUMEN RAW is a local desktop editor for landscape and travel photography on Windows, Apple silicon Macs and x86_64 Linux (from source). No account is required. The interface is available in nine languages: English, 简体中文, 繁體中文, 日本語, 한국어, Deutsch, Français, Español and Русский. Importing, culling, editing, lens corrections, AI object removal / denoising / super-resolution / masks, export and time-lapse videos all run offline on your computer. The network is used only when you choose a cloud language model for natural-language editing, once to download the speech model if you use voice instructions, and (from 2.1.1) to check for a new version at start-up, which you can switch off.
+SadSha Lumen is a local desktop editor for landscape and travel photography on Windows, Apple silicon Macs and x86_64 Linux (from source). No account is required. The interface is available in nine languages: English, 简体中文, 繁體中文, 日本語, 한국어, Deutsch, Français, Español and Русский. Importing, culling, editing, lens corrections, AI object removal / denoising / super-resolution / masks, export and time-lapse videos all run offline on your computer. The network is used only when you choose a cloud language model for natural-language editing, once to download the speech model if you use voice instructions, and (from 2.1.1) to check for a new version at start-up, which you can switch off.
 
 Current version: **2.3.0** (Windows and macOS, 2026-11-05). Linux: run or build from source (the Linux port arrived with 2.1.1).
 
-![LUMEN RAW 2.0.0 in English: the Library page with the folder tree, smart albums and keywords on the left, the thumbnail grid with stars, pick flags, color labels and a rejected photo, and the selected photo's capture data, sharpness, rating and keywords on the right](docs/screenshots/library-grid-en.png)
+![SadSha Lumen 2.0.0 in English: the Library page with the folder tree, smart albums and keywords on the left, the thumbnail grid with stars, pick flags, color labels and a rejected photo, and the selected photo's capture data, sharpness, rating and keywords on the right](docs/screenshots/library-grid-en.png)
 
 Actual application screenshots. The photographs are public test samples: CC0 photos from raw.pixls.us and Play Raw photos from discuss.pixls.us under CC BY-SA 4.0 ([image credits](docs/screenshots/README.md)).
 
@@ -16,24 +16,24 @@ Actual application screenshots. The photographs are public test samples: CC0 pho
 
 | System | Download | Requirements |
 |---|---|---|
-| Windows | [`LumenRAW-2.3.0-Setup.exe` (full installer, 606 MB), `LumenRAW-2.3.0-Update.exe` (update package, 143 MB) or `LumenRAW-2.3.0-Windows.zip` (portable, 673 MB)](https://github.com/hety0211/lumen-raw/releases/tag/v2.3.0) | Windows 10 22H2 / Windows 11, x64 |
-| macOS | [`LumenRAW-2.3.0-macOS-arm64.dmg` (663 MB)](https://github.com/hety0211/lumen-raw/releases/tag/v2.3.0-macos) | Apple silicon (M1 or newer), macOS 15 Sequoia or later |
-| Linux | No prebuilt download: run from source ([below](#run-from-source)); `tools/build_linux.sh --sample photo.DNG` builds a portable `LumenRAW-<version>-Linux-x86_64.tar.gz` | x86_64, Python 3.12; an NVIDIA GPU with a CUDA 13 driver is optional |
+| Windows | [`SadShaLumen-2.3.0-Setup.exe` (full installer, 606 MB), `SadShaLumen-2.3.0-Update.exe` (update package, 143 MB) or `SadShaLumen-2.3.0-Windows.zip` (portable, 673 MB)](https://github.com/hety0211/lumen-raw/releases/tag/v2.3.0) | Windows 10 22H2 / Windows 11, x64 |
+| macOS | [`SadShaLumen-2.3.0-macOS-arm64.dmg` (663 MB)](https://github.com/hety0211/lumen-raw/releases/tag/v2.3.0-macos) | Apple silicon (M1 or newer), macOS 15 Sequoia or later |
+| Linux | No prebuilt download: run from source ([below](#run-from-source)); `tools/build_linux.sh --sample photo.DNG` builds a portable `SadShaLumen-<version>-Linux-x86_64.tar.gz` | x86_64, Python 3.12; an NVIDIA GPU with a CUDA 13 driver is optional |
 
 Windows and macOS are at 2.3.0: a Portrait panel, cropping as a tool on the photo with Auto level, an edit history with named steps, a new Auto, about half the memory when exporting, and on the Mac a menu bar and ⌘ shortcuts that work again ([issue #11](https://github.com/hety0211/lumen-raw/issues/11)). 2.1.2 brought where a photo was taken in the Watermark panel (an offline map, the XMP sidecar, a map pin in the border), update checks that fall back to mirrors when GitHub cannot be reached, the root cause of a damaged library database found and fixed, and Nikon High Efficiency NEFs and photos with embedded ICC profiles read in their own colour space. 2.1.1 brought in-app updates, AI models kept apart from the program, separate sharpness and closed-eye analysis, DeepSeek Harness and Xiaomi MiMo. The Mac build opens the download page when a new version is out. Linux (x86_64) runs from source from 2.1.1 on, with native CUDA kernels on NVIDIA GPUs (a community contribution, see [Download and install](#download-and-install)). 2.3.0 saves projects in format 9 (crop flips, faces): it opens every older project, but 2.1.2 and earlier cannot open those saved by 2.3.0. 2.1.1 and 2.1.2 keep project format 8, so 2.1.0 – 2.1.2 open each other's projects. 2.1.0 saves projects (`.lumen`) and albums (`.lumenalbum`) in format 8 (for AI removals and the new masks): 2.1.0 opens every older project, but 2.0.1 and earlier cannot open those saved by 2.1.0. Each release lists SHA-256 checksums. The binaries are not code-signed with a commercial certificate.
 
 **Windows**
 
 - **Installer:** installs for the current user without administrator rights and upgrades 1.2.x – 2.1.1 in place. From 2.1.0 the update package (135 MB) is enough: it carries no AI models and keeps the ones 2.1.0 installed. Save your album and close the old version first. The language you choose when the installer starts becomes the interface language; change it later in the **Language** menu.
-- **Portable:** extract and run `LumenRAW-Windows\LumenRAW.exe`. Keep the `_internal` and `models` folders next to the exe. The portable build follows the system language until you choose one.
+- **Portable:** extract and run `SadShaLumen-Windows\SadShaLumen.exe`. Keep the `_internal` and `models` folders next to the exe. The portable build follows the system language until you choose one.
 - Both include Python, ExifTool, fonts, the fifteen AI models, the video encoders and the lensfun lens database, and work fully offline. The speech model for voice instructions (about 240 MB) is downloaded the first time you click **Voice**; when you upgrade from 1.5 – 1.7, the installer keeps the model those versions bundled, so it is not downloaded again.
 - From 2.1.1 the AI models (about 522 MB) live in the `models` folder next to the program, apart from it: in-app updates download only the program (about 135 MB) and the models that changed; see [Updates and AI models](#updates-and-ai-models). AI models are stored at half precision (results differ by about 0.001 %, at the same speed), and the speech model is not bundled.
 
 **macOS**
 
-- Open the DMG and drag **LUMEN RAW** to Applications (replacing an older copy).
-- The interface starts in the first supported language of System Settings → General → Language & Region (or the language set for LUMEN RAW under Applications there); change it in the **Language** menu. The 1.5.0 Mac build was Chinese-only, so a Mac whose first language is English now starts in English.
-- The app is ad-hoc signed and not notarized by Apple, so the first launch is blocked. Open System Settings → Privacy & Security and click **Open Anyway**, or run `xattr -dr com.apple.quarantine "/Applications/LUMEN RAW.app"`.
+- Open the DMG and drag **SadSha Lumen** to Applications (replacing an older copy).
+- The interface starts in the first supported language of System Settings → General → Language & Region (or the language set for SadSha Lumen under Applications there); change it in the **Language** menu. The 1.5.0 Mac build was Chinese-only, so a Mac whose first language is English now starts in English.
+- The app is ad-hoc signed and not notarized by Apple, so the first launch is blocked. Open System Settings → Privacy & Security and click **Open Anyway**, or run `xattr -dr com.apple.quarantine "/Applications/SadSha Lumen.app"`.
 - The first voice instruction asks for microphone access and, as on Windows, downloads the speech model once (about 240 MB) after you agree. Speech is recognized on the Mac and never uploaded.
 - Cloud API keys are kept in the login keychain. After each update, macOS asks once whether the new build may read them; choose **Always Allow**.
 
@@ -46,12 +46,12 @@ Windows and macOS are at 2.3.0: a Portrait panel, cropping as a tool on the phot
 
 ## Updates and AI models
 
-From 2.1.1 LUMEN RAW checks for a new version in the background when it starts (it reads `lumen-update.json` on the latest GitHub release, sending only the program version). When there is one, the **LUMEN RAW — Software update** window shows the current and latest version, the download size and what changed:
+From 2.1.1 SadSha Lumen checks for a new version in the background when it starts (it reads `lumen-update.json` on the latest GitHub release, sending only the program version). When there is one, the **SadSha Lumen — Software update** window shows the current and latest version, the download size and what changed:
 
-- **Update now** downloads the update package and only the AI models this computer lacks (cancel at any time; it resumes next time), checks every file's size and SHA-256 and accepts files from this project's GitHub releases only. Then **Restart and update** closes LUMEN RAW (asking about unsaved edits as usual); the update package waits until it has exited, installs silently and opens the new version.
+- **Update now** downloads the update package and only the AI models this computer lacks (cancel at any time; it resumes next time), checks every file's size and SHA-256 and accepts files from this project's GitHub releases only. Then **Restart and update** closes SadSha Lumen (asking about unsaved edits as usual); the update package waits until it has exited, installs silently and opens the new version.
 - **Remind me later** closes the window until the next start. **Help → Check for updates…** checks by hand; **Help → Check for updates at start-up** turns the automatic check off.
-- **Only what changed is downloaded:** the fifteen AI models (about 522 MB) live in `models` next to `LumenRAW.exe`, named after their SHA-256 (e.g. `skyseg.b57ea5204f87.onnx`). The update package is the program alone (about 135 MB) and leaves `models` as it is; when a version replaces a model, only that model is downloaded. The full installer and the portable build still carry every model for offline installs.
-- **Missing models** are offered for download at start-up and in **Help → AI models…** (command line: `lumen-cli models --download`); a feature whose model is missing says what to download, everything else keeps working.
+- **Only what changed is downloaded:** the fifteen AI models (about 522 MB) live in `models` next to `SadShaLumen.exe`, named after their SHA-256 (e.g. `skyseg.b57ea5204f87.onnx`). The update package is the program alone (about 135 MB) and leaves `models` as it is; when a version replaces a model, only that model is downloaded. The full installer and the portable build still carry every model for offline installs.
+- **Missing models** are offered for download at start-up and in **Help → AI models…** (command line: `sadsha-lumen models --download`); a feature whose model is missing says what to download, everything else keeps working.
 - Portable copies, source runs (Linux included) and the macOS app open the download page instead.
 - **On a poor connection:** a download resumes by itself where it stopped when the connection drops or brings no data for 30 seconds. If it still fails, the window gives the reason (for example `github.com: the connection timed out`) and links for downloading by hand: a failed check links the [newest release](https://github.com/hety0211/lumen-raw/releases/latest), whose full installer (with every AI model) installs over the current version; a failed model download also links the [`ai-models` page](https://github.com/hety0211/lumen-raw/releases/tag/ai-models) for the missing files (keep their names), which go into the folder **Open model folder** shows, followed by **Retry**; the speech model files are on the [`speech-model-1` page](https://github.com/hety0211/lumen-raw/releases/tag/speech-model-1) and go into the folder **Open speech model folder** shows. (A fix made on release day, 2026-10-26: the 2.1.1 first uploaded stopped at the first dropped connection; if you installed it, install the new full installer over it — you will not be prompted.)
 - **Mirrors (2.1.2):** when GitHub cannot be reached, the update check and the downloads use the author's Singapore mirror, then the Hong Kong one ([lumenraw.com](https://lumenraw.com/download/)). A mirror's update feed counts only with a valid signature by the release key, and every file is checked against the SHA-256 in that feed, so a mirror cannot change anything.
@@ -64,7 +64,7 @@ From 2.1.1 LUMEN RAW checks for a new version in the background when it starts (
 - **Edit history and a new Auto (2.3.0):** every edit step is listed by name and one click goes back to it; **Auto** now sets white balance, exposure, tone and vibrance from measurements of the photo, as ordinary sliders. The develop panels are one row of eight (color grading joined **Color**, lens corrections fold away at the bottom of **Detail**).
 - **In-app updates (2.1.1):** a new version is found at start-up, downloaded with one click and installed silently after the window closes; the AI models are kept apart from the program, so later updates download only the program (about 135 MB) and the models that changed. Dropped connections resume by themselves, and a failed download links a page for downloading by hand.
 - **Sharpness and closed eyes analysed separately (2.1.1):** two switches in the **Library** menu; landscapes can skip the face search, and turning the second analysis on later computes only that part.
-- **DeepSeek Harness and Xiaomi MiMo (2.1.1):** one click in **AI assistants (MCP)** adds LUMEN RAW to DSH; natural-language editing adds Xiaomi MiMo and drops Qwen (Bailian), Doubao (Ark) and SiliconFlow.
+- **DeepSeek Harness and Xiaomi MiMo (2.1.1):** one click in **AI assistants (MCP)** adds SadSha Lumen to DSH; natural-language editing adds Xiaomi MiMo and drops Qwen (Bailian), Doubao (Ark) and SiliconFlow.
 - **Linux (2.1.1, community contribution):** x86_64 Linux runs from source, with native CUDA development kernels and CUDA AI models on NVIDIA GPUs. See [Download and install](#download-and-install).
 - **AI removal (2.1.0):** paint over a distraction, or click it, and a local LaMa model fills it from its surroundings — people on a pier, a sign, a whole lighthouse. The fill is computed once on the original and saved with the project, so preview, zoom and export match. See [AI removal](#ai-removal).
 - **Landscape masks and picked objects (2.1.0):** one click selects water, vegetation, mountains, buildings or the ground; **Pick Object** masks anything you click, Shift-click adds, Alt-click takes away. See [Landscape masks and picked objects](#landscape-masks-and-picked-objects).
@@ -79,11 +79,11 @@ From 2.1.1 LUMEN RAW checks for a new version in the background when it starts (
 - **Histogram dragging and a grading eyedropper (1.7.0):** drag in the histogram to change blacks, shadows, exposure, highlights and whites, as in Lightroom; pick a color from the photo as a color-grading hue. See [Histogram dragging and the grading eyedropper](#histogram-dragging-and-the-grading-eyedropper).
 - **Scene-referred color (1.6.0):** process version 2 keeps colors outside sRGB through the RAW decode, computes exposure, white balance and highlights / shadows in linear light (highlights / shadows as halo-free local tone mapping), works saturation, the color mixer and grading in OkLCh, and maps colors beyond sRGB keeping hue and lightness. Older projects look unchanged. See [Color and process versions](#color-and-process-versions).
 - **Ratings (1.6.0):** stars, pick / reject flags and color labels with Lightroom's shortcuts and a field search; saved automatically, interchanged with XMP, importable from Lightroom catalogs. See [Ratings and filters](#ratings-and-filters).
-- **AI assistants and command line (1.6.0):** Claude Code, Codex, WorkBuddy and other local assistants drive LUMEN RAW over MCP (visible in the window, undoable); `lumen-cli` renders from scripts. See [AI assistants (MCP) and the command line](#ai-assistants-mcp-and-the-command-line).
+- **AI assistants and command line (1.6.0):** Claude Code, Codex, WorkBuddy and other local assistants drive SadSha Lumen over MCP (visible in the window, undoable); `sadsha-lumen` renders from scripts. See [AI assistants (MCP) and the command line](#ai-assistants-mcp-and-the-command-line).
 - **Lens corrections (1.5.1):** the lens is identified from EXIF and its distortion, vignetting and lateral chromatic aberration (purple / green edge fringes) are corrected with the open-source lensfun database. See [Lens corrections](#lens-corrections).
 - **Nine interface languages (1.5.1):** switch any time from the **Language** menu; the installer offers the same languages.
 - **Edit in one sentence (1.5):** type or say the look you want; a local or cloud language model of your choice returns the parameters, applied as one undoable step. See [Natural-language editing](#natural-language-editing).
-- **RAW formats:** Sony ARW / SR2 / SRF, Canon CRW / CR2 / CR3, Nikon NEF / NRW, Fujifilm RAF (including X-Trans), Panasonic RW2, DNG and other formats supported by the bundled LibRaw, plus JPEG / PNG / TIFF. Nikon "High Efficiency" NEFs that LibRaw cannot decode open from their full-size embedded JPEG (since 2.1.2 decoded in the sRGB or Adobe RGB the camera was set to). Embedded ICC profiles (Display P3, Adobe RGB and others) and camera files marked Adobe RGB in their EXIF are read in their own colour space, wide-gamut colours unclipped. For the Nikon Z50 II and Z5 II, which the bundled LibRaw does not list, LUMEN RAW supplies the colour matrix of their lossless NEFs.
+- **RAW formats:** Sony ARW / SR2 / SRF, Canon CRW / CR2 / CR3, Nikon NEF / NRW, Fujifilm RAF (including X-Trans), Panasonic RW2, DNG and other formats supported by the bundled LibRaw, plus JPEG / PNG / TIFF. Nikon "High Efficiency" NEFs that LibRaw cannot decode open from their full-size embedded JPEG (since 2.1.2 decoded in the sRGB or Adobe RGB the camera was set to). Embedded ICC profiles (Display P3, Adobe RGB and others) and camera files marked Adobe RGB in their EXIF are read in their own colour space, wide-gamut colours unclipped. For the Nikon Z50 II and Z5 II, which the bundled LibRaw does not list, SadSha Lumen supplies the colour matrix of their lossless NEFs.
 - **Non-destructive development:** exposure, contrast, highlights / shadows / whites / blacks, an exposure curve you can bend anywhere, white balance (camera-recorded temperature and an eyedropper), 8-color HSL, RGB and per-channel curves, three-way color grading, monochrome, vignette and grain. 12 built-in looks with adjustable strength (importable and exportable), Lightroom preset and LUT import, auto adjust, snapshots, undo / redo.
 - **Detail and retouching:** dehaze, clarity, texture, sharpening, luminance and color noise reduction; spot healing, clone stamp and AI removal.
 - **Masks:** brush, linear and radial gradients, luminance range, similar-color selection, local AI models for sky, people, subject, background, foreground, water, vegetation, mountains, buildings and ground, and objects picked with a click. Invert, feather, opacity and brush refinement; up to 32 masks per photo.
@@ -95,7 +95,7 @@ From 2.1.1 LUMEN RAW checks for a new version in the background when it starts (
 
 ## AI removal
 
-![LUMEN RAW 2.1.0 in English: in the Retouch panel the tool "AI Remove · Click object" is chosen; one click on the Skagen lighthouse outlined the whole tower in purple and the status bar reads "Reading the original and removing with AI…"](docs/screenshots/removal-en.png)
+![SadSha Lumen 2.1.0 in English: in the Retouch panel the tool "AI Remove · Click object" is chosen; one click on the Skagen lighthouse outlined the whole tower in purple and the status bar reads "Reading the original and removing with AI…"](docs/screenshots/removal-en.png)
 
 ![The same photo before (left) and after (right) the click: the lighthouse is gone, the house, the flag and the clouds are continued](docs/screenshots/removal-before-after.jpg)
 
@@ -111,7 +111,7 @@ In the **Retouch** panel, the tool menu has two AI tools next to spot healing an
 
 ## Landscape masks and picked objects
 
-![LUMEN RAW 2.1.0 in English: the Masks panel with the new buttons Water, Vegetation, Mountains, Buildings and Ground and the active Pick Object button; one click on the kitten selected it (purple overlay), including the raised paw](docs/screenshots/object-masks-en.png)
+![SadSha Lumen 2.1.0 in English: the Masks panel with the new buttons Water, Vegetation, Mountains, Buildings and Ground and the active Pick Object button; one click on the kitten selected it (purple overlay), including the raised paw](docs/screenshots/object-masks-en.png)
 
 - **Water, Vegetation, Mountains, Buildings, Ground:** one network (EfficientViT-Seg B2, trained on the 150 classes of ADE20K) finds all five groups at once, in about 0.25 s on the CPU. Water covers water, sea, rivers, lakes, pools and waterfalls; vegetation trees, grass, plants, fields, flowers and palms; mountains mountains, hills and rocks; buildings buildings, houses, skyscrapers, towers, bridges, walls, columns, huts and piers; ground the ground, roads, pavements, earth, sand, paths, tracks and dirt roads. Like the sky and people masks, they appear at once from the preview and their edges are then refined on the original.
 - **Pick Object:** turn it on and click anything in the photo: EfficientViT-SAM L0 (an efficient Segment Anything) outlines it. The first click encodes the whole picture (about 0.5–1 s), then each click takes about 15 ms plus 0.3 s to align the mask with the photo's edges. Shift-click adds (another part, or the next of several things), Alt-click (`Option` on a Mac) takes away: the whole object under that click is removed, unless it holds an added click, then only the part you marked. The clicks are saved with the project.
@@ -119,7 +119,7 @@ In the **Retouch** panel, the tool menu has two AI tools next to spot healing an
 
 ## Black and white points on the exposure curve
 
-![LUMEN RAW 2.1.0 in English: the exposure curve in the Light panel with its black point moved to the start of the histogram and its white point being dragged to its end; the readout says "White point 182 → 255" and the Grand Canyon photo gains contrast](docs/screenshots/curve-ends-en.png)
+![SadSha Lumen 2.1.0 in English: the exposure curve in the Light panel with its black point moved to the start of the histogram and its white point being dragged to its end; the readout says "White point 182 → 255" and the Grand Canyon photo gains contrast](docs/screenshots/curve-ends-en.png)
 
 - The two ends of the exposure curve (square handles) move freely, as when you stretch a log image with a curve in DaVinci Resolve: the black point to the right clips the darkest tones, upwards it lifts the blacks (a faded look); the white point to the left takes duller highlights to pure white, downwards it lowers the white level. The whole curve between them, including bends you made, keeps its shape and stretches; outside them it stays flat.
 - The histogram of the unedited photo is drawn behind the curve, so you can see where a flat image's tones begin and end and drag the points there. While dragging, the curve shows the point's input → output (0–255).
@@ -127,7 +127,7 @@ In the **Retouch** panel, the tool menu has two AI tools next to spot healing an
 
 ## Library
 
-The **Library** page (`G`; `D` returns to **Develop**) is LUMEN RAW's own catalog of your photos.
+The **Library** page (`G`; `D` returns to **Develop**) is SadSha Lumen's own catalog of your photos.
 
 1. **Import:** **Import Folder…** (`Ctrl+Shift+I`, or drag a folder onto the grid) adds a folder and its sub-folders in the background, skipping recycle bins and system or hidden folders. Photos stay where they are; the library only records them (`library.db` in the data folder). Photos you open in the develop view join the library too.
 2. **Browse:** on the left are the catalog (all photos, last import, the current selection), smart albums, the folder tree with photo counts, and keywords. The grid sorts by capture time, name, rating or import time; `Ctrl` + wheel or the slider sizes thumbnails from 96 to 320 pixels. Thumbnails show stars, flags, color labels, burst positions and hints.
@@ -142,7 +142,7 @@ The **Library** page (`G`; `D` returns to **Develop**) is LUMEN RAW's own catalo
 
 ## Culling
 
-![LUMEN RAW 2.0.0 culling in compare mode: a lighthouse in Greece on the left, the candidate (Skagen lighthouse) on the right with an amber frame; the header shows its capture data, four stars, the pick flag and sharpness 98, the strip below shows the ratings of the whole set](docs/screenshots/culling-en.png)
+![SadSha Lumen 2.0.0 culling in compare mode: a lighthouse in Greece on the left, the candidate (Skagen lighthouse) on the right with an amber frame; the header shows its capture data, four stars, the pick flag and sharpness 98, the strip below shows the ratings of the whole set](docs/screenshots/culling-en.png)
 
 **Cull** (`C`, or `Space` in the grid) shows the photos of the grid full screen — only the selected ones when several are selected. It can also start from the filmstrip.
 
@@ -176,7 +176,7 @@ Select an interval sequence in the filmstrip (or in the library grid, which adds
 
 ## Presets, Lightroom presets and LUTs
 
-![LUMEN RAW 1.7.0: the Presets panel lists imported Lightroom presets by group ("Film Looks") with "Amber Film 01" applied, and the strength slider of the LUT "Teal Orange Film" below](docs/screenshots/presets-en.png)
+![SadSha Lumen 1.7.0: the Presets panel lists imported Lightroom presets by group ("Film Looks") with "Amber Film 01" applied, and the strength slider of the LUT "Teal Orange Film" below](docs/screenshots/presets-en.png)
 
 In the left-hand **Presets** panel:
 
@@ -201,14 +201,14 @@ In the left-hand **Presets** panel:
 
 ## Histogram dragging and the grading eyedropper
 
-![LUMEN RAW 1.7.0: the histogram's Shadows zone is shaded and reads +38; in the Grading panel the Pick color button sits next to the zone selector, and the hue 41 was picked from the photo](docs/screenshots/tools-en.png)
+![SadSha Lumen 1.7.0: the histogram's Shadows zone is shaded and reads +38; in the Grading panel the Pick color button sits next to the zone selector, and the hue 41 was picked from the photo](docs/screenshots/tools-en.png)
 
 - **Drag the histogram:** as in Lightroom, the histogram has five zones (blacks, shadows, exposure, highlights, whites). The zone under the pointer is shaded and named with its value; drag left or right to change it (the full width is 200 points, 4 EV for exposure). Each drag is one undo step; double-click resets the zone.
 - **Grading eyedropper:** in the **Grading** panel choose shadows, midtones or highlights, click **Pick color**, then click a color in the photo to use its hue for that zone; a zone without a tint also gets a strength from how vivid the color is. Grey spots are ignored.
 
 ## Lens corrections
 
-![LUMEN RAW 1.5.1 in English: the Crop · Lens panel has identified a Nikon Nikkor Z 14-24mm f/2.8 S from EXIF and corrects its distortion, vignetting and chromatic aberration](docs/screenshots/workspace-en.png)
+![SadSha Lumen 1.5.1 in English: the Crop · Lens panel has identified a Nikon Nikkor Z 14-24mm f/2.8 S from EXIF and corrects its distortion, vignetting and chromatic aberration](docs/screenshots/workspace-en.png)
 
 **Lens Corrections** sits below the crop tools in the right-hand **Crop · Lens** panel:
 
@@ -219,11 +219,11 @@ In the left-hand **Presets** panel:
 - The correction is interpolated between the database's calibrations for the photo's focal length, aperture and focus distance, and scaled for the body's crop factor; APS-C crop mode on a full-frame body is recognized from the 35 mm equivalent focal length in EXIF. Profiles calibrated for a smaller format are not used on larger images.
 - Corrections come first in the pipeline: vignetting is corrected in linear light, and after distortion correction the image is enlarged so no empty corners remain. Crop, masks, retouching, the white-balance eyedropper and AI masks all work on the corrected image; hold-for-original and before / after show the uncorrected original.
 - Corrections are saved with the project and applied to export, batch export and the zoomed view. **Apply Current Look to Selected** copies the correction switches and amounts; each photo gets the profile for its own EXIF.
-- The lensfun models are implemented in LUMEN RAW itself (the lensfun library is not linked) and were checked against lensfun's own results: chromatic-aberration sample positions agree to within 0.002 px.
+- The lensfun models are implemented in SadSha Lumen itself (the lensfun library is not linked) and were checked against lensfun's own results: chromatic-aberration sample positions agree to within 0.002 px.
 
 ## Natural-language editing
 
-![LUMEN RAW 1.5.0 (Chinese interface): in the natural-language tab on the left, a local qwen3-14b model has applied "warmer, brighter shadows, more vivid colors"](docs/screenshots/workspace.png)
+![SadSha Lumen 1.5.0 (Chinese interface): in the natural-language tab on the left, a local qwen3-14b model has applied "warmer, brighter shadows, more vivid colors"](docs/screenshots/workspace.png)
 
 The **Natural Language** tab sits between presets and snapshots in the left panel:
 
@@ -261,7 +261,7 @@ Photos opened in 1.6.0 use **process version 2 (scene-referred)**; projects and 
 
 ## Ratings and filters
 
-![LUMEN RAW 1.6.0: filmstrip thumbnails show stars, the pick flag, a rejected photo and color labels; the toolbar has stars, flags, labels and filters; the status bar shows an edit an AI assistant just applied](docs/screenshots/library-en.png)
+![SadSha Lumen 1.6.0: filmstrip thumbnails show stars, the pick flag, a rejected photo and color labels; the toolbar has stars, flags, labels and filters; the status bar shows an edit an AI assistant just applied](docs/screenshots/library-en.png)
 
 In the library grid, in culling, and in the filmstrip toolbar and thumbnails:
 
@@ -279,57 +279,57 @@ In the library grid, in culling, and in the filmstrip toolbar and thumbnails:
 
 ## AI assistants (MCP) and the command line
 
-Every operation of LUMEN RAW is a command with a stable id and JSON parameters (`edit.apply`, `library.rate`, `photo.export`, …). The rating controls, the command palette (`Ctrl+K`), the command line and the MCP server all dispatch through the same layer.
+Every operation of SadSha Lumen is a command with a stable id and JSON parameters (`edit.apply`, `library.rate`, `photo.export`, …). The rating controls, the command palette (`Ctrl+K`), the command line and the MCP server all dispatch through the same layer.
 
-**Let an AI assistant work in LUMEN RAW:** **Help → AI Assistants (MCP)** shows ready-to-copy setups:
-
-```
-claude mcp add lumen-raw -- "%LOCALAPPDATA%\Programs\LUMEN RAW\lumen-cli.exe" mcp
-codex mcp add lumen-raw -- "%LOCALAPPDATA%\Programs\LUMEN RAW\lumen-cli.exe" mcp
-```
-
-On a Mac, `lumen-cli` is inside the app:
+**Let an AI assistant work in SadSha Lumen:** **Help → AI Assistants (MCP)** shows ready-to-copy setups:
 
 ```
-claude mcp add lumen-raw -- "/Applications/LUMEN RAW.app/Contents/MacOS/lumen-cli" mcp
+claude mcp add sadsha-lumen -- "%LOCALAPPDATA%\Programs\SadSha Lumen\sadsha-lumen.exe" mcp
+codex mcp add sadsha-lumen -- "%LOCALAPPDATA%\Programs\SadSha Lumen\sadsha-lumen.exe" mcp
 ```
 
-**DeepSeek Harness (DSH, 2.1.1):** the **DeepSeek Harness** page of that window writes the entry into `~/.dsh/cordis.patch.yml` (the home-level patch every DSH profile reads, the command line and the desktop app alike; your other entries stay and the file is backed up first), or run `lumen-cli mcp-config dsh --install`. Restart DSH; the tools appear as `mcp__lumen-raw__<tool>`. The entry is one `@deepseek-ai/dsh-mcp-client` row:
+On a Mac, `sadsha-lumen` is inside the app:
+
+```
+claude mcp add sadsha-lumen -- "/Applications/SadSha Lumen.app/Contents/MacOS/sadsha-lumen" mcp
+```
+
+**DeepSeek Harness (DSH, 2.1.1):** the **DeepSeek Harness** page of that window writes the entry into `~/.dsh/cordis.patch.yml` (the home-level patch every DSH profile reads, the command line and the desktop app alike; your other entries stay and the file is backed up first), or run `sadsha-lumen mcp-config dsh --install`. Restart DSH; the tools appear as `mcp__sadsha-lumen__<tool>`. The entry is one `@deepseek-ai/dsh-mcp-client` row:
 
 ```yaml
 - insert:
-    - id: mcp-lumen-raw
+    - id: mcp-sadsha-lumen
       name: '@deepseek-ai/dsh-mcp-client'
       config:
-        serverName: lumen-raw
+        serverName: sadsha-lumen
         transport: stdio
-        command: 'C:\Users\<you>\AppData\Local\Programs\LUMEN RAW\lumen-cli.exe'
+        command: 'C:\Users\<you>\AppData\Local\Programs\SadSha Lumen\sadsha-lumen.exe'
         args: ['mcp']
         env: {}
         toolCallTimeoutMs: 600000
 ```
 
-WorkBuddy, Claude Desktop and other clients take a JSON entry (`"command"`: the full path of `lumen-cli.exe`, or of `lumen-cli` on a Mac, `"args": ["mcp"]`). Then ask, for example: "apply the Golden preset to the photos rated three stars or more in this folder, darken the sky a little and export them to the desktop", or "import E:\DCIM, keep the sharpest open-eyed frame of each burst and tag them Iceland".
+WorkBuddy, Claude Desktop and other clients take a JSON entry (`"command"`: the full path of `sadsha-lumen.exe`, or of `sadsha-lumen` on a Mac, `"args": ["mcp"]`). Then ask, for example: "apply the Golden preset to the photos rated three stars or more in this folder, darken the sky a little and export them to the desktop", or "import E:\DCIM, keep the sharpest open-eyed frame of each burst and tag them Iceland".
 
-- **With LUMEN RAW open:** the assistant works in the window through a local control channel (a named pipe on Windows, a Unix socket on macOS, that only your user can open); every step is visible and `Ctrl+Z` undoes it. The status bar and the AI Assistants window list recent actions; window control can be switched off there.
-- **With LUMEN RAW closed:** the assistant opens, edits, renders and exports photos in the background, continuing from a `.lumen` project next to a photo; nothing is written until it saves a project or exports.
+- **With SadSha Lumen open:** the assistant works in the window through a local control channel (a named pipe on Windows, a Unix socket on macOS, that only your user can open); every step is visible and `Ctrl+Z` undoes it. The status bar and the AI Assistants window list recent actions; window control can be switched off there.
+- **With SadSha Lumen closed:** the assistant opens, edits, renders and exports photos in the background, continuing from a `.lumen` project next to a photo; nothing is written until it saves a project or exports.
 - **Tools (32):** open photos, read / apply edits (the natural-language editing vocabulary, including AI region masks such as sky and subject, and LUTs), refine AI mask edges, undo / redo, auto tone, presets (built-in and imported), import Lightroom presets and LUTs, copy edits, stars / flags / labels, render a preview (a JPEG image the assistant can look at), export, batch export, save projects; new in 2.0.0: import folders into the library, search it (keywords, camera, date, sharpness, closed eyes, bursts …), add or remove keywords, analyse sharpness and closed eyes and pick the best frame of each burst, and make time-lapse videos.
 - **Protocol:** stdio; MCP 2026-07-28 (no handshake) and 2024-11-05 to 2025-11-25 (`initialize`).
 
 **Command line:**
 
 ```
-lumen-cli render DSC0001.ARW out.jpg --size 2560 --preset Golden --set exposure=0.3 --set hsl.blue.saturation=20
-lumen-cli render DSC0001.ARW out.jpg --preset "Amber Film 01" --lut film.cube --lut-amount 70
-lumen-cli import-presets presets.zip
-lumen-cli render trip.lumen out.tif
-lumen-cli rate *.ARW 4
-lumen-cli list "rating>=3 -flag:reject"
-lumen-cli run edit.apply "{\"changes\": {\"adjustments\": {\"highlights\": -40}}}"
-lumen-cli run catalog.import "{\"paths\": [\"E:/DCIM\"]}"
-lumen-cli run catalog.search "{\"query\": \"burst:best -eyes:closed keyword:Iceland\"}"
-lumen-cli run video.timelapse "{\"query\": \"folder:Timelapse\", \"output\": \"night.mp4\", \"deflicker\": \"medium\"}"
-lumen-cli commands
+sadsha-lumen render DSC0001.ARW out.jpg --size 2560 --preset Golden --set exposure=0.3 --set hsl.blue.saturation=20
+sadsha-lumen render DSC0001.ARW out.jpg --preset "Amber Film 01" --lut film.cube --lut-amount 70
+sadsha-lumen import-presets presets.zip
+sadsha-lumen render trip.lumen out.tif
+sadsha-lumen rate *.ARW 4
+sadsha-lumen list "rating>=3 -flag:reject"
+sadsha-lumen run edit.apply "{\"changes\": {\"adjustments\": {\"highlights\": -40}}}"
+sadsha-lumen run catalog.import "{\"paths\": [\"E:/DCIM\"]}"
+sadsha-lumen run catalog.search "{\"query\": \"burst:best -eyes:closed keyword:Iceland\"}"
+sadsha-lumen run video.timelapse "{\"query\": \"folder:Timelapse\", \"output\": \"night.mp4\", \"deflicker\": \"medium\"}"
+sadsha-lumen commands
 ```
 
 `run` executes in the open window when there is one (`--headless` never does). Results are JSON; from source use `python main.py --cli …`.
@@ -337,7 +337,7 @@ lumen-cli commands
 ## Interface languages and appearance
 
 - **View → Appearance** offers **Match system** (the default; follows Windows' or macOS's dark / light switch at once), **Dark** (near-black with amber accents, so the photo sits on almost black) or **Light** (warm white panels around a neutral grey canvas). The choice applies at once and is remembered; where the system allows, the title bar follows. Since 2.1.0 the Mac build switches themes too.
-- The **Language** menu at the top offers English, 简体中文, 繁體中文, 日本語, 한국어, Deutsch, Français, Español and Русский. After choosing one, LUMEN RAW offers to restart; unsaved edits are offered for saving first.
+- The **Language** menu at the top offers English, 简体中文, 繁體中文, 日本語, 한국어, Deutsch, Français, Español and Русский. After choosing one, SadSha Lumen offers to restart; unsaved edits are offered for saving first.
 - The Windows installer asks for the same nine languages and writes the choice to the settings, so the first start uses it; after a change in the app, the next installer run preselects that language. Without a setting, the interface follows the system language.
 - Japanese, Korean and Traditional Chinese use the system's fonts for those scripts; Latin and Cyrillic text uses the system interface font.
 
@@ -388,18 +388,18 @@ lumen-cli commands
 
 | What | Windows | macOS |
 |---|---|---|
-| Logs | `%LOCALAPPDATA%\LUMEN RAW\logs` | `~/Library/Logs/LUMEN RAW` |
-| Interface language and lens defaults (`settings.ini`), natural-language settings, GPU compatibility record | `%LOCALAPPDATA%\LUMEN RAW` | `~/Library/Application Support/LUMEN RAW` |
-| API keys | in the settings file, DPAPI-encrypted | login keychain ("LUMEN RAW") |
-| Rating catalog (`catalog.jsonl`), command-line log | `%LOCALAPPDATA%\LUMEN RAW` | `~/Library/Application Support/LUMEN RAW` |
-| Imported and saved presets (`.lumenpreset`) | `%LOCALAPPDATA%\LUMEN RAW\presets` | `~/Library/Application Support/LUMEN RAW/presets` |
-| Library (`library.db`: folders, capture data, keywords, smart albums, culling hints) | `%LOCALAPPDATA%\LUMEN RAW` | — |
-| Preview cache (default limit 4 GB, deleted on uninstall) | `%LOCALAPPDATA%\LUMEN RAW\cache\previews` | — |
-| Speech model (downloaded on first use) | `%LOCALAPPDATA%\LUMEN RAW\models\sensevoice` | bundled in the app |
-| AI models (2.1.1) | `models` next to `LumenRAW.exe` (`%LOCALAPPDATA%\LUMEN RAW\models` when that folder cannot be written); deleted on uninstall | bundled in the app |
-| Downloaded update (2.1.1) | `%LOCALAPPDATA%\LUMEN RAW\updates`, deleted once the new version runs | — |
+| Logs | `%LOCALAPPDATA%\SadSha Lumen\logs` | `~/Library/Logs/SadSha Lumen` |
+| Interface language and lens defaults (`settings.ini`), natural-language settings, GPU compatibility record | `%LOCALAPPDATA%\SadSha Lumen` | `~/Library/Application Support/SadSha Lumen` |
+| API keys | in the settings file, DPAPI-encrypted | login keychain ("SadSha Lumen") |
+| Rating catalog (`catalog.jsonl`), command-line log | `%LOCALAPPDATA%\SadSha Lumen` | `~/Library/Application Support/SadSha Lumen` |
+| Imported and saved presets (`.lumenpreset`) | `%LOCALAPPDATA%\SadSha Lumen\presets` | `~/Library/Application Support/SadSha Lumen/presets` |
+| Library (`library.db`: folders, capture data, keywords, smart albums, culling hints) | `%LOCALAPPDATA%\SadSha Lumen` | — |
+| Preview cache (default limit 4 GB, deleted on uninstall) | `%LOCALAPPDATA%\SadSha Lumen\cache\previews` | — |
+| Speech model (downloaded on first use) | `%LOCALAPPDATA%\SadSha Lumen\models\sensevoice` | bundled in the app |
+| AI models (2.1.1) | `models` next to `SadShaLumen.exe` (`%LOCALAPPDATA%\SadSha Lumen\models` when that folder cannot be written); deleted on uninstall | bundled in the app |
+| Downloaded update (2.1.1) | `%LOCALAPPDATA%\SadSha Lumen\updates`, deleted once the new version runs | — |
 
-- On Linux these files live under `~/.local/state/LUMEN RAW`. API keys are stored in `natural-language.json` with mode 0600, since Linux has no counterpart to DPAPI or the keychain here; protect your account and backups accordingly.
+- On Linux these files live under `~/.local/state/SadSha Lumen`. API keys are stored in `natural-language.json` with mode 0600, since Linux has no counterpart to DPAPI or the keychain here; protect your account and backups accordingly.
 - Originals are read-only. Edits live in `.lumen` / `.lumenalbum` files; AI and merge results are saved as new DNG files. Removing a photo from the filmstrip or the library does not delete it from disk.
 - **Library → Preview Cache** sets the cache limit (1–32 GB), turns it off or empties it; it is rebuilt as needed. A photo changed on disk is decoded again. Uninstalling keeps the library and ratings.
 - The app goes online only when you edit with a cloud model, when you download the speech model or AI models it lacks, when Windows downloads TensorRT for RTX the first time, and, from 2.1.1, to check for a new version when it starts: one request for `lumen-update.json` on the latest GitHub release, carrying nothing but the program version; switch it off with **Help → Check for updates at start-up**. Running from source also downloads the runtime assets once. The lens database and the face models are bundled; identifying lenses and culling need no network.
@@ -435,7 +435,7 @@ The repository holds the code, tests, the lensfun lens database, model provenanc
 
 ```powershell
 git clone https://github.com/hety0211/lumen-raw.git
-cd lumen-raw
+cd sadsha-lumen
 py -3.12 -m venv .venv
 .\.venv\Scripts\python.exe -m pip install -r requirements.txt
 .\.venv\Scripts\python.exe tools/fetch_assets.py
@@ -455,7 +455,7 @@ For GPU acceleration, switch ONNX Runtime to the Windows ML build (DirectML incl
 
 ```bash
 git clone https://github.com/hety0211/lumen-raw.git
-cd lumen-raw
+cd sadsha-lumen
 ./run-source.command
 ```
 
@@ -465,7 +465,7 @@ The first run creates `.venv-macos`, installs `requirements-macos.txt`, and rest
 
 ```bash
 git clone https://github.com/hety0211/lumen-raw.git
-cd lumen-raw
+cd sadsha-lumen
 ./run-source.sh
 ```
 
@@ -482,7 +482,7 @@ The first run creates `.venv-linux`, installs `requirements.txt`, and — when `
 - **Translations:** interface texts are written in Simplified Chinese in the code and looked up through `tr()` in `lumen/locales/<language>.json`; `python tools/i18n_catalog.py` reports missing entries and placeholder mismatches. Add translations for every language when you add interface text.
 - **Windows release build:** `build-release.cmd` runs the tests and the DirectML check, then builds the portable ZIP and the Inno Setup installer.
 - **macOS release build:** `./build-macos.command` runs the tests and the Metal / Core ML check, then PyInstaller, ad-hoc signing, smoke tests and the DMG. Output goes to `.publish/v<version>/macos/`.
-- **Linux development and release build:** `./run-source.sh` for the editor; `.venv-linux/bin/python -m pip install -r requirements-linux-dev.txt` then `.venv-linux/bin/python -m pytest tests -q`. `tools/build_linux.sh --sample photo.DNG` runs the tests, the source smoke test, PyInstaller and the frozen smoke test, and writes `LumenRAW-<version>-Linux-x86_64.tar.gz` to `.publish/v<version>/linux/`; the AI models go into `models` next to the program, as on Windows. The portable folder also contains `LumenRAW.desktop`, `lumen.png` and `install-desktop.sh` for a per-user menu entry.
+- **Linux development and release build:** `./run-source.sh` for the editor; `.venv-linux/bin/python -m pip install -r requirements-linux-dev.txt` then `.venv-linux/bin/python -m pytest tests -q`. `tools/build_linux.sh --sample photo.DNG` runs the tests, the source smoke test, PyInstaller and the frozen smoke test, and writes `SadShaLumen-<version>-Linux-x86_64.tar.gz` to `.publish/v<version>/linux/`; the AI models go into `models` next to the program, as on Windows. The portable folder also contains `SadShaLumen.desktop`, `lumen.png` and `install-desktop.sh` for a per-user menu entry.
 - **Self-checks with a real photo:**
   - `python main.py --smoke-test <photo> <output dir>`: interface, editing, masks, AI preview, every AI model loading, the speech model when it is installed, one natural-language edit, lens corrections, the language catalogs, the library and culling, and video encoding.
   - `--workflow-test`: multi-brand import and AI copies.

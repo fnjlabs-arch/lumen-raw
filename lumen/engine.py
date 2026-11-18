@@ -208,7 +208,7 @@ def _load_image(path, preview_limit=1600, develop_reference=False, clip=False):
             tags = {} if embedded else white_balance.metadata(path)[0]
             pixels = arr[..., :3][..., ::-1]
             if own:
-                # A LUMEN RAW export in Display P3 / Adobe RGB: back to linear sRGB primaries, unclipped.
+                # A SadSha Lumen export in Display P3 / Adobe RGB: back to linear sRGB primaries, unclipped.
                 rgb = color.to_linear_srgb(pixels.astype(np.float32) / 65535, own)
                 note = tr('{space} · 16-bit · 保留广色域', space=color.space(own).label)
             else:
@@ -386,7 +386,7 @@ def load_pillow(path, limit):
         tags = white_balance.metadata(path)[0]
         source, label = (None, '') if own else input_source(profile, tags, path)
         if own:
-            img = img.convert('RGB')        # a LUMEN RAW export in Display P3 / Adobe RGB: decoded below
+            img = img.convert('RGB')        # a SadSha Lumen export in Display P3 / Adobe RGB: decoded below
             note = tr('{space} · EXIF 方向已应用', space=color.space(own).label)
         elif source is not None:
             img = img.convert('L' if source.gray else 'RGB')    # decoded below, wide gamut kept

@@ -74,13 +74,13 @@ def background(scale=1):
         except OSError:
             return ImageFont.load_default()
     title = font(22)
-    draw.text((w / 2, 46 * scale), 'LUMEN RAW', font=title, fill=(229, 234, 220), anchor='mm')
+    draw.text((w / 2, 46 * scale), 'SadSha Lumen', font=title, fill=(229, 234, 220), anchor='mm')
     draw.text((w / 2, 76 * scale), '风光与旅行 RAW 工作室 · Apple 芯片版', font=font(13), fill=(135, 147, 137), anchor='mm')
     # Arrow between the two icon positions (180, 200) and (480, 200).
     y = 205 * scale
     draw.line([(262 * scale, y), (390 * scale, y)], fill=(160, 177, 143), width=3 * scale)
     draw.polygon([(398 * scale, y), (384 * scale, y - 9 * scale), (384 * scale, y + 9 * scale)], fill=(160, 177, 143))
-    draw.text((w / 2, 330 * scale), '将 LUMEN RAW 拖到「应用程序」文件夹完成安装', font=font(13),
+    draw.text((w / 2, 330 * scale), '将 SadSha Lumen 拖到「应用程序」文件夹完成安装', font=font(13),
               fill=(201, 213, 190), anchor='mm')
     draw.text((w / 2, 356 * scale), '首次打开若被系统拦截：系统设置 → 隐私与安全性 → 仍要打开', font=font(11),
               fill=(122, 135, 118), anchor='mm')
@@ -91,8 +91,8 @@ def main(folder):
     folder = Path(folder)
     folder.mkdir(parents=True, exist_ok=True)
     master = icon()
-    master.save(folder / 'LumenRAW-1024.png')
-    (folder / 'LumenRAW.icns').write_bytes(icns(master))
+    master.save(folder / 'SadShaLumen-1024.png')
+    (folder / 'SadShaLumen.icns').write_bytes(icns(master))
     background(1).save(folder / 'dmg-background.png')
     background(2).save(folder / 'dmg-background@2x.png')
     print(f'Icon and DMG background written to {folder}')

@@ -159,7 +159,7 @@ class MainWindow(WorkStateAccess, WorkflowMixin, AgentMixin, UpdateMixin, Natura
         font =Path(__file__).resolve().parents[1] / 'assets' / 'NotoSansSC.ttf'
         if font.exists():
             QFontDatabase.addApplicationFont(str(font))
-        self.setWindowTitle(tr('LUMEN RAW {version} · 多品牌 RAW 工作室', version=__version__))
+        self.setWindowTitle(tr('SadSha Lumen {version} · 多品牌 RAW 工作室', version=__version__))
         self.setWindowIcon(QIcon(str(Path(__file__).resolve().parents[1]/'assets/lumen.ico')))
         self.resize(1600, 1040)
         self.setMinimumSize(1180, 780)
@@ -205,7 +205,7 @@ class MainWindow(WorkStateAccess, WorkflowMixin, AgentMixin, UpdateMixin, Natura
         self.init_natural_language()
         self.build_ui()
         self.shortcuts()
-        # 1.6.0: local control channel for lumen-cli and MCP agents.
+        # 1.6.0: local control channel for sadsha-lumen and MCP agents.
         self.init_agents()
         # 2.1.1: AI models kept apart from the program, and updates from inside the editor.
         self.init_updates()
@@ -647,7 +647,7 @@ class MainWindow(WorkStateAccess, WorkflowMixin, AgentMixin, UpdateMixin, Natura
 
     def error(self, text):
         self.statusBar().showMessage(tr('操作未完成'))
-        QMessageBox.warning(self, 'LUMEN RAW', text)
+        QMessageBox.warning(self, 'SadSha Lumen', text)
 
     def may_discard(self):
         if self.source is None or (self.edits == self.saved_edits and self.snapshots == self.saved_snapshots):
@@ -1400,7 +1400,7 @@ def main():
     app = QApplication(sys.argv)
     from . import ai_worker
     app.aboutToQuit.connect(ai_worker.shutdown)
-    app.setApplicationName('LUMEN RAW')
+    app.setApplicationName('SadSha Lumen')
     i18n.install_qt_translator(app)
     app.setStyle('Fusion')
     theme.apply(app)

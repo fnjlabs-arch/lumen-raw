@@ -826,7 +826,7 @@ class NaturalLanguageMixin:
         if status == Qt.PermissionStatus.Undetermined:
             QApplication.instance().requestPermission(permission, self, lambda *_: self.nl_toggle_voice())
             return False
-        self.nl_status.setText(tr('没有麦克风权限：请在“系统设置 → 隐私与安全性 → 麦克风”中允许 LUMEN RAW。'))
+        self.nl_status.setText(tr('没有麦克风权限：请在“系统设置 → 隐私与安全性 → 麦克风”中允许 SadSha Lumen。'))
         return False
 
     def nl_level(self, value):

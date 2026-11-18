@@ -57,8 +57,8 @@ def record(path, tag):
 
 def main():
     tag = f'v{__version__}'
-    update = PACKAGES / f'LumenRAW-{__version__}-Update.exe'
-    setup = PACKAGES / f'LumenRAW-{__version__}-Setup.exe'
+    update = PACKAGES / f'SadShaLumen-{__version__}-Update.exe'
+    setup = PACKAGES / f'SadShaLumen-{__version__}-Setup.exe'
     for path in (update, setup):
         if not path.is_file():
             raise SystemExit(f'missing {path}')
@@ -68,9 +68,9 @@ def main():
         notes = json.loads(notes_file.read_text(encoding='utf-8'))
     else:
         print(f'warning: {notes_file} is missing; the feed carries a generic note', file=sys.stderr)
-        notes = {'zh_CN': f'LUMEN RAW {__version__} 已发布，详见发布页面。', 'en': f'LUMEN RAW {__version__} is out; see the release page.'}
+        notes = {'zh_CN': f'SadSha Lumen {__version__} 已发布，详见发布页面。', 'en': f'SadSha Lumen {__version__} is out; see the release page.'}
     page = f'{REPOSITORY}/releases/tag/{tag}'
-    feed = dict(format=1, name='LUMEN RAW', version=__version__, date=time.strftime('%Y-%m-%d'), page=page, notes=notes,
+    feed = dict(format=1, name='SadSha Lumen', version=__version__, date=time.strftime('%Y-%m-%d'), page=page, notes=notes,
                 windows=dict(version=__version__, page=page, update=record(update, tag), setup=record(setup, tag),
                              models=models))
     output = PACKAGES / 'lumen-update.json'

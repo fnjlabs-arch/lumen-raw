@@ -1,10 +1,10 @@
 ; Build with Inno Setup 6.7+ / 7 from the source directory:
-;   ISCC.exe /DAppBuild=dist\LumenRAW installer.iss
+;   ISCC.exe /DAppBuild=dist\SadShaLumen installer.iss
 ; AppVersion must equal lumen/__init__.py __version__ (checked by tests/test_v13_release.py).
-; 2.1.1: /DUpdatePackage builds LumenRAW-<version>-Update.exe, the program without the AI models
-; (dist\LumenRAW\models), which the editor downloads and runs to update itself.
+; 2.1.1: /DUpdatePackage builds SadShaLumen-<version>-Update.exe, the program without the AI models
+; (dist\SadShaLumen\models), which the editor downloads and runs to update itself.
 #ifndef AppBuild
-  #define AppBuild "dist\LumenRAW"
+  #define AppBuild "dist\SadShaLumen"
 #endif
 #ifndef AppVersion
   #define AppVersion "2.3.0"
@@ -18,24 +18,24 @@
 
 [Setup]
 AppId={{F1CA8FF7-EB54-4B53-81E3-4CC183C8C1B9}
-AppName=LUMEN RAW
+AppName=SadSha Lumen
 AppVersion={#AppVersion}
 VersionInfoVersion={#AppVersion}
-AppPublisher=LUMEN RAW
-DefaultDirName={localappdata}\Programs\LUMEN RAW
-DefaultGroupName=LUMEN RAW
+AppPublisher=SadSha Lumen
+DefaultDirName={localappdata}\Programs\SadSha Lumen
+DefaultGroupName=SadSha Lumen
 DisableProgramGroupPage=yes
 PrivilegesRequired=lowest
 ArchitecturesAllowed=x64compatible
 ArchitecturesInstallIn64BitMode=x64compatible
 MinVersion=10.0.19045
 OutputDir=.publish\{#PackageDir}\packages
-OutputBaseFilename=LumenRAW-{#AppVersion}-{#PackageKind}
+OutputBaseFilename=SadShaLumen-{#AppVersion}-{#PackageKind}
 Compression=lzma2/normal
 SolidCompression=yes
 WizardStyle=modern
 SetupIconFile=assets\lumen.ico
-UninstallDisplayIcon={app}\LumenRAW.exe
+UninstallDisplayIcon={app}\SadShaLumen.exe
 LicenseFile=LICENSE
 CloseApplications=yes
 RestartApplications=no
@@ -61,11 +61,11 @@ Name: "ru"; MessagesFile: "compiler:Languages\Russian.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked; Check: not PortableMode
 
 [Dirs]
-Name: "{localappdata}\LUMEN RAW"; Flags: uninsneveruninstall; Check: not PortableMode
+Name: "{localappdata}\SadSha Lumen"; Flags: uninsneveruninstall; Check: not PortableMode
 
 [INI]
 ; Read by lumen/i18n.py; the editor's language menu writes the same key.
-Filename: "{localappdata}\LUMEN RAW\settings.ini"; Section: "General"; Key: "language"; String: "{language}"; Check: not PortableMode
+Filename: "{localappdata}\SadSha Lumen\settings.ini"; Section: "General"; Key: "language"; String: "{language}"; Check: not PortableMode
 
 [Files]
 #ifdef UpdatePackage
@@ -85,22 +85,22 @@ Type: files; Name: "{group}\Lumen ARW.lnk"; Check: not PortableMode
 Type: files; Name: "{userdesktop}\Lumen ARW.lnk"; Check: not PortableMode
 
 [Icons]
-Name: "{group}\LUMEN RAW"; Filename: "{app}\LumenRAW.exe"; Check: not PortableMode
-Name: "{userdesktop}\LUMEN RAW"; Filename: "{app}\LumenRAW.exe"; Tasks: desktopicon; Check: not PortableMode
+Name: "{group}\SadSha Lumen"; Filename: "{app}\SadShaLumen.exe"; Check: not PortableMode
+Name: "{userdesktop}\SadSha Lumen"; Filename: "{app}\SadShaLumen.exe"; Tasks: desktopicon; Check: not PortableMode
 
 [UninstallDelete]
 ; 1.8.0: the speech model downloaded on first use (lumen/speech.py) is a re-downloadable cache.
-Type: filesandordirs; Name: "{localappdata}\LUMEN RAW\models"; Check: not PortableMode
+Type: filesandordirs; Name: "{localappdata}\SadSha Lumen\models"; Check: not PortableMode
 ; 2.0.0: the preview cache (lumen/preview_cache.py) is rebuilt when needed; the library catalog
 ; (library.db) and the ratings (catalog.jsonl) are the user's and stay.
-Type: filesandordirs; Name: "{localappdata}\LUMEN RAW\cache\previews"; Check: not PortableMode
+Type: filesandordirs; Name: "{localappdata}\SadSha Lumen\cache\previews"; Check: not PortableMode
 ; 2.1.1: models the editor downloaded itself are not in the uninstall log.
 Type: filesandordirs; Name: "{app}\models"; Check: not PortableMode
 
 [Run]
-Filename: "{app}\LumenRAW.exe"; Description: "{cm:LaunchProgram,LUMEN RAW}"; Flags: nowait postinstall skipifsilent
+Filename: "{app}\SadShaLumen.exe"; Description: "{cm:LaunchProgram,SadSha Lumen}"; Flags: nowait postinstall skipifsilent
 ; 2.1.1: an update started from the editor (/SILENT /RELAUNCH=1) opens it again when it is done.
-Filename: "{app}\LumenRAW.exe"; Flags: nowait; Check: RelaunchRequested
+Filename: "{app}\SadShaLumen.exe"; Flags: nowait; Check: RelaunchRequested
 
 [Code]
 const
@@ -179,7 +179,7 @@ begin
   if (CurStep = ssInstall) and not PortableMode then
   begin
     OldFolder := ExpandConstant('{app}\_internal\assets\models\sensevoice');
-    NewFolder := ExpandConstant('{localappdata}\LUMEN RAW\models\sensevoice');
+    NewFolder := ExpandConstant('{localappdata}\SadSha Lumen\models\sensevoice');
     if FileExists(OldFolder + '\model.int8.onnx') and ForceDirectories(NewFolder) then
     begin
       KeepFile('model.int8.onnx', OldFolder, NewFolder);

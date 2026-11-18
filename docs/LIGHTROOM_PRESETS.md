@@ -1,6 +1,6 @@
 # Lightroom 预设与 LUT（1.7.0）
 
-LUMEN RAW 可以导入 Lightroom Classic／Camera Raw 的修图预设和 `.cube` LUT，放进左侧「预设」面板，像内置风格一样带强度套用、批量套用到选中的照片。
+SadSha Lumen 可以导入 Lightroom Classic／Camera Raw 的修图预设和 `.cube` LUT，放进左侧「预设」面板，像内置风格一样带强度套用、批量套用到选中的照片。
 
 **这是近似换算。** LUMEN 的滑块不是 Adobe 的：处理版本 2 在场景线性光中做曝光与局部色调映射，色彩在 OkLCh 中计算，Adobe 的滑块曲线也没有公开。同一个预设在 LUMEN 中的效果接近 Lightroom，但不会完全一致；需要时导入后再微调。
 
@@ -14,7 +14,7 @@ LUMEN RAW 可以导入 Lightroom Classic／Camera Raw 的修图预设和 `.cube`
 | `.cube` | LUT，导入为“只设置 LUT”的预设。 |
 | `.lumenpreset` | LUMEN 自己的预设。 |
 
-导入的预设保存为 `.lumenpreset`，放在数据目录的 `presets` 文件夹（Windows：`%LOCALAPPDATA%\LUMEN RAW\presets`），下次启动仍在。分组取预设自带的 `crs:Group`，否则取预设包或所在文件夹的名称。再次导入同一个包会覆盖原来的文件，不会重复。Adobe 配置文件（`crs:PresetType` 为 Look／Profile 的 `.xmp`）不是修图预设，无法导入。
+导入的预设保存为 `.lumenpreset`，放在数据目录的 `presets` 文件夹（Windows：`%LOCALAPPDATA%\SadSha Lumen\presets`），下次启动仍在。分组取预设自带的 `crs:Group`，否则取预设包或所在文件夹的名称。再次导入同一个包会覆盖原来的文件，不会重复。Adobe 配置文件（`crs:PresetType` 为 Look／Profile 的 `.xmp`）不是修图预设，无法导入。
 
 ## 预设只改变它包含的设置
 
@@ -97,4 +97,4 @@ python tools/calibrate_lightroom.py [照片或文件夹 …] [--size 1200] [--pr
 - `edit.apply`：`changes` 中的 `lut` 可为 `{"path": "….cube", "amount": 80}`（载入）、`{"amount": 50}`（调强度）或 `null`（移除）。自然语言修图只能调强度或移除。
 - `preset.import`（MCP 工具 `import_presets`）：导入预设文件或预设包，返回导入的预设和未能套用的设置。
 - `edit.presets`／`edit.preset`：列出并套用内置风格与导入的预设；`edit.preset` 的 `paths` 可一次套用到多张照片。
-- `lumen-cli render … --preset 名称 --lut 文件.cube --lut-amount 80`，`lumen-cli import-presets 文件`。
+- `sadsha-lumen render … --preset 名称 --lut 文件.cube --lut-amount 80`，`sadsha-lumen import-presets 文件`。

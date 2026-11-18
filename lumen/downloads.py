@@ -7,7 +7,7 @@ caller checks the finished file's SHA-256 (``sha256``) before it is used.  Stand
 resumed by ``fetch`` itself, again and again while bytes keep arriving, and ``describe`` turns
 the operating system's long messages into a short reason the windows can show.
 
-2.1.2: LUMEN RAW's release files (update installers, AI and speech models) are mirrored on the
+2.1.2: SadSha Lumen's release files (update installers, AI and speech models) are mirrored on the
 author's servers, copied from GitHub every hour.  A file GitHub does not deliver is fetched from
 Singapore, then from Hong Kong (``alternatives``); every caller checks the SHA-256 it got from the
 program itself or from the signed update feed (``signing``), so a mirror can never change a file.

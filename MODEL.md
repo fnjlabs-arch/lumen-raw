@@ -2,11 +2,11 @@
 
 ## 2.1.1 模型与程序分开存放
 
-模型本身没有变化。打包时 15 个 AI 模型（float16 权重，共约 522 MB）不再放在程序文件（`_internal`）里，而是以内容命名（`<名称>.<SHA-256 前 12 位>.onnx`，例如 `skyseg.b57ea5204f87.onnx`）放在 `LumenRAW.exe` 旁边的 `models` 文件夹中，`_internal/assets/ai-models.json` 列出这个版本需要的文件、大小与 SHA-256（`tools/bundle.py` 的 `model_pack` 生成）。程序只按清单找文件、不做哈希，下载的文件核对大小与 SHA-256 后才改成最终文件名，所以同一模型的新旧版本可以并存，正在使用的文件不会被覆盖。
+模型本身没有变化。打包时 15 个 AI 模型（float16 权重，共约 522 MB）不再放在程序文件（`_internal`）里，而是以内容命名（`<名称>.<SHA-256 前 12 位>.onnx`，例如 `skyseg.b57ea5204f87.onnx`）放在 `SadShaLumen.exe` 旁边的 `models` 文件夹中，`_internal/assets/ai-models.json` 列出这个版本需要的文件、大小与 SHA-256（`tools/bundle.py` 的 `model_pack` 生成）。程序只按清单找文件、不做哈希，下载的文件核对大小与 SHA-256 后才改成最终文件名，所以同一模型的新旧版本可以并存，正在使用的文件不会被覆盖。
 
 - **完整安装包、便携包：** 带全部模型，可离线使用。
-- **升级包（`LumenRAW-<版本>-Update.exe`）：** 只有程序，不含模型，也不改动已有的 `models` 文件夹；软件内更新下载它，再只下载新版本清单中本机没有的模型。从 2.1.0 升级时，安装程序把 `_internal/assets/models` 中的旧模型移到 `models/import`，软件启动时把 SHA-256 与清单相符的文件改名留用（2.1.1 与 2.1.0 的模型完全相同，不需要下载），其余删除。
-- **下载来源：** 本项目 GitHub 的 `ai-models` 预发布（`https://github.com/hety0211/lumen-raw/releases/download/ai-models/<文件名>`），只上传以前没有的文件。`models` 文件夹不可写时下载到 `%LOCALAPPDATA%\LUMEN RAW\models`。缺少的模型在启动时提示下载，也可在「帮助 → AI 模型…」或 `lumen-cli models --download` 中下载；缺少模型的功能会说明需要下载什么，其他功能不受影响。
+- **升级包（`SadShaLumen-<版本>-Update.exe`）：** 只有程序，不含模型，也不改动已有的 `models` 文件夹；软件内更新下载它，再只下载新版本清单中本机没有的模型。从 2.1.0 升级时，安装程序把 `_internal/assets/models` 中的旧模型移到 `models/import`，软件启动时把 SHA-256 与清单相符的文件改名留用（2.1.1 与 2.1.0 的模型完全相同，不需要下载），其余删除。
+- **下载来源：** 本项目 GitHub 的 `ai-models` 预发布（`https://github.com/hety0211/lumen-raw/releases/download/ai-models/<文件名>`），只上传以前没有的文件。`models` 文件夹不可写时下载到 `%LOCALAPPDATA%\SadSha Lumen\models`。缺少的模型在启动时提示下载，也可在「帮助 → AI 模型…」或 `sadsha-lumen models --download` 中下载；缺少模型的功能会说明需要下载什么，其他功能不受影响。
 - 源码运行仍直接使用 `assets/models` 中的原始 float32 文件（`tools/fetch_assets.py`）。
 
 ## 2.1.0 AI 移除、风光语义蒙版与点选物体
@@ -17,7 +17,7 @@
 |---|---|---|---|
 | AI 移除 | LaMa big-lama（Suvorov 等，WACV 2022；advimman/lama，代码与权重 Apache-2.0）。ONNX 取自 Hugging Face `smile-forge/big-lama-onnx`（Apache-2.0，固定版本 `4211d2c`）：傅里叶单元的 FFT 写成与余弦／正弦矩阵的乘积，权重未改动，与原模型相差约 8×10⁻⁵ | `inpaint-lama.onnx`，208,851,664 字节 | `rgb` [1, 3, H, W]（0–1，H、W 为 8 的倍数，64–4096）与 `mask` [1, 1, H, W]（1 为要补全处）；输出补全后的图像 |
 | 点选物体 | EfficientViT-SAM L0（MIT Han Lab，Apache-2.0；建立在 Meta 的 Segment Anything 上，Apache-2.0），官方 ONNX，Hugging Face `mit-han-lab/efficientvit-sam`（固定版本 `a2f0c59`） | `object-encoder.onnx` 123,112,917 字节、`object-decoder.onnx` 16,470,362 字节 | 编码器：长边缩到 512 像素、补零到 512 × 512、按 ImageNet 均值方差（0–255 尺度）归一化；解码器：点击坐标（换算到长边 1024 的画面）与标签（1 加选、0 减选），输出 256 × 256 的蒙版 logits，对应补零后的 1024 画面；每个减选点再以单个加选点解码一次，得到的物体不含加选点时从结果中扣掉（只给点击时模型会在被减的物体上留下残片）。未补 Segment Anything 的“占位点”（标签 −1）：在面包上它去掉了残片，但让小猫爪子、希腊灯塔堤岸的减选失效，单击的选取范围也有变化 |
-| 风光语义蒙版 | EfficientViT-Seg B2，ADE20K 150 类（MIT Han Lab，Apache-2.0），权重 `efficientvit_seg_b2_ade20k.pt`（Hugging Face `han-cai/efficientvit-seg` 固定版本 `cf3ccaf`，SHA-256 `fabfa716…b510`），用 `tools/convert_landscape.py` 导出（PyTorch 2.14.1 旧导出器，opset 17，动态宽高，与 PyTorch 最大相差 4.3×10⁻⁶）。上游没有 ONNX 版，导出的文件发布在 LUMEN RAW 自己的 GitHub Release | `landscape-seg.onnx`，61,391,343 字节 | 短边 512、长边按比例取 32 的倍数（最多 1536）的 RGB，ImageNet 归一化；输出 1/8 分辨率上五组的概率：150 类 softmax 后按组求和 |
+| 风光语义蒙版 | EfficientViT-Seg B2，ADE20K 150 类（MIT Han Lab，Apache-2.0），权重 `efficientvit_seg_b2_ade20k.pt`（Hugging Face `han-cai/efficientvit-seg` 固定版本 `cf3ccaf`，SHA-256 `fabfa716…b510`），用 `tools/convert_landscape.py` 导出（PyTorch 2.14.1 旧导出器，opset 17，动态宽高，与 PyTorch 最大相差 4.3×10⁻⁶）。上游没有 ONNX 版，导出的文件发布在 SadSha Lumen 自己的 GitHub Release | `landscape-seg.onnx`，61,391,343 字节 | 短边 512、长边按比例取 32 的倍数（最多 1536）的 RGB，ImageNet 归一化；输出 1/8 分辨率上五组的概率：150 类 softmax 后按组求和 |
 
 - **AI 移除的做法（`lumen/remove.py`）：** 在原图（镜头校正后、应用了之前的修复）上取区域四周各留出与区域同样大小（至少 96 个工作像素）的范围，按 0.3% 高光取一个尺度，乘白平衡并编码为 γ 2.2 后缩到最长 1024 像素；要补全的区域向外扩 3 个工作像素，右下镜像补到 8 的倍数后推理。结果解码回白平衡之前的线性值，只保留区域的外接矩形，以预乘 alpha 的 16 位 RGBA PNG 存入配方（alpha 即覆盖：涂抹为向内羽化的笔划，点选为略外扩、边缘柔和的物体蒙版）。渲染时按画面大小重采样图块（缩小时先按面积平均）；放大使用时补回颗粒：添加时测得周围原图每通道的噪声强度（1 像素高斯残差的稳健标准差 ÷ √亮度），以及 LaMa 在工作尺寸上保留了多少噪声，缺少的部分以按照片固定种子的白噪声补上，因此整幅与任意分块得到同样的像素。
 - **选择理由与对比：** 在 PlayRaw 样片（Skagen 灯塔与旗帜、希腊灯塔堤上的行人、面包、小猫、台北 101）上比较了 LaMa 与 MI-GAN（MIT，28 MB）：MI-GAN 在小猫处补出了红色的团块、旗杆处留下条纹，LaMa 在各处都补出了连续的天空、云、草和墙面，因此虽大 7 倍仍选 LaMa；LaMa 在 512 与 1024 工作尺寸上的结果相近，取 1024 以便大区域保留更多细节。点选模型比较了 EfficientViT-SAM L0、SAM 2.1 hiera-tiny（onnx-community）与 MobileSAM：在 6 个物体上 EfficientViT-SAM 的轮廓最完整（含小猫抬起的爪子、整座灯塔），SAM 2.1 tiny 漏掉了 Skagen 灯塔，MobileSAM 漏掉爪子且在 DirectML 上输出 NaN。风光分割比较了 EfficientViT-Seg B2 与 L1：在 13 张风光样片上 B2 同样准确（L1 把黑森林的晨雾当成水、在喜马拉雅湖面的倒影中标出建筑），而大小只有四分之一、速度快一倍。SegFormer（NVIDIA 非商业许可）与 MaskFormer（CC BY-NC）因许可未考虑。
@@ -38,7 +38,7 @@
 
 ## 1.5.0 语音识别：SenseVoice-Small
 
-1.8.0 起模型不再随包，第一次使用语音时下载（约 240 MB，`lumen/speech.py`）；2.0.0 起除 Hugging Face 与 hf-mirror.com 外，同样的文件也放在 LUMEN RAW 自己的 GitHub Release（`assets/speech-assets.json` 的 `releases`），上游仓库失效时仍可下载。
+1.8.0 起模型不再随包，第一次使用语音时下载（约 240 MB，`lumen/speech.py`）；2.0.0 起除 Hugging Face 与 hf-mirror.com 外，同样的文件也放在 SadSha Lumen 自己的 GitHub Release（`assets/speech-assets.json` 的 `releases`），上游仓库失效时仍可下载。
 
 “自然语言输入”的语音由 **SenseVoice-Small**（FunAudioLLM / 阿里巴巴通义实验室，`iic/SenseVoiceSmall`）离线识别，支持中文、英文与中英混说。文件取自 k2-fsa / sherpa-onnx 的 ONNX 导出（Hugging Face `csukuangfj/sherpa-onnx-sense-voice-zh-en-ja-ko-yue-2024-07-17`，固定版本 `2365baea`），未做修改：`model.int8.onnx`（239,233,841 字节，MatMul 权重 QUInt8 动态量化）与 `tokens.txt`（25,055 个 SentencePiece 词元）。校验值见 `assets/speech-assets.json`，许可为 FunASR 模型开源协议 1.1（`assets/SenseVoice-LICENSE.txt`，要求注明出处并保留模型名称）。
 
@@ -125,7 +125,7 @@ DRUNet 使用原图九区 Haar 噪声估计，强度 35 为基准，sigma 上限
 
 ## 超分
 
-运行 LUMEN RAW 不需要安装 PyTorch，也不需要另外下载权重。
+运行 SadSha Lumen 不需要安装 PyTorch，也不需要另外下载权重。
 
 随包提供的 `assets/models/realesr-general-x4v3.onnx` 来自 Real-ESRGAN 官方 v0.2.5.0 发布的 `realesr-general-x4v3.pth`，使用 BSD-3-Clause 许可。网络结构为 BasicSR SRVGGNetCompact：64 个特征通道、32 个中间卷积、PReLU、4× PixelShuffle，加最近邻放大的残差。
 

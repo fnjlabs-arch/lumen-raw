@@ -257,9 +257,9 @@ def update_check(destination):
     server = ThreadingHTTPServer(('127.0.0.1', 0), Handler)
     threading.Thread(target=server.serve_forever, daemon=True).start()
     base = f'http://127.0.0.1:{server.server_address[1]}/'
-    package = dict(url=base + 'LumenRAW-99.0.0-Update.exe', bytes=len(payload), sha256=hashlib.sha256(payload).hexdigest())
+    package = dict(url=base + 'SadShaLumen-99.0.0-Update.exe', bytes=len(payload), sha256=hashlib.sha256(payload).hexdigest())
     entry = dict(version='99.0.0', notes={'en': 'smoke'}, update=package)
-    files['/LumenRAW-99.0.0-Update.exe'] = payload
+    files['/SadShaLumen-99.0.0-Update.exe'] = payload
     files['/lumen-update.json'] = json.dumps(dict(format=1, version='99.0.0', windows=entry, macos=entry)).encode('utf-8')
     previous = os.environ.get('LUMEN_UPDATE_FEED')
     os.environ['LUMEN_UPDATE_FEED'] = base + 'lumen-update.json'

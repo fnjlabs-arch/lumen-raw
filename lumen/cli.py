@@ -1,17 +1,17 @@
-"""``lumen-cli``: LUMEN RAW from the command line and as an MCP server (1.6.0).
+"""``sadsha-lumen``: SadSha Lumen from the command line and as an MCP server (1.6.0).
 
-    lumen-cli render INPUT OUTPUT [--size 2560] [--quality 92] [--preset NAME] [--lut FILE.cube] [--set exposure=0.3 …]
-    lumen-cli import-presets FILE               Lightroom .xmp / .lrtemplate, .cube, .lumenpreset or a .zip pack
-    lumen-cli info PHOTO
-    lumen-cli list [QUERY]                      e.g. "rating>=3 -flag:reject"
-    lumen-cli rate PHOTO… 0-5 | flag PHOTO… pick|reject|none | label PHOTO… red|…|none
-    lumen-cli xmp read|write PHOTO…
-    lumen-cli import-lightroom CATALOG.lrcat
-    lumen-cli commands                          every command id and its parameters
-    lumen-cli run COMMAND [JSON] [--headless]   any command, in the open editor when there is one
-    lumen-cli mcp [--headless]                  MCP server over stdio (Claude Code, Codex, WorkBuddy …)
-    lumen-cli mcp-config [claude-code|codex|json|dsh] [--install]   (--install: DeepSeek Harness only)
-    lumen-cli models [--download]               the AI models this version needs (2.1.1)
+    sadsha-lumen render INPUT OUTPUT [--size 2560] [--quality 92] [--preset NAME] [--lut FILE.cube] [--set exposure=0.3 …]
+    sadsha-lumen import-presets FILE               Lightroom .xmp / .lrtemplate, .cube, .lumenpreset or a .zip pack
+    sadsha-lumen info PHOTO
+    sadsha-lumen list [QUERY]                      e.g. "rating>=3 -flag:reject"
+    sadsha-lumen rate PHOTO… 0-5 | flag PHOTO… pick|reject|none | label PHOTO… red|…|none
+    sadsha-lumen xmp read|write PHOTO…
+    sadsha-lumen import-lightroom CATALOG.lrcat
+    sadsha-lumen commands                          every command id and its parameters
+    sadsha-lumen run COMMAND [JSON] [--headless]   any command, in the open editor when there is one
+    sadsha-lumen mcp [--headless]                  MCP server over stdio (Claude Code, Codex, WorkBuddy …)
+    sadsha-lumen mcp-config [claude-code|codex|json|dsh] [--install]   (--install: DeepSeek Harness only)
+    sadsha-lumen models [--download]               the AI models this version needs (2.1.1)
 
 INPUT is a photo or a ``.lumen`` project.  Results are JSON on stdout; errors go to stderr with
 exit status 1.  The editor is used through its control channel when it is open (``run``,
@@ -30,10 +30,10 @@ from . import __version__
 
 
 def executable():
-    """The command an MCP client should start: lumen-cli.exe next to the frozen app, or this source tree."""
+    """The command an MCP client should start: sadsha-lumen.exe next to the frozen app, or this source tree."""
     if getattr(sys, 'frozen', False):
         folder = Path(sys.executable).resolve().parent
-        name = 'lumen-cli.exe' if sys.platform == 'win32' else 'lumen-cli'
+        name = 'sadsha-lumen.exe' if sys.platform == 'win32' else 'sadsha-lumen'
         return [str(folder / name)]
     root = Path(__file__).resolve().parents[1]
     return [sys.executable, str(root / 'main.py'), '--cli']
@@ -44,23 +44,23 @@ def mcp_config(kind='json'):
     program, arguments = command[0], command[1:] + ['mcp']
     quoted = ' '.join(f'"{part}"' if ' ' in part or '\\' in part else part for part in command + ['mcp'])
     if kind == 'claude-code':
-        return f'claude mcp add lumen-raw -- {quoted}'
+        return f'claude mcp add sadsha-lumen -- {quoted}'
     if kind == 'codex':
-        return (f'codex mcp add lumen-raw -- {quoted}\n\n# or in ~/.codex/config.toml:\n'
-                f'[mcp_servers.lumen-raw]\ncommand = {json.dumps(program)}\nargs = {json.dumps(arguments)}\n'
+        return (f'codex mcp add sadsha-lumen -- {quoted}\n\n# or in ~/.codex/config.toml:\n'
+                f'[mcp_servers.sadsha-lumen]\ncommand = {json.dumps(program)}\nargs = {json.dumps(arguments)}\n'
                 f'startup_timeout_sec = 60\ntool_timeout_sec = 600')
     if kind == 'dsh':
         return (f'# DeepSeek Harness: merge into {dsh_patch_file()} (every profile reads it),\n'
-                f'# then restart DSH; the tools appear as mcp__lumen-raw__<tool>.\n' + dsh_entry())
-    return json.dumps(dict(mcpServers={'lumen-raw': dict(type='stdio', command=program, args=arguments)}),
+                f'# then restart DSH; the tools appear as mcp__sadsha-lumen__<tool>.\n' + dsh_entry())
+    return json.dumps(dict(mcpServers={'sadsha-lumen': dict(type='stdio', command=program, args=arguments)}),
                       indent=2, ensure_ascii=False)
 
 
 # 2.1.1: DeepSeek Harness (DSH) loads MCP servers as @deepseek-ai/dsh-mcp-client plugin entries of a
 # Cordis patch file; $DSH_HOME/cordis.patch.yml (normally ~/.dsh) applies to every profile, the
 # command-line ones and the Desktop app's.
-DSH_BEGIN = '# >>> LUMEN RAW (MCP server) - written by LUMEN RAW; edit or delete this block freely'
-DSH_END = '# <<< LUMEN RAW (MCP server)'
+DSH_BEGIN = '# >>> SadSha Lumen (MCP server) - written by SadSha Lumen; edit or delete this block freely'
+DSH_END = '# <<< SadSha Lumen (MCP server)'
 
 
 def _yaml(text):
@@ -73,10 +73,10 @@ def dsh_entry():
     program, arguments = command[0], command[1:] + ['mcp']
     return '\n'.join([
         '- insert:',
-        '    - id: mcp-lumen-raw',
+        '    - id: mcp-sadsha-lumen',
         "      name: '@deepseek-ai/dsh-mcp-client'",
         '      config:',
-        '        serverName: lumen-raw',
+        '        serverName: sadsha-lumen',
         '        transport: stdio',
         f'        command: {_yaml(program)}',
         f'        args: [{", ".join(_yaml(a) for a in arguments)}]',
@@ -92,7 +92,7 @@ def dsh_patch_file():
 
 
 def install_dsh(path=None):
-    """Add (or refresh) the LUMEN RAW entry in DSH's home patch file; returns ``(path, action)``
+    """Add (or refresh) the SadSha Lumen entry in DSH's home patch file; returns ``(path, action)``
     with action ``created`` / ``added`` / ``updated`` / ``present`` (an entry the user wrote).
     The previous file is kept once as ``cordis.patch.yml.lumen-backup``."""
     from .i18n import tr
@@ -106,7 +106,7 @@ def install_dsh(path=None):
     body = [line for line in text.splitlines() if line.strip() and not line.lstrip().startswith('#')]
     if marked.search(text):
         result, action = marked.sub(lambda _: block, text, count=1), 'updated'
-    elif re.search(r'serverName:\s*[\'"]?lumen-raw\b', text):
+    elif re.search(r'serverName:\s*[\'"]?sadsha-lumen\b', text):
         return path, 'present'
     elif not body or body == ['[]']:
         kept = '\n'.join(line for line in text.splitlines() if line.strip() != '[]').strip()
@@ -128,7 +128,7 @@ def install_dsh(path=None):
 
 
 def models(download=False):
-    """``lumen-cli models``: where the AI models are and which are missing; downloads them."""
+    """``sadsha-lumen models``: where the AI models are and which are missing; downloads them."""
     from . import ai_models, updates
     ai_models.prepare(keep=updates.keep_models())
     if download and ai_models.missing():
@@ -227,9 +227,9 @@ def main(argv=None):
         if stream is not None and hasattr(stream, 'reconfigure'):
             stream.reconfigure(encoding='utf-8', errors='replace')
     from . import logs
-    logs.configure(filename='lumen-cli.log')
-    parser = argparse.ArgumentParser(prog='lumen-cli', description=f'LUMEN RAW {__version__} command line and MCP server')
-    parser.add_argument('--version', action='version', version=f'LUMEN RAW {__version__}')
+    logs.configure(filename='sadsha-lumen.log')
+    parser = argparse.ArgumentParser(prog='sadsha-lumen', description=f'SadSha Lumen {__version__} command line and MCP server')
+    parser.add_argument('--version', action='version', version=f'SadSha Lumen {__version__}')
     sub = parser.add_subparsers(dest='action', required=True)
     p = sub.add_parser('render', help='render a photo or .lumen project to JPEG / PNG / TIFF / DNG')
     p.add_argument('input')
@@ -341,7 +341,7 @@ def main(argv=None):
             context = _context(args.headless)
             result = dict(context.run(args.command, payload), mode=context.mode)
     except (commands.CommandError, ValueError, OSError) as exc:
-        sys.stderr.write(f'lumen-cli: {exc}\n')
+        sys.stderr.write(f'sadsha-lumen: {exc}\n')
         return 1
     if isinstance(result, dict) and 'image' in result:
         result = {k: v for k, v in result.items() if k != 'image'}

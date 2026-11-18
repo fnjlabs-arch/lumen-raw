@@ -158,7 +158,7 @@ def main():
         report['targets'][target] = entry
         print(f"{target:12s} alpha {best:<5} CV MAE model {entry['model_mae']:<8} rules {entry.get('rules_mae', '-'):<8} "
               f"average {entry['mean_mae']}")
-    data = {'format': 1, 'name': 'LUMEN RAW automatic adjustment', 'photos': len(examples),
+    data = {'format': 1, 'name': 'SadSha Lumen automatic adjustment', 'photos': len(examples),
             'trained': time.strftime('%Y-%m-%d'), 'features': list(auto_adjust.FEATURES),
             'mean': [round(float(v), 6) for v in mean], 'scale': [round(float(v), 6) for v in scale],
             'targets': fitted}

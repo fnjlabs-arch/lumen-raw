@@ -114,7 +114,7 @@ class RevisionMixin:
         if self.source is None:
             return
         if not remove.available():
-            return self.error(tr('缺少 AI 移除模型，请重新安装 LUMEN RAW。'))
+            return self.error(tr('缺少 AI 移除模型，请重新安装 SadSha Lumen。'))
         if len(self.edits['retouch']) + len(self.removal_queue) >= 500:
             self.statusBar().showMessage(tr('修复笔划达到 500 个上限，请删除不需要的笔划。'))
             return

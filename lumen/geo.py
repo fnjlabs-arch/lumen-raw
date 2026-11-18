@@ -2,7 +2,7 @@
 
 A position is ``(latitude, longitude)`` in decimal degrees, WGS-84, north and east positive (what
 cameras and phones record).  The camera's own GPS comes from the photo's EXIF; a position chosen
-on LUMEN RAW's map is written into the photo's XMP sidecar (``exif:GPSLatitude`` and
+on SadSha Lumen's map is written into the photo's XMP sidecar (``exif:GPSLatitude`` and
 ``exif:GPSLongitude``, as Lightroom does), never into the photo itself, and wins over the
 camera's when the photo is opened again.  Exports carry it in their EXIF unless location
 metadata is switched off.

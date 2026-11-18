@@ -1,10 +1,10 @@
 """Package and verify the Linux PyInstaller build (2.1.0).
 
-  python tools/package_linux.py dist/LumenRAW --output .publish/v210/linux [--sample photo.DNG]
+  python tools/package_linux.py dist/SadShaLumen --output .publish/v210/linux [--sample photo.DNG]
       add a .desktop entry and a PNG icon, write a portable .tar.gz, and optionally run the
       frozen smoke test against ``--sample``.
 
-The application folder stays usable in place (``dist/LumenRAW/LumenRAW``); the archive is the
+The application folder stays usable in place (``dist/SadShaLumen/SadShaLumen``); the archive is the
 Linux counterpart of the portable Windows zip and the macOS DMG.
 """
 from __future__ import annotations
@@ -24,15 +24,15 @@ from lumen import __version__  # noqa: E402
 
 DESKTOP = """[Desktop Entry]
 Type=Application
-Name=LUMEN RAW
+Name=SadSha Lumen
 GenericName=RAW Photo Editor
 Comment=Non-destructive RAW development for landscape and travel photography
-Exec=LumenRAW %F
+Exec=SadShaLumen %F
 Icon=lumen
 Terminal=false
 Categories=Graphics;Photography;
 MimeType=image/x-dcraw;image/x-adobe-dng;image/tiff;image/jpeg;image/png;
-StartupWMClass=LumenRAW
+StartupWMClass=SadShaLumen
 """
 
 
@@ -49,7 +49,7 @@ def write_launcher(folder):
             image.save(icon)
     except Exception:
         pass
-    (folder / 'LumenRAW.desktop').write_text(DESKTOP, encoding='utf-8')
+    (folder / 'SadShaLumen.desktop').write_text(DESKTOP, encoding='utf-8')
     # A one-command installation into the current user's menu; no root is needed.
     install = folder / 'install-desktop.sh'
     install.write_text("""#!/bin/sh
@@ -60,11 +60,11 @@ BIN="$HOME/.local/bin"
 APPS="$HOME/.local/share/applications"
 ICONS="$HOME/.local/share/icons/hicolor/256x256/apps"
 mkdir -p "$BIN" "$APPS" "$ICONS"
-ln -sf "$ROOT/LumenRAW" "$BIN/LumenRAW"
-ln -sf "$ROOT/lumen-cli" "$BIN/lumen-cli"
+ln -sf "$ROOT/SadShaLumen" "$BIN/SadShaLumen"
+ln -sf "$ROOT/sadsha-lumen" "$BIN/sadsha-lumen"
 cp "$ROOT/lumen.png" "$ICONS/lumen.png"
-cp "$ROOT/LumenRAW.desktop" "$APPS/LumenRAW.desktop"
-echo "Installed LUMEN RAW. Start it from the application menu or run $BIN/LumenRAW."
+cp "$ROOT/SadShaLumen.desktop" "$APPS/SadShaLumen.desktop"
+echo "Installed SadSha Lumen. Start it from the application menu or run $BIN/SadShaLumen."
 """, encoding='utf-8')
     install.chmod(0o755)
 
@@ -73,7 +73,7 @@ def smoke(folder, sample, destination):
     smoke_dir = Path(destination)
     smoke_dir.mkdir(parents=True, exist_ok=True)
     environment = dict(os.environ, QT_QPA_PLATFORM='offscreen')
-    code = subprocess.run([str(folder / 'LumenRAW'), '--smoke-test', str(sample), str(smoke_dir)],
+    code = subprocess.run([str(folder / 'SadShaLumen'), '--smoke-test', str(sample), str(smoke_dir)],
                           env=environment).returncode
     if code:
         raise SystemExit(f'frozen smoke test failed ({code}); see {smoke_dir / "report.json"}')
@@ -89,15 +89,15 @@ def smoke(folder, sample, destination):
 
 def package(folder, output, sample=None):
     folder, output = Path(folder), Path(output)
-    if not (folder / 'LumenRAW').is_file():
-        raise SystemExit(f'{folder} does not contain the LumenRAW executable')
+    if not (folder / 'SadShaLumen').is_file():
+        raise SystemExit(f'{folder} does not contain the SadShaLumen executable')
     output.mkdir(parents=True, exist_ok=True)
     write_launcher(folder)
-    archive = output / f'LumenRAW-{__version__}-Linux-x86_64.tar.gz'
+    archive = output / f'SadShaLumen-{__version__}-Linux-x86_64.tar.gz'
     archive.unlink(missing_ok=True)
     subprocess.run(['tar', '-C', str(folder.parent), '-czf', str(archive), folder.name], check=True)
     report = dict(version=__version__, archive=archive.name, bytes=archive.stat().st_size,
-                  sha256=sha256(archive), desktop_entry='LumenRAW.desktop')
+                  sha256=sha256(archive), desktop_entry='SadShaLumen.desktop')
     if sample:
         with tempfile.TemporaryDirectory(prefix='lumen-linux-smoke-') as temporary:
             smoke(folder, sample, temporary)

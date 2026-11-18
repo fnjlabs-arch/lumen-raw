@@ -20,7 +20,7 @@ D50 = np.array([.9642, 1., .8249])
 D65 = np.array([.95047, 1., 1.08883])
 BRADFORD = np.array([[.8951, .2664, -.1614], [-.7502, 1.7135, .0367], [.0389, -.0685, 1.0296]])
 DESCRIPTIONS = {'p3': 'Display P3', 'adobe-rgb': 'Adobe RGB (1998) compatible'}
-COPYRIGHT = 'No copyright, use freely. Written by LUMEN RAW.'
+COPYRIGHT = 'No copyright, use freely. Written by SadSha Lumen.'
 
 
 def _fixed(value):
@@ -83,7 +83,7 @@ def profile(key=None):
 
 
 def identify(data):
-    """The output space key of a profile LUMEN RAW wrote (``'p3'``, ``'adobe-rgb'``), else None."""
+    """The output space key of a profile SadSha Lumen wrote (``'p3'``, ``'adobe-rgb'``), else None."""
     if not data:
         return None
     for key in ('p3', 'adobe-rgb'):

@@ -254,7 +254,7 @@ class CullWindow(QWidget):
     def __init__(self, window, rows, start=0):
         super().__init__(None, Qt.WindowType.Window)
         self.window = window
-        self.setWindowTitle(tr('选片 · LUMEN RAW'))
+        self.setWindowTitle(tr('选片 · SadSha Lumen'))
         self.setObjectName('cullWindow')
         self.setStyleSheet('QWidget#cullWindow { background: #050506; } QLabel { background: transparent; color: #d8d4cc; }'
                            ' QLabel#cullHints { color: #e6c84f; } QLabel#cullHelp { color: #7c7972; font-size: 11px; }')

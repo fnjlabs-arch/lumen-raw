@@ -1,5 +1,5 @@
 #!/bin/bash
-# Run LUMEN RAW from source on an Apple silicon Mac (Python 3.12). First run creates .venv-macos,
+# Run SadSha Lumen from source on an Apple silicon Mac (Python 3.12). First run creates .venv-macos,
 # installs requirements-macos.txt and restores the runtime assets and the Perl ExifTool.
 cd "$(dirname "$0")" || exit 1
 PYTHON_BASE="${LUMEN_PYTHON:-python3.12}"

@@ -1,5 +1,5 @@
 #!/bin/bash
-# LUMEN RAW Linux release build:
+# SadSha Lumen Linux release build:
 #   environment -> runtime assets + Perl ExifTool -> tests -> source smoke test -> PyInstaller
 #   folder -> portable .tar.gz (+ optional frozen smoke test).
 # Usage: tools/build_linux.sh [--python .venv-linux/bin/python] [--sample photo.DNG] [--skip-tests]
@@ -24,7 +24,7 @@ PUBLISH="$ROOT/.publish/$TAG/linux"
 LOGS="$PUBLISH/logs"
 mkdir -p "$LOGS"
 BUILD_LOG="$LOGS/build.log"
-echo "LUMEN RAW $VERSION Linux build $(date '+%Y-%m-%dT%H:%M:%S')" > "$BUILD_LOG"
+echo "SadSha Lumen $VERSION Linux build $(date '+%Y-%m-%dT%H:%M:%S')" > "$BUILD_LOG"
 export PYTHONUTF8=1 PYTHONIOENCODING=utf-8
 
 say() { echo "$*" | tee -a "$BUILD_LOG"; }
@@ -94,13 +94,13 @@ say "Sample: $SAMPLE"
 rm -rf "$PUBLISH/source-smoke"
 run 'source smoke test' "$BUILD_LOG" env QT_QPA_PLATFORM=offscreen "$PY" main.py --smoke-test "$SAMPLE" "$PUBLISH/source-smoke"
 
-step 'PyInstaller (LumenRAW)'
-rm -rf dist/LumenRAW build/LumenRAW-linux
-run 'PyInstaller' "$LOGS/pyinstaller.log" "$PY" -m PyInstaller --noconfirm --clean LumenRAW-linux.spec
-[ -x dist/LumenRAW/LumenRAW ] || fail 'app executable missing'
+step 'PyInstaller (SadShaLumen)'
+rm -rf dist/SadShaLumen build/SadShaLumen-linux
+run 'PyInstaller' "$LOGS/pyinstaller.log" "$PY" -m PyInstaller --noconfirm --clean SadShaLumen-linux.spec
+[ -x dist/SadShaLumen/SadShaLumen ] || fail 'app executable missing'
 
 step 'Portable archive and frozen smoke test'
-run 'package Linux app' "$LOGS/package.log" "$PY" tools/package_linux.py dist/LumenRAW --output "$PUBLISH" --sample "$SAMPLE"
+run 'package Linux app' "$LOGS/package.log" "$PY" tools/package_linux.py dist/SadShaLumen --output "$PUBLISH" --sample "$SAMPLE"
 say ""
-say "SUCCESS: LUMEN RAW $VERSION for Linux is in $PUBLISH"
+say "SUCCESS: SadSha Lumen $VERSION for Linux is in $PUBLISH"
 ls -l "$PUBLISH" | tee -a "$BUILD_LOG"

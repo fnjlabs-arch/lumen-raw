@@ -19,7 +19,7 @@ a few measured steps:
 4. **Contrast** from the spread of the midtones, **vibrance** from the colourfulness of the
    result (Hasler & Süsstrunk 2003).
 
-``measure`` returns the numbers each step looks at.  When LUMEN RAW ships a fitted model
+``measure`` returns the numbers each step looks at.  When SadSha Lumen ships a fitted model
 (``assets/auto-adjust-model.json``, made by ``tools/train_auto_adjust.py`` from photos edited by
 hand), ``suggest`` uses it instead of the rules: ``describe`` measures the photo, one linear model
 per slider predicts the sliders and the median the edit reaches, and the exposure that reaches
@@ -170,7 +170,7 @@ def describe(small, base):
     return np.array([float(values[name]) for name in FEATURES])
 
 
-#: The fitted model (``tools/train_auto_adjust.py``) shipped with LUMEN RAW.
+#: The fitted model (``tools/train_auto_adjust.py``) shipped with SadSha Lumen.
 MODEL = 'auto-adjust-model.json'
 _model = None
 
@@ -184,7 +184,7 @@ def model():
         path = Path(__file__).resolve().parents[1] / 'assets' / MODEL
         try:
             data = json.loads(path.read_text(encoding='utf-8'))
-            # A model made for other measurements (an older or newer LUMEN RAW) is not used.
+            # A model made for other measurements (an older or newer SadSha Lumen) is not used.
             count = len(data.get('features', []))
             if data.get('format') != 1 or not set(data['features']) <= set(FEATURES) or                     len(data['mean']) != count or len(data['scale']) != count or 'median' not in data['targets'] or                     any(len(t['coef']) != count for t in data['targets'].values()):
                 raise ValueError('format')
@@ -270,7 +270,7 @@ def _rounded(a):
 
 def suggest(source, edits, use_model=True):
     """Slider values (``KEYS``) for the photo ``source`` with its ``edits``: from the fitted model
-    (``model``) when LUMEN RAW has one, else from the rules below."""
+    (``model``) when SadSha Lumen has one, else from the rules below."""
     from . import engine, tone
     small = engine.resize_limit(source, SAMPLE_EDGE)
     base = _neutral(edits)

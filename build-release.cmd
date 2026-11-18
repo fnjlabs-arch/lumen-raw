@@ -1,7 +1,7 @@
 @echo off
 setlocal
 cd /d "%~dp0"
-echo LUMEN RAW release build: tests, DirectML check, portable ZIP and installer.
+echo SadSha Lumen release build: tests, DirectML check, portable ZIP and installer.
 echo Logs: .publish\v141\logs  (this takes about 15-25 minutes)
 echo.
 powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0tools\build_release.ps1" %*

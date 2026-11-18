@@ -375,7 +375,7 @@ def edit_location(window):
     finally:
         QApplication.restoreOverrideCursor()
     if errors:
-        QMessageBox.warning(window, 'LUMEN RAW', tr('位置没有写入 XMP 附属文件：{error}', error='; '.join(errors[:3])))
+        QMessageBox.warning(window, 'SadSha Lumen', tr('位置没有写入 XMP 附属文件：{error}', error='; '.join(errors[:3])))
         return False
     window.info['photo'] = updated
     try:

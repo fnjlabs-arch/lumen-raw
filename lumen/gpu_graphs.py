@@ -312,7 +312,7 @@ KINDS = ('tonal', 'color', 'fused', 'tonal2', 'color2', 'fused2', 'color2lab', '
 def model(kind):
     if kind not in KINDS:
         raise ValueError(kind)
-    g = Graph(f'LUMEN RAW {kind} pipeline')
+    g = Graph(f'SadSha Lumen {kind} pipeline')
     x = g.input('image', SHAPE)
     if kind in ('tonal', 'fused'):
         x = _tonal(g, x)

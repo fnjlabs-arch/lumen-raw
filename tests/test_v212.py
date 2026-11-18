@@ -315,7 +315,7 @@ def mirrors(monkeypatch, tmp_path):
 
 
 def _feed(github, version, payload):
-    package = dict(url=github + f'download/v{version}/LumenRAW-{version}-Update.exe', bytes=len(payload),
+    package = dict(url=github + f'download/v{version}/SadShaLumen-{version}-Update.exe', bytes=len(payload),
                    sha256=hashlib.sha256(payload).hexdigest())
     entry = dict(version=version, update=package, models=None)
     return json.dumps(dict(format=1, version=version, page=github + 'tag', notes={'zh_CN': '镜像测试'},
@@ -328,7 +328,7 @@ def test_github_down_reads_the_signed_feed_from_singapore_then_downloads_there(m
     body = _feed(mirrors['github'], '2.9.0', payload)
     sg.files['/lumen-raw/releases/latest/download/lumen-update.json'] = body
     sg.files['/lumen-raw/releases/latest/download/lumen-update.json.sig'] = signing.sign(mirrors['seed'], body).hex().encode()
-    sg.files['/lumen-raw/releases/download/v2.9.0/LumenRAW-2.9.0-Update.exe'] = payload
+    sg.files['/lumen-raw/releases/download/v2.9.0/SadShaLumen-2.9.0-Update.exe'] = payload
     update = updates.check()
     assert update.version == '2.9.0' and update.source == '127.0.0.1' and update.notes == '镜像测试'
     assert downloads.alternatives(update.package['url'])[0].startswith(sg_base)

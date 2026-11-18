@@ -160,17 +160,17 @@ def test_platform_folders(monkeypatch, tmp_path):
     monkeypatch.setattr(host, 'MACOS', True)
     monkeypatch.setattr(Path, 'home', lambda: tmp_path)
     monkeypatch.delenv('LOCALAPPDATA', raising=False)
-    assert host.data_folder() == tmp_path / 'Library' / 'Application Support' / 'LUMEN RAW'
-    assert host.log_folder() == tmp_path / 'Library' / 'Logs' / 'LUMEN RAW'
-    assert host.cache_folder() == tmp_path / 'Library' / 'Caches' / 'LUMEN RAW'
+    assert host.data_folder() == tmp_path / 'Library' / 'Application Support' / 'SadSha Lumen'
+    assert host.log_folder() == tmp_path / 'Library' / 'Logs' / 'SadSha Lumen'
+    assert host.cache_folder() == tmp_path / 'Library' / 'Caches' / 'SadSha Lumen'
     # 2.1.0: LOCALAPPDATA, never set on macOS, moves the data folder (the tests' own folders).
     monkeypatch.setenv('LOCALAPPDATA', str(tmp_path / 'Tests'))
-    assert host.data_folder() == tmp_path / 'Tests' / 'LUMEN RAW'
+    assert host.data_folder() == tmp_path / 'Tests' / 'SadSha Lumen'
     monkeypatch.setattr(host, 'MACOS', False)
     monkeypatch.setenv('LOCALAPPDATA', str(tmp_path / 'Local'))
-    # Windows keeps the 1.3 locations: logs and gpu-compat.json under %LOCALAPPDATA%\LUMEN RAW.
-    assert host.log_folder() == tmp_path / 'Local' / 'LUMEN RAW' / 'logs'
-    assert host.data_folder() == tmp_path / 'Local' / 'LUMEN RAW'
+    # Windows keeps the 1.3 locations: logs and gpu-compat.json under %LOCALAPPDATA%\SadSha Lumen.
+    assert host.log_folder() == tmp_path / 'Local' / 'SadSha Lumen' / 'logs'
+    assert host.data_folder() == tmp_path / 'Local' / 'SadSha Lumen'
     from lumen import ai_worker, logs
     assert logs.folder() == host.log_folder()
     assert ai_worker._record_path() == host.data_folder() / 'gpu-compat.json'

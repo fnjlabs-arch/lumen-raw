@@ -12,7 +12,7 @@ their SHA-256, simplifies the lines (Douglas–Peucker) and writes one compresse
   each layer is ``<layer>_<lod>_xy`` (float32 longitude, latitude) and ``<layer>_<lod>_parts``
   (int32 start of every ring or line, plus the end);
 * ``places``: the 7,342 populated places with their position, the zoom level at which Natural
-  Earth labels them, population and names in LUMEN RAW's nine interface languages.
+  Earth labels them, population and names in SadSha Lumen's nine interface languages.
 
 The map is physical on purpose: coastlines, lakes, rivers and towns, no national or provincial
 boundaries (and no country names), which are disputed in places and drawn differently by
@@ -169,7 +169,7 @@ def main():
     buffer = io.BytesIO()
     np.savez_compressed(buffer, **arrays)
     (OUTPUT / 'world.npz').write_bytes(buffer.getvalue())
-    lines = ['Offline world map of the location picker (LUMEN RAW 2.1.2), built by tools/build_map.py.', '',
+    lines = ['Offline world map of the location picker (SadSha Lumen 2.1.2), built by tools/build_map.py.', '',
              'Source: Natural Earth (https://www.naturalearthdata.com/), public domain:',
              '"All versions of Natural Earth raster + vector map data found on this website are in the public domain."',
              f'Files from https://github.com/nvkelso/natural-earth-vector at commit {COMMIT}:', '']

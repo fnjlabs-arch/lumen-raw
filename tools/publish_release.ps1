@@ -1,4 +1,4 @@
-# Publish the built LUMEN RAW release to GitHub: commit + tag + push the source,
+# Publish the built SadSha Lumen release to GitHub: commit + tag + push the source,
 # then create the GitHub Release with the installer, portable ZIP, checksums and notes.
 # 2.1.1: also the update installer and the update feed lumen-update.json (the editor reads the
 # copy on the Latest release), and the AI models the feed lists on the 'ai-models' pre-release
@@ -16,7 +16,7 @@ $logs = Join-Path $publish 'logs'
 $log = Join-Path $logs 'publish.log'
 $status = Join-Path $logs 'publish-status.txt'
 New-Item -ItemType Directory -Force -Path $logs | Out-Null
-Set-Content -LiteralPath $log -Value "LUMEN RAW $version GitHub publication $(Get-Date -Format s)" -Encoding UTF8
+Set-Content -LiteralPath $log -Value "SadSha Lumen $version GitHub publication $(Get-Date -Format s)" -Encoding UTF8
 
 function Say([string]$text) { Write-Host $text; Add-Content -LiteralPath $log -Value $text -Encoding UTF8 }
 function Step([string]$name) { Say ''; Say "==== $name  [$(Get-Date -Format HH:mm:ss)] ===="; Set-Content -LiteralPath $status -Value "running: $name" -Encoding UTF8 }
@@ -35,11 +35,11 @@ try {
     Step 'Check built packages'
     $buildStatus = (Get-Content -Raw -LiteralPath (Join-Path $logs 'status.txt')).Trim()
     if (-not $buildStatus.StartsWith("SUCCESS $version")) { Fail "build-release has not succeeded for $version ($buildStatus)" }
-    $setup = Join-Path $packages "LumenRAW-$version-Setup.exe"
-    $zip = Join-Path $packages "LumenRAW-$version-Windows.zip"
+    $setup = Join-Path $packages "SadShaLumen-$version-Setup.exe"
+    $zip = Join-Path $packages "SadShaLumen-$version-Windows.zip"
     $sums = Join-Path $packages 'SHA256SUMS.txt'
     $notes = Join-Path $publish 'release-notes.md'
-    $updateSetup = Join-Path $packages "LumenRAW-$version-Update.exe"
+    $updateSetup = Join-Path $packages "SadShaLumen-$version-Update.exe"
     $feed = Join-Path $packages 'lumen-update.json'
     # 2.1.2: the feed's signature (tools/make_update_feed.py); editors trust the mirrors' copy only with it.
     $feedSig = Join-Path $packages 'lumen-update.json.sig'
@@ -48,7 +48,7 @@ try {
     }
     $feedData = Get-Content -Raw -Encoding UTF8 -LiteralPath $feed | ConvertFrom-Json
     if ($feedData.version -ne $version) { Fail "lumen-update.json is for $($feedData.version), not $version" }
-    $modelFolder = Join-Path $root 'dist\LumenRAW\models'
+    $modelFolder = Join-Path $root 'dist\SadShaLumen\models'
     $modelFiles = @($feedData.windows.models.models.PSObject.Properties | ForEach-Object { Join-Path $modelFolder $_.Value.file })
     foreach ($file in $modelFiles) { if (-not (Test-Path -LiteralPath $file)) { Fail "missing model $file" } }
     foreach ($line in Get-Content -LiteralPath $sums) {
@@ -120,7 +120,7 @@ try {
         $target = ((Capture $git @('rev-list', '-n', '1', $tag)) -join '').Trim()
         if ($target -ne $head) { Fail "tag $tag already exists on another commit ($target)" }
     } else {
-        Run 'git tag' $git @('tag', '-a', $tag, '-m', "LUMEN RAW $version")
+        Run 'git tag' $git @('tag', '-a', $tag, '-m', "SadSha Lumen $version")
     }
 
     Step 'Push to GitHub'
@@ -136,7 +136,7 @@ try {
     & $gh release view 'ai-models' --repo $Repo 2>&1 | Out-Null
     if ($LASTEXITCODE -ne 0) {
         Run 'create ai-models release' $gh @('release', 'create', 'ai-models', '--repo', $Repo, '--prerelease', '--target', 'main',
-            '--title', 'LUMEN RAW AI models', '--notes', 'AI model files of LUMEN RAW 2.1.1 and later, named after their SHA-256. The editor downloads the ones it lacks (lumen/ai_models.py); there is no need to download them by hand.')
+            '--title', 'SadSha Lumen AI models', '--notes', 'AI model files of SadSha Lumen 2.1.1 and later, named after their SHA-256. The editor downloads the ones it lacks (lumen/ai_models.py); there is no need to download them by hand.')
     }
     $existing = ((Capture $gh @('api', "repos/$Repo/releases/tags/ai-models")) -join "`n") | ConvertFrom-Json
     $have = @{}
@@ -162,9 +162,9 @@ try {
     if ($LASTEXITCODE -eq 0) {
         Say "Release $tag exists; replacing assets and notes."
         Run 'upload assets' $gh @('release', 'upload', $tag, $setup, $updateSetup, $zip, $sums, $feed, $feedSig, '--repo', $Repo, '--clobber')
-        Run 'edit release' $gh @('release', 'edit', $tag, '--repo', $Repo, '--title', "LUMEN RAW $version", '--notes-file', $notes)
+        Run 'edit release' $gh @('release', 'edit', $tag, '--repo', $Repo, '--title', "SadSha Lumen $version", '--notes-file', $notes)
     } else {
-        $arguments = @('release', 'create', $tag, $setup, $updateSetup, $zip, $sums, $feed, $feedSig, '--repo', $Repo, '--title', "LUMEN RAW $version",
+        $arguments = @('release', 'create', $tag, $setup, $updateSetup, $zip, $sums, $feed, $feedSig, '--repo', $Repo, '--title', "SadSha Lumen $version",
                        '--notes-file', $notes, '--verify-tag')
         if ($Draft) { $arguments += '--draft' } else { $arguments += '--latest' }
         Run 'create release' $gh $arguments

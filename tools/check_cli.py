@@ -1,6 +1,6 @@
-"""Smoke test of a frozen ``lumen-cli`` (1.6.0): version, render, and an MCP session over stdio.
+"""Smoke test of a frozen ``sadsha-lumen`` (1.6.0): version, render, and an MCP session over stdio.
 
-Usage: python tools/check_cli.py <lumen-cli executable> <sample photo> <output folder>
+Usage: python tools/check_cli.py <sadsha-lumen executable> <sample photo> <output folder>
 
 Runs with its own catalog and control-channel name, so it never touches the user's library or
 talks to an editor window that happens to be open.  Writes report.json into the output folder.
@@ -16,7 +16,7 @@ from pathlib import Path
 def main(executable, sample, folder):
     folder = Path(folder)
     folder.mkdir(parents=True, exist_ok=True)
-    env = dict(os.environ, LUMEN_CATALOG=str(folder / 'catalog.jsonl'), LUMEN_CONTROL_NAME=f'lumen-cli-check-{os.getpid()}',
+    env = dict(os.environ, LUMEN_CATALOG=str(folder / 'catalog.jsonl'), LUMEN_CONTROL_NAME=f'sadsha-lumen-check-{os.getpid()}',
                LUMEN_PREVIEW_CACHE=str(folder / 'previews'))     # 2.0.0: and its own preview cache
     report = {}
 

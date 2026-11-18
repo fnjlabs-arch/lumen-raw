@@ -557,8 +557,8 @@ def run(frames, options, backend, progress=lambda done, total, text: None, cance
     repeat = max(1, int(options.get('repeat', 1)))
     from . import __version__
     encoder = Encoder(options['output'], fmt, size, options.get('fps', 30), mbps, bool(options.get('ten_bit')),
-                      options.get('hardware', True), metadata=dict(comment=f'LUMEN RAW {__version__} time-lapse',
-                                                                   encoder=f'LUMEN RAW {__version__}'))
+                      options.get('hardware', True), metadata=dict(comment=f'SadSha Lumen {__version__} time-lapse',
+                                                                   encoder=f'SadSha Lumen {__version__}'))
 
     def prepare(index):
         edits = recipe_at(index, keyframes)

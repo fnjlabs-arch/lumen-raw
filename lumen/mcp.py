@@ -1,6 +1,6 @@
-"""MCP server: lets local agents (Claude Code, Codex, DeepSeek Harness, WorkBuddy, Claude Desktop …) drive LUMEN RAW (1.6.0).
+"""MCP server: lets local agents (Claude Code, Codex, DeepSeek Harness, WorkBuddy, Claude Desktop …) drive SadSha Lumen (1.6.0).
 
-``lumen-cli mcp`` speaks the Model Context Protocol over stdio (newline-delimited JSON-RPC 2.0).
+``sadsha-lumen mcp`` speaks the Model Context Protocol over stdio (newline-delimited JSON-RPC 2.0).
 It is a dual-era server: clients of the 2026-07-28 revision send ``server/discover`` and carry
 the protocol version in each request's ``_meta``; older clients (2024-11-05 … 2025-11-25) open
 with ``initialize``.  Only standard-library code: no SDK in the frozen app.
@@ -25,9 +25,9 @@ MODERN = '2026-07-28'
 LEGACY = ('2025-11-25', '2025-06-18', '2025-03-26', '2024-11-05')
 VERSIONS = (MODERN,) + LEGACY
 META = 'io.modelcontextprotocol/'
-SERVER = dict(name='lumen-raw', title='LUMEN RAW', version=__version__)
+SERVER = dict(name='sadsha-lumen', title='SadSha Lumen', version=__version__)
 
-INSTRUCTIONS = '''LUMEN RAW is a RAW photo editor (landscape and travel). Typical flow:
+INSTRUCTIONS = '''SadSha Lumen is a RAW photo editor (landscape and travel). Typical flow:
 1. list_photos (library, ratings) or add_photos (files/folders), then open_photo.
 2. get_edits shows current values; apply_edits sets final values (not increments) as one undoable step.
    Local masks: masks=[{"region": "sky", "adjustments": {...}}] (sky/subject/person/background/foreground and, since 2.1.0, water/vegetation/mountain/building/ground are found by local AI).
@@ -48,7 +48,7 @@ def tools():
                            annotations=dict(readOnlyHint=cmd.read_only, destructiveHint=False,
                                             idempotentHint=cmd.read_only, openWorldHint=False)))
     result.append(dict(name='run_command', title='Run command',
-                       description='Run any LUMEN RAW command by id (see list_commands), e.g. library.write_xmp.',
+                       description='Run any SadSha Lumen command by id (see list_commands), e.g. library.write_xmp.',
                        inputSchema=dict(type='object', properties=dict(command=dict(type='string'), args=dict(type='object')),
                                         required=['command'], additionalProperties=False),
                        annotations=dict(readOnlyHint=False, destructiveHint=False, openWorldHint=False)))

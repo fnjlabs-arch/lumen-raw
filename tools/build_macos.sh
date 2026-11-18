@@ -1,9 +1,9 @@
 #!/bin/bash
-# LUMEN RAW macOS (Apple silicon) release build:
+# SadSha Lumen macOS (Apple silicon) release build:
 #   environment -> runtime assets + Perl ExifTool -> Metal / Core ML check -> tests ->
 #   source smoke test -> PyInstaller .app -> ad-hoc signature -> frozen smoke test -> DMG.
 # Usage: tools/build_macos.sh [--python python3.12] [--sample photo.ARW] [--skip-tests]
-# Output: .publish/v<version>/macos/  (logs/, LumenRAW-<version>-macOS-arm64.dmg, SHA256SUMS-macOS.txt)
+# Output: .publish/v<version>/macos/  (logs/, SadShaLumen-<version>-macOS-arm64.dmg, SHA256SUMS-macOS.txt)
 set -uo pipefail
 # Keep the Mac awake for the whole build (idle sleep would stop tests and packaging).
 if [ -z "${LUMEN_CAFFEINATED:-}" ] && command -v caffeinate >/dev/null; then
@@ -30,7 +30,7 @@ LOGS="$PUBLISH/logs"
 mkdir -p "$LOGS"
 BUILD_LOG="$LOGS/build.log"
 STATUS="$LOGS/status.txt"
-echo "LUMEN RAW $VERSION macOS build $(date '+%Y-%m-%dT%H:%M:%S')" > "$BUILD_LOG"
+echo "SadSha Lumen $VERSION macOS build $(date '+%Y-%m-%dT%H:%M:%S')" > "$BUILD_LOG"
 export PYTHONUTF8=1 PYTHONIOENCODING=utf-8
 
 say() { echo "$*" | tee -a "$BUILD_LOG"; }
@@ -88,11 +88,11 @@ run 'artwork' "$BUILD_LOG" "$PY" tools/make_macos_art.py build/macos
 tiffutil -cathidpicheck build/macos/dmg-background.png build/macos/dmg-background@2x.png \
     -out build/macos/dmg-background.tiff >> "$BUILD_LOG" 2>&1 || fail 'DMG background'
 
-step 'PyInstaller (LUMEN RAW.app)'
-rm -rf "dist/LUMEN RAW.app" dist/LumenRAW build/LumenRAW-macOS
-run 'PyInstaller' "$LOGS/pyinstaller.log" "$PY" -m PyInstaller --noconfirm --clean LumenRAW-macOS.spec
-APP="$ROOT/dist/LUMEN RAW.app"
-[ -x "$APP/Contents/MacOS/LumenRAW" ] || fail 'app executable missing'
+step 'PyInstaller (SadSha Lumen.app)'
+rm -rf "dist/SadSha Lumen.app" dist/SadShaLumen build/SadShaLumen-macOS
+run 'PyInstaller' "$LOGS/pyinstaller.log" "$PY" -m PyInstaller --noconfirm --clean SadShaLumen-macOS.spec
+APP="$ROOT/dist/SadSha Lumen.app"
+[ -x "$APP/Contents/MacOS/SadShaLumen" ] || fail 'app executable missing'
 
 step 'Minimum macOS version and ad-hoc signature'
 MINIMUM="$("$PY" tools/package_macos.py --minimum "$APP")" || fail 'minimum macOS scan'
@@ -106,14 +106,14 @@ run 'codesign verify' "$BUILD_LOG" codesign --verify --deep --strict --verbose=2
 
 step 'Frozen smoke test'
 rm -rf "$PUBLISH/app-smoke"
-QT_QPA_PLATFORM=offscreen "$APP/Contents/MacOS/LumenRAW" --smoke-test "$SAMPLE" "$PUBLISH/app-smoke" >> "$BUILD_LOG" 2>&1 \
+QT_QPA_PLATFORM=offscreen "$APP/Contents/MacOS/SadShaLumen" --smoke-test "$SAMPLE" "$PUBLISH/app-smoke" >> "$BUILD_LOG" 2>&1 \
     || fail "frozen smoke test; see $PUBLISH/app-smoke/report.json"
 run 'smoke report' "$BUILD_LOG" "$PY" tools/package_macos.py --check-smoke "$PUBLISH/app-smoke/report.json"
-run 'frozen lumen-cli and MCP check' "$LOGS/cli-smoke.log" "$PY" tools/check_cli.py "$APP/Contents/MacOS/lumen-cli" "$SAMPLE" "$PUBLISH/cli-smoke"
+run 'frozen sadsha-lumen and MCP check' "$LOGS/cli-smoke.log" "$PY" tools/check_cli.py "$APP/Contents/MacOS/sadsha-lumen" "$SAMPLE" "$PUBLISH/cli-smoke"
 
 step 'DMG'
 run 'package DMG' "$LOGS/package.log" "$PY" tools/package_macos.py --dmg "$APP" "$PUBLISH" --sample "$SAMPLE"
 echo "SUCCESS $VERSION $(date '+%Y-%m-%dT%H:%M:%S')" > "$STATUS"
 say ""
-say "SUCCESS: LUMEN RAW $VERSION for macOS is in $PUBLISH"
+say "SUCCESS: SadSha Lumen $VERSION for macOS is in $PUBLISH"
 ls -l "$PUBLISH" | tee -a "$BUILD_LOG"
